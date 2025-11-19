@@ -16,6 +16,7 @@ module Eventure
     plugin :static, ['/assets'], root: 'app/presentation'
     plugin :common_logger, $stdout
     plugin :halt
+    plugin :all_verbs # allows DELETE and other HTTP verbs beyond GET/POST
 
     route do |routing|
       response['Content-Type'] = 'text/html; charset=utf-8'

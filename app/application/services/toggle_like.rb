@@ -3,22 +3,26 @@
 require 'dry/monads'
 
 module Eventure
-  module Services
+  module Service
+    # Service to toggle like status for an activity
     class ToggleLike # rubocop:disable Style/Documentation
       include Dry::Monads[:result]
+
+      DB_ERR = 'Cannot access database'
+      NOT_FOUND = 'Activity not found'
 
       def call(session:, serno:)
         session[:user_likes] ||= []
 
         activity = find_activity(serno)
-        return Failure('Activity not found') if activity.nil?
+        return Failure(Response::ApiResult.new(status: :not_found, message: NOT_FOUND)) if activity.nil?
 
         toggle_like!(session, activity, serno)
         persist_likes(activity)
 
-        Success(activity.likes_count || 0)
-      rescue StandardError => e
-        Failure(e.message)
+        Success(Response::ApiResult.new(status: :ok, message: OpenStruct.new(likes_count: activity.likes_count)))
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
 
       private

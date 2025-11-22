@@ -13,14 +13,18 @@ module Eventure
       step :filter_by_city
       step :filter_by_districts
       step :filter_by_dates
+      step :wrap_in_response
 
       private
+
+      DB_ERR = 'Cannot access database'
+      BAD_REQ = 'Start date cannot be later than end date'
 
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
         Success(input)
-      rescue StandardError => e
-        Failure(e.to_s)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
 
       def filter_by_tags(input)
@@ -35,8 +39,8 @@ module Eventure
           end
         end
         Success(input)
-      rescue StandardError => e
-        Failure(e.to_s)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
 
       def filter_by_city(input)
@@ -45,8 +49,8 @@ module Eventure
           input[:filtered_activities] = input[:filtered_activities].select { |activity| activity.city == city }
         end
         Success(input)
-      rescue StandardError => e
-        Failure(e.to_s)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
 
       def filter_by_districts(input)
@@ -57,8 +61,8 @@ module Eventure
           end
         end
         Success(input)
-      rescue StandardError => e
-        Failure(e.to_s)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
 
       def filter_by_dates(input)
@@ -70,7 +74,7 @@ module Eventure
         end_dt   = parse_date(end_raw)
 
         if start_dt && end_dt
-          return Failure('Start date cannot be later than end date') if start_dt > end_dt
+          return Failure(Response::ApiResult.new(status: :bad_request, message: BAD_REQ)) if start_dt > end_dt
 
           input[:filtered_activities] = input[:filtered_activities].select do |ac_date|
             ad = ac_date.activity_date
@@ -88,8 +92,13 @@ module Eventure
           end
         end
         Success(input)
-      rescue StandardError => e
-        Failure(e.to_s)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+      end
+
+      def wrap_in_response(input)
+        list = Eventure::Response::ActivitiesList.new(input[:filtered_activities])
+        Success(Response::ApiResult.new(status: :ok, message: list))
       end
 
       # Helper — safe parse

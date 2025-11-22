@@ -4,16 +4,19 @@ require 'dry/monads'
 require 'dry/monads/do'
 
 module Eventure
-  module Services
+  module Service
     # update likes service
     class UpdateLikes
       include Dry::Monads[:result, :do]
+
+      DB_ERR = 'Cannot access database'
+      NOT_FOUND = 'Activity not found'
 
       def call(user:, serno:)
         activity = yield find_activity(serno)
         updated_user = toggle_like(user, serno)
         yield save_to_db(activity, updated_user.user_likes.include?(serno))
-        Success(updated_user)
+        Success(Response::ApiResult.new(status: :ok, message: OpenStruct.new(user_likes: updated_user.user_likes)))
       end
 
       private
@@ -22,7 +25,7 @@ module Eventure
         activity = Eventure::Repository::Activities.find_serno(serno)
         return Success(activity) if activity
 
-        Failure(:activity_not_found)
+        Failure(Response::ApiResult.new(status: :not_found, message: NOT_FOUND))
       end
 
       def toggle_like(user, serno)
@@ -54,7 +57,7 @@ module Eventure
         Eventure::Repository::Activities.update_likes(activity)
         Success(activity)
       rescue StandardError => e
-        Failure(:db_error)
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
     end
   end

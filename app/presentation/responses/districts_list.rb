@@ -3,6 +3,6 @@
 module Eventure
   module Response
     # List of districts
-    DistrictsList = Struct.new(:city, :districts)
+    DistrictsList = Struct.new(:districts)
   end
 end

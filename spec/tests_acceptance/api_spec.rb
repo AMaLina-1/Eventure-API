@@ -60,7 +60,7 @@ describe 'Test API routes' do
       _(last_response.status).must_equal 200
 
       response = JSON.parse(last_response.body)
-      _(response['status']).must_be_kind_of Symbol
+      _(response['status']).must_be_kind_of String
       _(response['message']).must_be_kind_of Hash
       
       response['message'].each do |city, districts|
@@ -139,16 +139,13 @@ describe 'Test API routes' do
 
   describe 'Like endpoints' do
     it 'toggles like for an activity (if activities exist)' do
-      # Get first activity from database
       get '/api/v1/activities'
       activities_response = JSON.parse(last_response.body)
       
-      # Skip test if no activities exist
       skip 'No activities in database' if activities_response['activities'].empty?
       
       first_activity_serno = activities_response['activities'].first['serno']
       
-      # Like the activity
       params = { serno: first_activity_serno }
       
       post '/api/v1/activities/like', params.to_json, { 'CONTENT_TYPE' => 'application/json' }

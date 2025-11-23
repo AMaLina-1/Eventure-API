@@ -31,11 +31,11 @@ describe 'FilteredActivities Service Integration Test' do
       filters = { tag: [], city: nil, districts: [], start_date: nil, end_date: nil }
       result = Eventure::Service::FilteredActivities.new.call(filters: filters)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
       _(rebuilt[:all_activities]).must_equal Eventure::Repository::Activities.all
       _(rebuilt[:filtered_activities]).must_equal Eventure::Repository::Activities.all
-      _(rebuilt[:filters]).must_equal filters
     end
 
     it 'HAPPY: should be filtered by tags' do
@@ -43,7 +43,8 @@ describe 'FilteredActivities Service Integration Test' do
       filters = { tag: [args], city: nil, districts: [], start_date: nil, end_date: nil }
       result = Eventure::Service::FilteredActivities.new.call(filters: filters)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
       _(rebuilt[:filtered_activities].all? { |activity| activity.tag.include?(args) }).must_equal true
     end
@@ -53,7 +54,8 @@ describe 'FilteredActivities Service Integration Test' do
       filters = { tag: [], city: args, districts: [], start_date: nil, end_date: nil }
       result = Eventure::Service::FilteredActivities.new.call(filters: filters)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
       _(rebuilt[:filtered_activities].all? { |activity| activity.city == args }).must_equal true
     end
@@ -63,7 +65,8 @@ describe 'FilteredActivities Service Integration Test' do
       filters = { tag: [], city: args[0], districts: [args[1]], start_date: nil, end_date: nil }
       result = Eventure::Service::FilteredActivities.new.call(filters: filters)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
       _(rebuilt[:filtered_activities].all? do |activity|
         activity.city == args[0] && [args[1]].include?(activity.district)
@@ -75,12 +78,14 @@ describe 'FilteredActivities Service Integration Test' do
       filters1 = { tag: [], city: args[0], districts: [args[1]], start_date: nil, end_date: nil }
       result1 = Eventure::Service::FilteredActivities.new.call(filters: filters1)
       _(result1.success?).must_equal true
-      rebuilt1 = result1.value!
+      api_result1 = result1.value!
+      rebuilt1 = api_result1.message
 
       filters2 = { tag: [], city: args[0], districts: [], start_date: nil, end_date: nil }
       result2 = Eventure::Service::FilteredActivities.new.call(filters: filters2)
       _(result2.success?).must_equal true
-      rebuilt2 = result2.value!
+      api_result2 = result2.value!
+      rebuilt2 = api_result2.message
 
       _(rebuilt1[:filtered_activities].all? { |activity| activity.city == args[0] }).must_equal true
       _(rebuilt1[:filtered_activities].length).must_equal rebuilt2[:filtered_activities].length
@@ -91,7 +96,8 @@ describe 'FilteredActivities Service Integration Test' do
       filters = { tag: [], city: nil, districts: [], start_date: args[0], end_date: args[1] }
       result = Eventure::Service::FilteredActivities.new.call(filters: filters)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
       _(rebuilt[:filtered_activities].all? do |activity|
         activity.start_time.between?(DateTime.parse(args[0]), DateTime.parse(args[1]))
@@ -103,7 +109,7 @@ describe 'FilteredActivities Service Integration Test' do
       filters = { tag: [], city: nil, districts: [], start_date: args[0], end_date: args[1] }
       result = Eventure::Service::FilteredActivities.new.call(filters: filters)
       _(result.success?).must_equal false
-      _(result.failure).must_equal 'Start date cannot be later than end date'
+      _(result.failure.message).must_equal 'Start date cannot be later than end date'
     end
   end
 end

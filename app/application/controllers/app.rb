@@ -85,7 +85,9 @@ module Eventure
               failed.to_json
             else
               api_result = result.value!
-              activities_list = api_result.message
+              result_hash = api_result.message
+              filtered = result_hash[:filtered_activities]
+              activities_list = Response::ActivitiesList.new(filtered)
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
               Representer::ActivityList.new(activities_list).to_json

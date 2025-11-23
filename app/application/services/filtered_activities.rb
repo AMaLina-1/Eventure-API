@@ -22,17 +22,16 @@ module Eventure
 
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
+        input[:filtered_activities] = input[:all_activities]
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(DB_ERR)
       end
 
       def filter_by_tags(input)
         tag_set = input[:filters][:tag]
 
-        if tag_set.nil? || tag_set.empty?
-          input[:filtered_activities] = input[:all_activities]
-        else
+        unless tag_set.nil? || tag_set.empty?
           input[:filtered_activities] = input[:all_activities].select do |activity|
             tags = Array(activity.tags).map { |ac_tag| ac_tag.respond_to?(:tag) ? ac_tag.tag.to_s : ac_tag.to_s }
             tags.intersect?(tag_set)
@@ -40,7 +39,7 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(DB_ERR)
       end
 
       def filter_by_city(input)
@@ -50,7 +49,7 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(DB_ERR)
       end
 
       def filter_by_districts(input)
@@ -62,7 +61,7 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(DB_ERR)
       end
 
       def filter_by_dates(input)
@@ -74,7 +73,7 @@ module Eventure
         end_dt   = parse_date(end_raw)
 
         if start_dt && end_dt
-          return Failure(Response::ApiResult.new(status: :bad_request, message: BAD_REQ)) if start_dt > end_dt
+          return Failure(BAD_REQ) if start_dt > end_dt
 
           input[:filtered_activities] = input[:filtered_activities].select do |ac_date|
             ad = ac_date.activity_date
@@ -93,12 +92,19 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(DB_ERR)
       end
 
       def wrap_in_response(input)
-        filtered_activities = { filtered_activities: input[:filtered_activities], all_activities: input[:all_activities] }
-        Success(Response::ApiResult.new(status: :ok, message: result_data))
+        result_hash = Response::ApiResult.new(
+          status: :ok,
+          message: "Success",
+          data: { 
+            all_activities: input[:all_activities],
+            filtered_activities: input[:filtered_activities]
+          }
+        )
+        Success(result_hash)
       end
 
       # Helper — safe parse

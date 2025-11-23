@@ -32,6 +32,7 @@ end
 # Configuration and Utilities
 gem 'figaro', '~> 1.0'
 gem 'pry'
+gem 'rack-test'
 gem 'rake'
 
 # PRESENTATION LAYER

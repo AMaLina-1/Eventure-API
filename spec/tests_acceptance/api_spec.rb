@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require_relative '../../../helpers/spec_helper'
-require_relative '../../../helpers/vcr_helper'
-require_relative '../../../helpers/database_helper'
+require_relative '../helpers/spec_helper'
+require_relative '../helpers/vcr_helper'
+require_relative '../helpers/database_helper'
 require 'rack/test'
 
 def app
   Eventure::App
 end
 
-describe 'Eventure API routes' do
+describe 'Test API routes' do
   include Rack::Test::Methods
 
   VcrHelper.setup_vcr
 
   before do
-    VcrHelper.configure_vcr_for_eventure
+    VcrHelper.configure_vcr_for_hccg
     DatabaseHelper.wipe_database
   end
 

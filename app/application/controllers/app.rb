@@ -1,146 +1,154 @@
 # frozen_string_literal: true
 
 require 'roda'
-require 'slim'
-require 'slim/include'
-require_relative '../../presentation/view_objects/activity_list'
-require_relative '../../presentation/view_objects/filter'
-require_relative '../../presentation/view_objects/filter_option'
-require_relative '../services/filtered_activities'
-require_relative '../services/update_like_counts'
 
 module Eventure
   class App < Roda
     plugin :flash
-    plugin :render, engine: 'slim', views: 'app/presentation/views_html'
-    plugin :static, ['/assets'], root: 'app/presentation'
-    plugin :common_logger, $stdout
     plugin :halt
+    plugin :all_verbs # allows DELETE and other HTTP verbs beyond GET/POST
 
     route do |routing|
-      response['Content-Type'] = 'text/html; charset=utf-8'
+      response['Content-Type'] = 'application/json'
 
       routing.root do
-        if session[:seen_intro_where]
-          routing.redirect '/activities'
-        else
-          session[:seen_intro_where] = true
-          view 'intro_where'
-        end
+        message = { status: 'ok', message: 'Eventure API v1' }
+        response.status = 200
+        message.to_json
       end
 
-      routing.get 'intro_where' do
-        view 'intro_where'
-      end
+      routing.on 'api/v1' do
+        routing.on 'activities' do
+          routing.is do
+            routing.get do
+              result = Service::ListActivity.new.call({})
 
-      routing.get 'intro_tag' do
-        # 先把這次帶進來的條件轉成乾淨 hash（包含 filter_city）
-        filters = extract_filters(routing) # => { tag: [...], city: '新竹市', ... }
-
-        # 目前只需要這次送來的條件就好
-        session[:filters] = filters
-
-        all_activities = Eventure::Repository::Activities.all
-
-        # 若有指定 city，只拿該 city 的活動來產生 tag 選單
-        activities_for_options =
-          if filters[:city] && !filters[:city].empty?
-            all_activities.select { |a| a.city.to_s == filters[:city].to_s }
-          else
-            all_activities
+              if result.failure?
+                failed = Representer::HttpResponse.new(result.failure)
+                response.status = failed.http_status_code
+                failed.to_json
+              else
+                api_result = result.value!
+                activities_list = api_result.message
+                http_response = Representer::HttpResponse.new(api_result)
+                response.status = http_response.http_status_code
+                Representer::ActivityList.new(activities_list).to_json
+              end
+            end
           end
 
-        @current_filters = Views::Filter.new(filters || {})
-        @filter_options  = Views::FilterOption.new(activities_for_options)
+          routing.on 'like' do
+            routing.post do
+              request_data = JSON.parse(routing.body.read)
+              serno = request_data['serno']
+              session[:user_likes] ||= []
 
-        view 'intro_tag',
-             locals: view_locals.merge(
-               liked_sernos: Array(session[:user_likes]).map(&:to_i)
-             )
-      end
+              result = Service::UpdateLikeCounts.new.call(serno: serno.to_i, user_likes: session[:user_likes])
 
-      # ================== Likes page ==================
-      routing.get 'like' do
-        liked_sernos = Array(session[:user_likes]).map(&:to_i)
-        liked_activities = liked_sernos.map { |serno| Eventure::Repository::Activities.find_serno(serno) }.compact
+              if result.failure?
+                failed = Representer::HttpResponse.new(result.failure)
+                response.status = failed.http_status_code
+                failed.to_json
+              else
+                api_result = result.value!
+                result_data = api_result.message
+                session[:user_likes] = result_data.user_likes
 
-        view 'like',
-             locals: view_locals.merge(
-               cards: Views::ActivityList.new(liked_activities),
-               liked_sernos: liked_sernos
-             )
-      end
+                like_response = OpenStruct.new(serno: serno.to_i, likes_count: result_data.like_counts, liked: session[:user_likes].include?(serno.to_i))
 
-      # ================== Activities ==================
-      routing.on 'activities' do
-        routing.is do
-          session[:filters] = extract_filters(routing)
-          result = Eventure::Service::FilteredActivities.new.call(filters: session[:filters])
-
-          if result.failure?
-            flash[:error] = result.failure
-            routing.redirect '/activities'
-          else
-            result = result.value!
-            @filtered_activities = result[:filtered_activities]
-            show_activities(result[:all_activities])
+                http_response = Representer::HttpResponse.new(api_result)
+                response.status = http_response.http_status_code
+                Representer::ActivityLike.new(like_response).to_json
+              end
+            end
           end
         end
 
-        routing.post 'like' do
-          response['Content-Type'] = 'application/json'
-          serno = routing.params['serno'] || routing.params['serno[]']
-          session[:user_likes] ||= []
+        routing.on 'filter' do
+          routing.post do
+            request_data = JSON.parse(routing.body.read)
+            filters = request_data['filters'] || {}
 
-          result = Service::UpdateLikeCounts.new.call(serno: serno.to_i, user_likes: session[:user_likes])
+            clean_filters = {
+              tag: Array(filters['tag']).map(&:to_s).reject(&:empty?),
+              city: filters['city']&.to_s || '',
+              districts: Array(filters['districts']).map(&:to_s).reject(&:empty?),
+              start_date: filters['start_date']&.to_s || '',
+              end_date: filters['end_date']&.to_s || ''
+            }
 
-          if result.failure?
-            flash[:error] = result.failure
-          else
-            result = result.value!
-            session[:user_likes] = result[:user_likes]
-            { serno: serno.to_i, likes_count: result[:like_counts] }.to_json
+            result = Service::FilteredActivities.new.call(filters: clean_filters)
+
+            if result.failure?
+              failed = Representer::HttpResponse.new(result.failure)
+              response.status = failed.http_status_code
+              failed.to_json
+            else
+              api_result = result.value!
+              result_hash = api_result.message
+              filtered = result_hash[:filtered_activities]
+              activities_list = Response::ActivitiesList.new(filtered)
+              http_response = Representer::HttpResponse.new(api_result)
+              response.status = http_response.http_status_code
+              Representer::ActivityList.new(activities_list).to_json
+            end
+          end
+        end
+
+        routing.on 'cities' do
+          routing.get do
+            result = Service::ListCity.new.call({})
+
+            if result.failure?
+              failed = Representer::HttpResponse.new(result.failure)
+              response.status = failed.http_status_code
+              failed.to_json
+            else
+              api_result = result.value!
+              cities_list = api_result.message
+              http_response = Representer::HttpResponse.new(api_result)
+              response.status = http_response.http_status_code
+              Representer::CityList.new(cities_list).to_json
+            end
+          end
+        end
+
+        routing.on 'districts' do
+          routing.get do
+            result = Service::ListDistrict.new.call({})
+
+            if result.failure?
+              failed = Representer::HttpResponse.new(result.failure)
+              response.status = failed.http_status_code
+              failed.to_json
+            else
+              api_result = result.value!
+              districts_list = api_result.message
+              http_response = Representer::HttpResponse.new(api_result)
+              response.status = http_response.http_status_code
+              { status: api_result.status, message: districts_list.districts }.to_json
+            end
+          end
+        end
+
+        routing.on 'tags' do
+          routing.get do
+            result = Service::ListTag.new.call({})
+
+            if result.failure?
+              failed = Representer::HttpResponse.new(result.failure)
+              response.status = failed.http_status_code
+              failed.to_json
+            else
+              api_result = result.value!
+              tags_list = api_result.message
+              http_response = Representer::HttpResponse.new(api_result)
+              response.status = http_response.http_status_code
+              Representer::TagList.new(tags_list).to_json
+            end
           end
         end
       end
-    end
-
-    # ================== Show Activities ==================
-    def show_activities(all)
-      @current_filters = Views::Filter.new(session[:filters])
-      @filter_options = Views::FilterOption.new(all)
-      view 'home',
-           locals: view_locals.merge(
-             liked_sernos: Array(session[:user_likes]).map(&:to_i)
-           )
-    end
-
-    # 把 params 換成乾淨 hash
-    def extract_filters(routing)
-      {
-        tag: Array(routing.params['filter_tag'] || routing.params['filter_tag[]']).map(&:to_s).reject(&:empty?),
-        city: routing.params['filter_city']&.to_s,
-        districts: Array(routing.params['filter_district'] || routing.params['filter_district[]'])
-          .map(&:to_s).reject(&:empty?),
-        start_date: routing.params['filter_start_date']&.to_s,
-        end_date: routing.params['filter_end_date']&.to_s
-      }
-    end
-
-    def view_locals
-      {
-        cards: Views::ActivityList.new(@filtered_activities || activities),
-        total_pages: 1,
-        current_page: 1
-      }
-    end
-
-    def activities
-      @activities ||= Eventure::Repository::Activities.all
-    end
-
-    def service
-      @service ||= Eventure::Services::ActivityService.new
     end
   end
 end

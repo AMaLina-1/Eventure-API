@@ -11,15 +11,19 @@ module Eventure
       step :fetch_activity
       step :update_like_session
       step :save_like_db
+      step :wrap_in_response
 
       private
+
+      DB_ERR = 'Cannot access database'
+      NOT_FOUND = 'Activity not found'
 
       def fetch_activity(input)
         input[:activity] = Eventure::Repository::Activities.find_serno(input[:serno])
         if input[:activity]
           Success(input)
         else
-          Failure('Activity not found')
+          Failure(Response::ApiResult.new(status: :not_found, message: NOT_FOUND))
         end
       end
 
@@ -32,15 +36,20 @@ module Eventure
           input[:user_likes] << input[:serno]
         end
         Success(input)
-      rescue StandardError => e
-        Failure(e.to_s)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end
 
       def save_like_db(input)
         Eventure::Repository::Activities.update_likes(input[:activity])
-        Success(user_likes: input[:user_likes], like_counts: input[:activity].likes_count)
-      rescue StandardError => e
-        Failure("Database failed to update: #{e}")
+        Success(input)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+      end
+
+      def wrap_in_response(input)
+        result = OpenStruct.new(user_likes: input[:user_likes], like_counts: input[:activity].likes_count)
+        Success(Response::ApiResult.new(status: :ok, message: result))
       end
     end
   end

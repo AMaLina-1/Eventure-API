@@ -39,11 +39,12 @@ describe 'UpdateLikeCounts Service Integration Test' do
       original_like_counts = @activities[5].likes_count
       result = Eventure::Service::UpdateLikeCounts.new.call(serno: target_serno, user_likes: @user_likes)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
-      _(rebuilt[:user_likes]).must_include target_serno
-      _(rebuilt[:like_counts]).must_equal original_like_counts + 1
-      _(rebuilt[:like_counts]).must_equal Eventure::Repository::Activities.find_serno(target_serno).likes_count
+      _(rebuilt.user_likes).must_include target_serno
+      _(rebuilt.like_counts).must_equal original_like_counts + 1
+      _(rebuilt.like_counts).must_equal Eventure::Repository::Activities.find_serno(target_serno).likes_count
     end
 
     it 'HAPPY: should properly "dislike" an activity' do
@@ -51,17 +52,18 @@ describe 'UpdateLikeCounts Service Integration Test' do
       original_like_counts = @activities[0].likes_count
       result = Eventure::Service::UpdateLikeCounts.new.call(serno: target_serno, user_likes: @user_likes)
       _(result.success?).must_equal true
-      rebuilt = result.value!
+      api_result = result.value!
+      rebuilt = api_result.message
 
-      _(rebuilt[:user_likes]).wont_include target_serno
-      _(rebuilt[:like_counts]).must_equal(original_like_counts > 0 ? original_like_counts - 1 : 0)
-      _(rebuilt[:like_counts]).must_equal Eventure::Repository::Activities.find_serno(target_serno).likes_count
+      _(rebuilt.user_likes).wont_include target_serno
+      _(rebuilt.like_counts).must_equal(original_like_counts > 0 ? original_like_counts - 1 : 0)
+      _(rebuilt.like_counts).must_equal Eventure::Repository::Activities.find_serno(target_serno).likes_count
     end
 
     it 'BAD: should gracefully fail for invalid serno' do
       result = Eventure::Service::UpdateLikeCounts.new.call(serno: 123, user_likes: @user_likes)
       _(result.success?).must_equal false
-      _(result.failure).must_equal 'Activity not found'
+      _(result.failure.message).must_equal 'Activity not found'
     end
   end
 end

@@ -32,7 +32,12 @@ end
 # Configuration and Utilities
 gem 'figaro', '~> 1.0'
 gem 'pry'
+gem 'rack-test'
 gem 'rake'
+
+# PRESENTATION LAYER
+gem 'multi_json', '~> 1.15'
+gem 'roar', '~> 1.1'
 
 # Validation
 gem 'dry-struct', '~> 1.0'

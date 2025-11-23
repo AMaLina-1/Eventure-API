@@ -81,6 +81,14 @@ module Eventure
       def remove_likes
         @likes_count -= 1 if @likes_count.positive?
       end
+
+      def status
+        activity_date.status
+      end
+
+      def duration
+        activity_date.duration
+      end
     end
   end
 end

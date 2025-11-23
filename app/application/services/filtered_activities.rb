@@ -97,8 +97,8 @@ module Eventure
       end
 
       def wrap_in_response(input)
-        list = Eventure::Response::ActivitiesList.new(input[:filtered_activities])
-        Success(Response::ApiResult.new(status: :ok, message: list))
+        filtered_activities = { filtered_activities: input[:filtered_activities], all_activities: input[:all_activities] }
+        Success(Response::ApiResult.new(status: :ok, message: result_data))
       end
 
       # Helper — safe parse

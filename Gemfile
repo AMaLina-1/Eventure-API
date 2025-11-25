@@ -37,6 +37,7 @@ gem 'rake'
 
 # PRESENTATION LAYER
 gem 'multi_json', '~> 1.15'
+gem 'ostruct', '~> 0.0'
 gem 'roar', '~> 1.1'
 
 # Validation
@@ -44,7 +45,7 @@ gem 'dry-struct', '~> 1.0'
 gem 'dry-types', '~> 1.0'
 
 # Web Application
-# gem 'dry-monads'
+gem 'dry-monads', '~> 1.0'
 gem 'dry-transaction'
 gem 'dry-validation'
 gem 'logger', '~> 1.0'
@@ -52,6 +53,11 @@ gem 'puma', '~> 6.4'
 gem 'rack-session', '~> 0'
 gem 'roda', '~> 3.0'
 gem 'slim', '~> 4.0'
+
+# Caching
+gem 'rack-cache', '~> 1.13'
+gem 'redis', '~> 4.8'
+gem 'redis-rack-cache', '~> 2.2'
 
 # Database
 gem 'hirb'
@@ -62,8 +68,5 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 1.0'
 end
-
-# Controllers and services
-gem 'dry-monads', '~> 1.0'

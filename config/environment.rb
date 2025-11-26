@@ -5,6 +5,8 @@ require 'yaml'
 require 'figaro'
 require 'sequel'
 require 'rack/session'
+require 'rack/cache'
+require 'redis-rack-cache'
 
 module Eventure
   # Main application class
@@ -23,6 +25,21 @@ module Eventure
 
     configure :development, :test do
       ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
+    end
+
+    # Setup Cacheing mechanism
+    configure :development do
+      use Rack::Cache,
+          verbose: true,
+          metastore: 'file:_cache/rack/meta',
+          entitystore: 'file:_cache/rack/body'
+    end
+
+    configure :production do
+      use Rack::Cache,
+          verbose: true,
+          metastore: "#{config.REDISCLOUD_URL}/0/metastore",
+          entitystore: "#{config.REDISCLOUD_URL}/0/entitystore"
     end
 
     # Database Setup

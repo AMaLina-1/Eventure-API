@@ -21,7 +21,12 @@ module Eventure
         routing.on 'activities' do
           routing.is do
             routing.get do
-              result = Service::ListActivity.new.call({})
+              # If a keyword is provided (from frontend search bar), use the searched service
+              result = if routing.params['keyword'] && !routing.params['keyword'].to_s.strip.empty?
+                         Service::SearchedActivities.new.call(keyword: routing.params['keyword'])
+                       else
+                         Service::ListActivity.new.call({})
+                       end
 
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
@@ -54,7 +59,8 @@ module Eventure
                 result_data = api_result.message
                 session[:user_likes] = result_data.user_likes
 
-                like_response = OpenStruct.new(serno: serno.to_i, likes_count: result_data.like_counts, liked: session[:user_likes].include?(serno.to_i))
+                like_response = OpenStruct.new(serno: serno.to_i, likes_count: result_data.like_counts,
+                                               liked: session[:user_likes].include?(serno.to_i))
 
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code

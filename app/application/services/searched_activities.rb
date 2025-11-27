@@ -40,7 +40,7 @@ module Eventure
         input[:filtered_activities] = input[:filtered_activities].select do |activity|
           name_match = activity.name.to_s.downcase.include?(pattern)
           detail_match = activity.detail.to_s.downcase.include?(pattern)
-          organizer_match = activity.organizer.to_s.downcase.include?(pattern)
+          # organizer_match = activity.organizer.to_s.downcase.include?(pattern)
           city_match = activity.city.to_s.downcase.include?(pattern)
 
           tags = Array(activity.tags).map { |t| t.respond_to?(:tag) ? t.tag.to_s.downcase : t.to_s.downcase }
@@ -55,12 +55,11 @@ module Eventure
       end
 
       def wrap_in_response(input)
-        result_hash = {
-          all_activities: input[:all_activities],
-          filtered_activities: input[:filtered_activities]
-        }
+        result_hash = input[:filtered_activities]
         Success(Response::ApiResult.new(status: :ok, message: result_hash))
       end
+    rescue StandardError
+      Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
     end
   end
 end

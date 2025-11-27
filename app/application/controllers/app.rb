@@ -21,12 +21,8 @@ module Eventure
         routing.on 'activities' do
           routing.is do
             routing.get do
-              # If a keyword is provided (from frontend search bar), use the searched service
-              result = if routing.params['keyword'] && !routing.params['keyword'].to_s.strip.empty?
-                         Service::SearchedActivities.new.call(keyword: routing.params['keyword'])
-                       else
-                         Service::ListActivity.new.call({})
-                       end
+              # Always use SearchedActivities; it returns the full list when no keyword
+              result = Service::SearchedActivities.new.call(keyword: routing.params['keyword'])
 
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
@@ -34,10 +30,11 @@ module Eventure
                 failed.to_json
               else
                 api_result = result.value!
-                activities_list = api_result.message
+                activities = api_result.message
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
-                Representer::ActivityList.new(activities_list).to_json
+                # ActivityList expects an object with `activities` collection
+                Representer::ActivityList.new(OpenStruct.new(activities: activities)).to_json
               end
             end
           end

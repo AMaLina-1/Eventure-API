@@ -32,7 +32,7 @@ end
 
 desc 'Run web app'
 task :run do
-  sh 'bundle exec puma'
+  sh 'bundle exec puma -p 9090'
 end
 
 desc 'Keep rerunning web app when files change'

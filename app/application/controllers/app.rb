@@ -30,7 +30,9 @@ module Eventure
                 failed.to_json
               else
                 api_result = result.value!
-                activities = api_result.message
+                puts api_result
+                activities_list = api_result.message
+                puts activities_list
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
                 # ActivityList expects an object with `activities` collection
@@ -79,20 +81,21 @@ module Eventure
               start_date: filters['start_date']&.to_s || '',
               end_date: filters['end_date']&.to_s || ''
             }
-
+            puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
-
+            puts result
             if result.failure?
               failed = Representer::HttpResponse.new(result.failure)
               response.status = failed.http_status_code
               failed.to_json
             else
               api_result = result.value!
-              result_hash = api_result.message
-              filtered = result_hash[:filtered_activities]
-              activities_list = Response::ActivitiesList.new(filtered)
+              result_hash = api_result.message.activities
+              # filtered = result_hash[:activities]
+              # activities_list = Response::ActivitiesList.new(filtered)
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
+              activities_list = OpenStruct.new(activities: filtered)
               Representer::ActivityList.new(activities_list).to_json
             end
           end

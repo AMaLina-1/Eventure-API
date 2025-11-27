@@ -12,8 +12,12 @@ module Eventure
     route do |routing|
       response['Content-Type'] = 'application/json'
       # ================== Write Database ==================
-      svc = Eventure::Services::ActivityService.new
-      svc.save_activities(100)
+      # The app previously saved activities on every request which causes
+      # frequent writes and locks (SQLite busy). Commented out so we don't
+      # sync on each HTTP request. If you want periodic sync, run a rake
+      # task or background job at startup/cron instead.
+      # svc = Eventure::Services::ActivityService.new
+      # svc.save_activities(100)
 
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
@@ -94,7 +98,7 @@ module Eventure
             else
               puts 'success'
               api_result = result.value!
-              
+
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
 

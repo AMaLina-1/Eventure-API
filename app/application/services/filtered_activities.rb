@@ -17,18 +17,19 @@ module Eventure
 
       private
 
-      DB_ERR = 'Cannot access database'
       BAD_REQ = 'Start date cannot be later than end date'
 
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
         input[:filtered_activities] = input[:all_activities]
+        # puts input['all_activities'].length
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch all activities'))
       end
 
       def filter_by_tags(input)
+        
         tag_set = input[:filters][:tag]
 
         unless tag_set.nil? || tag_set.empty?
@@ -39,7 +40,7 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot filter by tags'))
       end
 
       def filter_by_city(input)
@@ -49,7 +50,7 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot filter by city'))
       end
 
       def filter_by_districts(input)
@@ -61,7 +62,7 @@ module Eventure
         end
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot filter by districts'))
       end
 
       def filter_by_dates(input)
@@ -90,9 +91,10 @@ module Eventure
             ad&.start_time && ad.start_time <= end_dt
           end
         end
+        # puts input['all_activities'].length
         Success(input)
       rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fileter by dates'))
       end
 
       def wrap_in_response(input)
@@ -102,7 +104,11 @@ module Eventure
         #   activities: input[:filtered_activities]
         # }
         result = Response::ActivitiesList.new(activities: input[:filtered_activities])
+        # puts input[:filtered_activities].length
+        # puts result
         Success(Response::ApiResult.new(status: :ok, message: result))
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot wrap response'))
       end
 
       # Helper – safe parse

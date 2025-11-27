@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
+require_relative 'activities_controller'
 
 module Eventure
   class App < Roda
@@ -10,6 +11,9 @@ module Eventure
 
     route do |routing|
       response['Content-Type'] = 'application/json'
+      # ================== Write Database ==================
+      svc = Eventure::Services::ActivityService.new
+      svc.save_activities(100)
 
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
@@ -30,13 +34,11 @@ module Eventure
                 failed.to_json
               else
                 api_result = result.value!
-                puts api_result
                 activities_list = api_result.message
-                puts activities_list
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
                 # ActivityList expects an object with `activities` collection
-                Representer::ActivityList.new(OpenStruct.new(activities: activities)).to_json
+                Representer::ActivityList.new(OpenStruct.new(activities: activities_list)).to_json
               end
             end
           end
@@ -83,19 +85,21 @@ module Eventure
             }
             puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
-            puts result
+            puts 'result.failure?' + result.failure?.to_s
             if result.failure?
+              puts 'failure'
               failed = Representer::HttpResponse.new(result.failure)
               response.status = failed.http_status_code
               failed.to_json
             else
+              puts 'success'
               api_result = result.value!
-              result_hash = api_result.message.activities
-              # filtered = result_hash[:activities]
-              # activities_list = Response::ActivitiesList.new(filtered)
+              
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
-              activities_list = OpenStruct.new(activities: filtered)
+
+              result_activities = api_result.message[:activities]
+              activities_list = OpenStruct.new(activities: result_activities)
               Representer::ActivityList.new(activities_list).to_json
             end
           end

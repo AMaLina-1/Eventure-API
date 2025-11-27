@@ -11,7 +11,14 @@ module Eventure
     class TagList < Roar::Decorator
       include Roar::JSON
 
-      collection :tags, extend: TagSingle, class: OpenStruct
+      # Return tags as plain strings so frontends that expect an array of
+      # strings (e.g. ["教育文化", "文化藝術"]) can consume the API
+      # easily. We accept either OpenStruct/tag objects or plain strings.
+      collection :tags, getter: lambda { |represented:, **|
+        Array(represented.tags).map do |t|
+          t.respond_to?(:tag) ? t.tag.to_s : t.to_s
+        end
+      }
     end
   end
 end

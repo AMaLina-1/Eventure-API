@@ -46,7 +46,7 @@ module Eventure
           tags = Array(activity.tags).map { |t| t.respond_to?(:tag) ? t.tag.to_s.downcase : t.to_s.downcase }
           tags_match = tags.any? { |t| t.include?(pattern) }
 
-          name_match || detail_match || organizer_match || city_match || tags_match
+          name_match || detail_match || city_match || tags_match
         end
 
         Success(input)

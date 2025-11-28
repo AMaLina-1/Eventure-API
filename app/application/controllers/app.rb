@@ -50,10 +50,9 @@ module Eventure
           routing.on 'like' do
             routing.post do
               request_data = JSON.parse(routing.body.read)
-              serno = request_data['serno']
-              session[:user_likes] ||= []
-
-              result = Service::UpdateLikeCounts.new.call(serno: serno.to_i, user_likes: session[:user_likes])
+              serno = request_data['serno'].to_i
+              user_likes = request_data['user_likes'].map(&:to_i)
+              result = Service::UpdateLikeCounts.new.call(serno: serno, user_likes: user_likes)
 
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
@@ -62,10 +61,8 @@ module Eventure
               else
                 api_result = result.value!
                 result_data = api_result.message
-                session[:user_likes] = result_data.user_likes
-
-                like_response = OpenStruct.new(serno: serno.to_i, likes_count: result_data.like_counts,
-                                               liked: session[:user_likes].include?(serno.to_i))
+                like_response = OpenStruct.new(serno: result_data[:serno], likes_count: result_data.like_counts,
+                                               user_likes: result_data[:user_likes])
 
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
@@ -87,16 +84,16 @@ module Eventure
               start_date: filters['start_date']&.to_s || '',
               end_date: filters['end_date']&.to_s || ''
             }
-            puts clean_filters
+            # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
-            puts 'result.failure?' + result.failure?.to_s
+            # puts 'result.failure?' + result.failure?.to_s
             if result.failure?
-              puts 'failure'
+              # puts 'failure'
               failed = Representer::HttpResponse.new(result.failure)
               response.status = failed.http_status_code
               failed.to_json
             else
-              puts 'success'
+              # puts 'success'
               api_result = result.value!
 
               http_response = Representer::HttpResponse.new(api_result)

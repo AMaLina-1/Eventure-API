@@ -16,8 +16,8 @@ module Eventure
       # frequent writes and locks (SQLite busy). Commented out so we don't
       # sync on each HTTP request. If you want periodic sync, run a rake
       # task or background job at startup/cron instead.
-      # svc = Eventure::Services::ActivityService.new
-      # svc.save_activities(100)
+      svc = Eventure::Services::ActivityService.new
+      svc.save_activities(100)
 
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
@@ -51,7 +51,7 @@ module Eventure
             routing.post do
               request_data = JSON.parse(routing.body.read)
               serno = request_data['serno'].to_i
-              user_likes = request_data['user_likes'].map(&:to_i)
+              user_likes = Array(request_data['user_likes']).map(&:to_i)
               result = Service::UpdateLikeCounts.new.call(serno: serno, user_likes: user_likes)
 
               if result.failure?
@@ -86,14 +86,11 @@ module Eventure
             }
             # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
-            # puts 'result.failure?' + result.failure?.to_s
             if result.failure?
-              # puts 'failure'
               failed = Representer::HttpResponse.new(result.failure)
               response.status = failed.http_status_code
               failed.to_json
             else
-              # puts 'success'
               api_result = result.value!
 
               http_response = Representer::HttpResponse.new(api_result)

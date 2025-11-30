@@ -22,6 +22,8 @@ end
 desc 'Run all tests'
 Rake::TestTask.new(:spec) do |t|
   t.pattern = 'spec/**/*_spec.rb'
+  # t.pattern = 'spec/tests_acceptance/api_spec.rb'
+  # 查看詳細測試輸出: RACK_ENV=test ruby -Ilib:spec spec/XXX.rb -v
   t.warning = false
 end
 
@@ -32,7 +34,7 @@ end
 
 desc 'Run web app'
 task :run do
-  sh 'bundle exec puma'
+  sh 'bundle exec puma -p 9090'
 end
 
 desc 'Keep rerunning web app when files change'

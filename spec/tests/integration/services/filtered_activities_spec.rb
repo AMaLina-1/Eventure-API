@@ -34,8 +34,8 @@ describe 'FilteredActivities Service Integration Test' do
       api_result = result.value!
       rebuilt = api_result.message
 
-      _(rebuilt[:all_activities]).must_equal Eventure::Repository::Activities.all
-      _(rebuilt[:filtered_activities]).must_equal Eventure::Repository::Activities.all
+      _(rebuilt[:activities]).must_equal Eventure::Repository::Activities.all
+      # _(rebuilt[:filtered_activities]).must_equal Eventure::Repository::Activities.all
     end
 
     it 'HAPPY: should be filtered by tags' do
@@ -46,7 +46,8 @@ describe 'FilteredActivities Service Integration Test' do
       api_result = result.value!
       rebuilt = api_result.message
 
-      _(rebuilt[:filtered_activities].all? { |activity| activity.tag.include?(args) }).must_equal true
+      # _(rebuilt[:filtered_activities].all? { |activity| activity.tag.include?(args) }).must_equal true
+      _(rebuilt[:activities].all? { |activity| activity.tag.include?(args) }).must_equal true
     end
 
     it 'HAPPY: should be filtered by city' do
@@ -57,7 +58,8 @@ describe 'FilteredActivities Service Integration Test' do
       api_result = result.value!
       rebuilt = api_result.message
 
-      _(rebuilt[:filtered_activities].all? { |activity| activity.city == args }).must_equal true
+      _(rebuilt[:activities].all? { |activity| activity.city == args }).must_equal true
+      # _(rebuilt[:filtered_activities].all? { |activity| activity.city == args }).must_equal true
     end
 
     it 'HAPPY: should be filtered by districts (specific)' do
@@ -68,7 +70,8 @@ describe 'FilteredActivities Service Integration Test' do
       api_result = result.value!
       rebuilt = api_result.message
 
-      _(rebuilt[:filtered_activities].all? do |activity|
+      # _(rebuilt[:filtered_activities].all? do |activity|
+      _(rebuilt[:activities].all? do |activity|
         activity.city == args[0] && [args[1]].include?(activity.district)
       end).must_equal true
     end
@@ -87,8 +90,10 @@ describe 'FilteredActivities Service Integration Test' do
       api_result2 = result2.value!
       rebuilt2 = api_result2.message
 
-      _(rebuilt1[:filtered_activities].all? { |activity| activity.city == args[0] }).must_equal true
-      _(rebuilt1[:filtered_activities].length).must_equal rebuilt2[:filtered_activities].length
+      # _(rebuilt1[:filtered_activities].all? { |activity| activity.city == args[0] }).must_equal true
+      # _(rebuilt1[:filtered_activities].length).must_equal rebuilt2[:filtered_activities].length
+      _(rebuilt1[:activities].all? { |activity| activity.city == args[0] }).must_equal true
+      _(rebuilt1[:activities].length).must_equal rebuilt2[:activities].length
     end
 
     it 'HAPPY: should be filtered by dates' do
@@ -99,7 +104,8 @@ describe 'FilteredActivities Service Integration Test' do
       api_result = result.value!
       rebuilt = api_result.message
 
-      _(rebuilt[:filtered_activities].all? do |activity|
+      # _(rebuilt[:filtered_activities].all? do |activity|
+      _(rebuilt[:activities].all? do |activity|
         activity.start_time.between?(DateTime.parse(args[0]), DateTime.parse(args[1]))
       end).must_equal true
     end

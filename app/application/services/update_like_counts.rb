@@ -28,6 +28,7 @@ module Eventure
       end
 
       def update_like_session(input)
+        puts 'user_likes before: ', input[:user_likes]
         if input[:user_likes].include?(input[:serno])
           input[:activity].remove_likes
           input[:user_likes].delete(input[:serno])
@@ -35,9 +36,10 @@ module Eventure
           input[:activity].add_likes
           input[:user_likes] << input[:serno]
         end
+        puts 'user_likes after: ', input[:user_likes]
         Success(input)
-      rescue StandardError
-        Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
+      rescue StandardError => e
+        Failure(Response::ApiResult.new(status: :internal_error, message: e.message))
       end
 
       def save_like_db(input)
@@ -48,8 +50,10 @@ module Eventure
       end
 
       def wrap_in_response(input)
-        result = OpenStruct.new(user_likes: input[:user_likes], like_counts: input[:activity].likes_count)
+        result = Response::ActivityLike.new(serno: input[:serno], user_likes: input[:user_likes], like_counts: input[:activity].likes_count)
         Success(Response::ApiResult.new(status: :ok, message: result))
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot wrap response'))
       end
     end
   end

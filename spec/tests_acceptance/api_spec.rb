@@ -154,7 +154,7 @@ describe 'Test API routes' do
       response = JSON.parse(last_response.body)
       _(response['serno']).must_equal first_activity_serno
       _(response['likes_count']).must_be_kind_of Integer
-      _(response['liked']).must_equal true
+      _(response['user_likes']).must_equal Array(first_activity_serno)
     end
 
     it 'returns not found for non-existent activity' do

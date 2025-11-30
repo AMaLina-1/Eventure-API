@@ -11,7 +11,7 @@ module Eventure
 
       property :serno       # 給前端知道是哪一個活動
       property :likes_count # 最新愛心數
-      property :liked       # true/false 代表目前狀態
+      property :user_likes  # 使用者目前喜歡的活動清單
     end
   end
 end

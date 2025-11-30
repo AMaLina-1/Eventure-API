@@ -12,10 +12,17 @@ module Eventure
       property :serno
       property :name
       property :location
+      property :city
+      property :district
+      property :building
+      property :detail
+      property :organizer
+      property :voice
       property :tag
       property :status
       property :likes_count
       property :start_time
+      property :duration
     end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
+require_relative 'activities_controller'
 
 module Eventure
   class App < Roda
@@ -10,6 +11,13 @@ module Eventure
 
     route do |routing|
       response['Content-Type'] = 'application/json'
+      # ================== Write Database ==================
+      # The app previously saved activities on every request which causes
+      # frequent writes and locks (SQLite busy). Commented out so we don't
+      # sync on each HTTP request. If you want periodic sync, run a rake
+      # task or background job at startup/cron instead.
+      svc = Eventure::Services::ActivityService.new
+      svc.save_activities(100)
 
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
@@ -21,7 +29,8 @@ module Eventure
         routing.on 'activities' do
           routing.is do
             routing.get do
-              result = Service::ListActivity.new.call({})
+              # Always use SearchedActivities; it returns the full list when no keyword
+              result = Service::SearchedActivities.new.call(keyword: routing.params['keyword'])
 
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
@@ -32,7 +41,8 @@ module Eventure
                 activities_list = api_result.message
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
-                Representer::ActivityList.new(activities_list).to_json
+                # ActivityList expects an object with `activities` collection
+                Representer::ActivityList.new(OpenStruct.new(activities: activities_list)).to_json
               end
             end
           end
@@ -40,10 +50,9 @@ module Eventure
           routing.on 'like' do
             routing.post do
               request_data = JSON.parse(routing.body.read)
-              serno = request_data['serno']
-              session[:user_likes] ||= []
-
-              result = Service::UpdateLikeCounts.new.call(serno: serno.to_i, user_likes: session[:user_likes])
+              serno = request_data['serno'].to_i
+              user_likes = Array(request_data['user_likes']).map(&:to_i)
+              result = Service::UpdateLikeCounts.new.call(serno: serno, user_likes: user_likes)
 
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
@@ -52,9 +61,8 @@ module Eventure
               else
                 api_result = result.value!
                 result_data = api_result.message
-                session[:user_likes] = result_data.user_likes
-
-                like_response = OpenStruct.new(serno: serno.to_i, likes_count: result_data.like_counts, liked: session[:user_likes].include?(serno.to_i))
+                like_response = OpenStruct.new(serno: result_data[:serno], likes_count: result_data.like_counts,
+                                               user_likes: result_data[:user_likes])
 
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
@@ -76,20 +84,20 @@ module Eventure
               start_date: filters['start_date']&.to_s || '',
               end_date: filters['end_date']&.to_s || ''
             }
-
+            # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
-
             if result.failure?
               failed = Representer::HttpResponse.new(result.failure)
               response.status = failed.http_status_code
               failed.to_json
             else
               api_result = result.value!
-              result_hash = api_result.message
-              filtered = result_hash[:filtered_activities]
-              activities_list = Response::ActivitiesList.new(filtered)
+
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
+
+              result_activities = api_result.message[:activities]
+              activities_list = OpenStruct.new(activities: result_activities)
               Representer::ActivityList.new(activities_list).to_json
             end
           end

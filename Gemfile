@@ -52,7 +52,6 @@ gem 'logger', '~> 1.0'
 gem 'puma', '~> 6.4'
 gem 'rack-session', '~> 0'
 gem 'roda', '~> 3.0'
-gem 'slim', '~> 4.0'
 
 # Caching
 gem 'rack-cache', '~> 1.13'

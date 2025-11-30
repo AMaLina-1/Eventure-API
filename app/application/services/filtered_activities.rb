@@ -98,14 +98,7 @@ module Eventure
       end
 
       def wrap_in_response(input)
-        # result_hash = {
-        #   # all_activities: input[:all_activities],
-        #   # filtered_activities: input[:filtered_activities]
-        #   activities: input[:filtered_activities]
-        # }
         result = Response::ActivitiesList.new(activities: input[:filtered_activities])
-        # puts input[:filtered_activities].length
-        # puts result
         Success(Response::ApiResult.new(status: :ok, message: result))
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot wrap response'))

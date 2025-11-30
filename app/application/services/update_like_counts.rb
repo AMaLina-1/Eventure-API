@@ -29,7 +29,6 @@ module Eventure
 
       def update_like_session(input)
         puts 'user_likes before: ', input[:user_likes]
-        # input[:user_likes].map!(&:to_i)
         if input[:user_likes].include?(input[:serno])
           input[:activity].remove_likes
           input[:user_likes].delete(input[:serno])

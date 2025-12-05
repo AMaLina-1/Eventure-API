@@ -21,6 +21,7 @@ jobs:
     strategy:
       # don't cancel other jobs if one fails
       fail-fast: false
+      max-parallel: 1  # set max-parallel strategy
       matrix:
         os: [ubuntu, macos]
     runs-on: ${{ matrix.os }}-latest  # Runs on latest builds of matrix OSes
@@ -48,4 +49,10 @@ jobs:
           # REPOSTORE_PATH: ${{ secrets.REPOSTORE_PATH }}
           API_HOST: ${{ secrets.API_HOST }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-        run: bundle exec rake spec
+          QUEUE_URL: ${{ secrets.QUEUE_URL }}  # add AWS credentials
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          rake worker:run:test &  # & -> run worker in background
+          bundle exec rake spec

@@ -9,17 +9,18 @@ require_relative '../../../domain/values/location'
 require_relative '../../../domain/values/activity_date'
 
 module Eventure
-  module Hccg
-    # data mapper: hccg api response -> Activity entity
+  module Taipei
+    # data mapper: taipei api response -> Activity entity
     class ActivityMapper
-      def initialize(gateway_class = Hccg::Api)
+      def initialize(gateway_class = Taipei::Api)
         @gateway_class = gateway_class
         @gateway = @gateway_class.new
         @parsed_data = nil
       end
 
       def find(top)
-        @parsed_data = @gateway.parsed_json(top)
+        raw = @gateway.parsed_json(top)
+        @parsed_data = raw['data']
         build_entity
       end
 
@@ -59,46 +60,56 @@ module Eventure
         end
 
         def serno
-          @data['serno'].to_s
+          @data['id'].to_s
         end
 
         def name
-          @data['subject']
+          @data['title']
         end
 
         def detail
-          @data['detailcontent']
+          @data['description']
         end
 
         def start_time
-          DateTime.strptime(@data['activitysdate'], '%Y%m%d%H%M').new_offset(0)
+          DateTime.parse(@data['begin']).new_offset(0)
         end
 
         def end_time
-          DateTime.strptime(@data['activityedate'], '%Y%m%d%H%M').new_offset(0)
+          DateTime.parse(@data['end']).new_offset(0)
         end
 
         def location
-          Eventure::Value::Location.new(building: @data['activityplace'])
+          Eventure::Value::Location.new(building: '')
         end
 
         def voice
-          @data['voice']
+          @data['description']
         end
 
         def organizer
-          @data['hostunit']
+          # @data['hostunit']
+          ''
+        end
+
+        def tag_ids
+          # @data['subjectid'].split(',').map(&:to_i)
+          []
         end
 
         def tags
-          tag_texts = @data['subjectclass'].split(',')
-          tag_texts.map do |tag_text|
-            Eventure::Entity::Tag.new(tag: tag_text.split(']')[1])
-          end
+          # tag_texts = @data['subjectclass'].split(',')
+          # tag_texts.map.with_index do |tag_text, index|
+          #   Eventure::Entity::Tag.new(
+          #     tag_id: tag_ids[index],
+          #     tag: tag_text.split(']')[1]
+          #   )
+          # end
+          []
         end
 
         def relate_data
-          resource_list = @data['resourcedatalist']
+          resource_list = @data['links'] || []
           return [] if resource_list.empty?
 
           resource_list.map do |relate_item|
@@ -111,8 +122,8 @@ module Eventure
 
           Eventure::Entity::RelateData.new(
             relatedata_id: nil,
-            relate_title: relate_item['relatename'],
-            relate_url: relate_item['relateurl']
+            relate_title: relate_item['subject'],
+            relate_url: relate_item['src']
           )
         end
       end

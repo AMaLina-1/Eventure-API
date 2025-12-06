@@ -9,10 +9,10 @@ require_relative '../../../domain/values/location'
 require_relative '../../../domain/values/activity_date'
 
 module Eventure
-  module Hccg
-    # data mapper: hccg api response -> Activity entity
+  module NewTaipei
+    # data mapper: new taipei api response -> Activity entity
     class ActivityMapper
-      def initialize(gateway_class = Hccg::Api)
+      def initialize(gateway_class = NewTaipei::Api)
         @gateway_class = gateway_class
         @gateway = @gateway_class.new
         @parsed_data = nil
@@ -59,47 +59,55 @@ module Eventure
         end
 
         def serno
-          @data['serno'].to_s
+          @data['id'].to_s
         end
 
         def name
-          @data['subject']
+          @data['title']
         end
 
         def detail
-          @data['detailcontent']
+          @data['description']
         end
 
         def start_time
-          DateTime.strptime(@data['activitysdate'], '%Y%m%d%H%M').new_offset(0)
+          date = Date.strptime(@data['activeDate'], '%m/%d/%Y')
+          date.to_datetime.new_offset(0)
         end
 
+        # end_time -> activeEndDate
         def end_time
-          DateTime.strptime(@data['activityedate'], '%Y%m%d%H%M').new_offset(0)
+          raw = @data['activeEndDate']
+          return start_time if raw.nil? || raw.empty?
+
+          date = Date.strptime(raw, '%m/%d/%Y')
+          date.to_datetime.new_offset(0)
         end
 
         def location
-          Eventure::Value::Location.new(building: @data['activityplace'])
+          Eventure::Value::Location.new(building: @data['address'])
         end
 
         def voice
-          @data['voice']
+          @data['description']
         end
 
         def organizer
-          @data['hostunit']
+          @data['author']
         end
 
         def tags
-          tag_texts = @data['subjectclass'].split(',')
-          tag_texts.map do |tag_text|
-            Eventure::Entity::Tag.new(tag: tag_text.split(']')[1])
-          end
+          class_name = @data['className']
+          return [] if class_name.nil? || class_name.empty?
+
+          [Eventure::Entity::Tag.new(tag: class_name)]
         end
 
         def relate_data
-          resource_list = @data['resourcedatalist']
-          return [] if resource_list.empty?
+          url = @data['aboutUrl']
+          return [] if url.nil? || url.empty?
+
+          resource_list = [url]
 
           resource_list.map do |relate_item|
             self.class.build_relate_data_entity(relate_item)
@@ -111,8 +119,8 @@ module Eventure
 
           Eventure::Entity::RelateData.new(
             relatedata_id: nil,
-            relate_title: relate_item['relatename'],
-            relate_url: relate_item['relateurl']
+            relate_title: '',
+            relate_url: relate_item
           )
         end
       end

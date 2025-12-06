@@ -63,30 +63,19 @@ module Eventure
       end
 
       def self.assign_tags(db_activity, tags)
-        # return if tags.nil? || tags.empty?
+        # 先移除所有舊的 tag 關聯，避免重複累積
+        db_activity.remove_all_tags
 
-        existing_tag_ids = db_activity.tags.map(&:tag_id)
-
+        # 重新建立 tag 關聯
         Array(tags).each do |tag|
           tag_orm = find_or_create_tag(tag)
-          next if existing_tag_ids.include?(tag_orm.tag_id)
-
-          # begin
           db_activity.add_tag(tag_orm)
-          # rescue Sequel::UniqueConstraintViolation
-          # another process inserted the same join row concurrently; ignore
-          # next
-          # end
         end
       end
 
       def self.find_or_create_tag(tag)
-        if tag.is_a?(Eventure::Entity::Tag)
-          tag_id = tag.tag_id
-          Database::TagOrm.first(tag_id:) || Database::TagOrm.create(tag_id:, tag: tag.tag)
-        else
-          Database::TagOrm.first(tag: tag) || Database::TagOrm.create(tag: tag)
-        end
+        tag_name = tag.is_a?(Eventure::Entity::Tag) ? tag.tag : tag
+        Database::TagOrm.first(tag: tag_name) || Database::TagOrm.create(tag: tag_name)
       end
 
       def self.assign_relate_data(db_activity, relate_data)
@@ -129,7 +118,7 @@ module Eventure
             start_time: build_utc_datetime(db_record.start_time),
             end_time: build_utc_datetime(db_record.end_time)
           ),
-          tag_ids: rebuild_tag_ids(db_record_tags), tags: rebuild_tags(db_record_tags),
+          tags: rebuild_tags(db_record_tags),
           relate_data: rebuild_relate_data(db_record.relatedata)
         }
       end
@@ -144,12 +133,8 @@ module Eventure
         ).to_datetime
       end
 
-      def self.rebuild_tag_ids(db_tags)
-        db_tags.map(&:tag_id)
-      end
-
       def self.rebuild_tags(db_tags)
-        db_tags.map { |tag| Eventure::Entity::Tag.new(tag_id: tag.tag_id, tag: tag.tag) }
+        db_tags.map { |tag| Eventure::Entity::Tag.new(tag: tag.tag) }
       end
 
       def self.rebuild_relate_data(db_relatedata)

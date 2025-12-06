@@ -9,8 +9,7 @@ module Eventure
     class Tag < Dry::Struct
       include Dry.Types
 
-      attribute :tag_id, Integer.optional
-      attribute :tag,    String
+      attribute :tag, String
     end
   end
 end

@@ -14,13 +14,12 @@ module Eventure
     class Activity < Dry::Struct
       include Dry.Types
 
-      attribute :serno,        Strict::Integer
+      attribute :serno,        Strict::String
       attribute :name,         Strict::String
       attribute :detail,       Strict::String
       attribute :location,     Eventure::Value::Location
       attribute :voice,        Strict::String
       attribute :organizer,    Strict::String
-      attribute :tag_ids,      Strict::Array.of(Integer).default([].freeze)
       attribute :tags,         Strict::Array.of(Tag).default([].freeze)
       attribute :relate_data,  Strict::Array.of(RelateData).default([].freeze)
       attribute :activity_date, Eventure::Value::ActivityDate
@@ -41,10 +40,6 @@ module Eventure
       # def relate_data
       #   Eventure::Entity::Activity.relate_data
       # end
-
-      def tag_id
-        tag_ids
-      end
 
       def tag
         tags.map(&:tag)

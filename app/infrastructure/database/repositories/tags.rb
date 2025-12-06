@@ -18,10 +18,7 @@ module Eventure
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        Entity::Tag.new(
-          tag_id: db_record.tag_id || db_record.id,
-          tag: db_record.tag
-        )
+        Eventure::Entity::Tag.new(tag: db_record.tag)
       end
     end
   end

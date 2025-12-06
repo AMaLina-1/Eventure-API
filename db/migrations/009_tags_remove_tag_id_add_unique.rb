@@ -2,6 +2,9 @@
 
 Sequel.migration do
   up do
+    # 關閉外鍵檢查
+    run 'PRAGMA foreign_keys = OFF'
+
     # SQLite 需要重建整個表來修改主鍵
     create_table(:tags_new) do
       primary_key :id
@@ -24,9 +27,14 @@ Sequel.migration do
       foreign_key :tag_id, :tags, on_delete: :cascade
       primary_key %i[activity_id tag_id]
     end
+
+    # 開啟外鍵檢查
+    run 'PRAGMA foreign_keys = ON'
   end
 
   down do
+    run 'PRAGMA foreign_keys = OFF'
+
     drop_table(:activities_tags)
     create_table(:tags) do
       Integer :tag_id, primary_key: true
@@ -37,5 +45,7 @@ Sequel.migration do
       foreign_key :tag_id, :tags, on_delete: :cascade
       primary_key %i[activity_id tag_id]
     end
+
+    run 'PRAGMA foreign_keys = ON'
   end
 end

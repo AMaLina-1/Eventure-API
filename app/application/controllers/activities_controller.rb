@@ -9,11 +9,16 @@ module Eventure
     # Service for activities
     class ActivityService
       def initialize
-        @mapper = Eventure::Hccg::ActivityMapper.new
+        @hccg_mapper = Eventure::Hccg::ActivityMapper.new
+        @taipei_mapper = Eventure::Taipei::ActivityMapper.new
+        @new_taipei_mapper = Eventure::NewTaipei::ActivityMapper.new
       end
 
       def fetch_activities(limit = 100)
-        @mapper.find(limit).map(&:to_entity)
+        hccg_activities = fetch_hccg_activities(limit)
+        taipei_activities = fetch_taipei_activities(limit)
+        new_taipei_activities = fetch_new_taipei_activities(limit)
+        hccg_activities + taipei_activities + new_taipei_activities
       end
 
       def save_activities(top)
@@ -28,7 +33,27 @@ module Eventure
 
       private
 
-      # :reek:UtilityFunction
+      def fetch_hccg_activities(limit)
+        @hccg_mapper.find(limit).map(&:to_entity)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch HCCG activities: #{e.message}"
+        []
+      end
+
+      def fetch_taipei_activities(limit)
+        @taipei_mapper.find(limit).map(&:to_entity)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch Taipei activities: #{e.message}"
+        []
+      end
+
+      def fetch_new_taipei_activities(limit)
+        @new_taipei_mapper.find(limit).map(&:to_entity)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch New Taipei activities: #{e.message}"
+        []
+      end
+
       def parse_date_range(start_raw, end_raw)
         parts = [start_raw, end_raw].map { |date| date.to_s.strip }
         return [] if parts.any?(&:empty?) # 只要有一邊沒填 → 不啟用日期篩選

@@ -25,6 +25,11 @@ module Eventure
       attribute :activity_date, Eventure::Value::ActivityDate
       # attribute? :likes_count, Strict::Integer
 
+      def initialize(*args)
+        super(*args)
+        @likes_count = 0
+      end
+
       # 讓舊 view 照樣可用
       def start_time = activity_date.start_time
       def end_time   = activity_date.end_time
@@ -70,10 +75,11 @@ module Eventure
       end
 
       def add_likes
-        @likes_count += 1
+        @likes_count = (@likes_count || 0 ) + 1
       end
 
       def remove_likes
+        @likes_count = (@likes_count || 0 )
         @likes_count -= 1 if @likes_count.positive?
       end
 

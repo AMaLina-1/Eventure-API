@@ -152,13 +152,13 @@ describe 'Test API routes' do
       _(last_response.status).must_equal 200
 
       response = JSON.parse(last_response.body)
-      _(response['serno']).must_equal first_activity_serno
+      _(response['serno'].to_s).must_equal first_activity_serno.to_s
       _(response['likes_count']).must_be_kind_of Integer
-      _(response['user_likes']).must_equal Array(first_activity_serno)
+      _(response['user_likes'].map(&:to_s)).must_equal Array(first_activity_serno.to_s)
     end
 
     it 'returns not found for non-existent activity' do
-      params = { serno: 999999 }
+      params = { serno: '999999' }
       
       post '/api/v1/activities/like', params.to_json, { 'CONTENT_TYPE' => 'application/json' }
       _(last_response.status).must_equal 404

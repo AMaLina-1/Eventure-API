@@ -28,15 +28,23 @@ module Eventure
       end
 
       def update_like_session(input)
-        puts 'user_likes before: ', input[:user_likes]
-        if input[:user_likes].include?(input[:serno])
+        serno = input[:serno].to_s
+        likes = Array(input[:user_likes]).map(&:to_s)
+
+        puts 'user_likes before: ', likes if ENV['DEBUG_LIKES']
+
+        if likes.include?(serno)
           input[:activity].remove_likes
-          input[:user_likes].delete(input[:serno])
+          likes.delete(serno)
         else
           input[:activity].add_likes
-          input[:user_likes] << input[:serno]
+          likes << serno
         end
-        puts 'user_likes after: ', input[:user_likes]
+
+        likes.uniq!
+        input[:user_likes] = likes
+
+        puts 'user_likes after: ', likes if ENV['DEBUG_LIKES']
         Success(input)
       rescue StandardError => e
         Failure(Response::ApiResult.new(status: :internal_error, message: e.message))
@@ -50,7 +58,8 @@ module Eventure
       end
 
       def wrap_in_response(input)
-        result = Response::ActivityLike.new(serno: input[:serno], user_likes: input[:user_likes], like_counts: input[:activity].likes_count)
+        result = Response::ActivityLike.new(serno: input[:serno], user_likes: input[:user_likes],
+                                            like_counts: input[:activity].likes_count)
         Success(Response::ApiResult.new(status: :ok, message: result))
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot wrap response'))

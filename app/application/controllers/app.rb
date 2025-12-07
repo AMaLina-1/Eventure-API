@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
-require_relative 'activities_controller'
+require_relative '../services/api_activities'
 
 module Eventure
   class App < Roda
@@ -16,13 +16,34 @@ module Eventure
       # frequent writes and locks (SQLite busy). Commented out so we don't
       # sync on each HTTP request. If you want periodic sync, run a rake
       # task or background job at startup/cron instead.
-      svc = Eventure::Services::ActivityService.new
-      svc.save_activities(100)
+      routing.post do
+        puts "fetch_api_activities called"
+        result = Service::ApiActivities.new.call(total: 100)
+        if result.failure?
+          failed = Representer::HttpResponse.new(result.failure)
+          response.status = failed.http_status_code
+          failed.to_json
+        else
+          puts "Successfully fetched and saved activities"
+          api_result = result.value!
+
+          http_response = Representer::HttpResponse.new(api_result)
+          response.status = http_response.http_status_code
+
+          fetch_result_msg = api_result.message[:msg]
+          fetch_result = OpenStruct.new(msg: fetch_result_msg)
+          puts fetch_result
+          puts Representer::FetchApiData.new(fetch_result).to_json
+          Representer::FetchApiData.new(fetch_result).to_json
+        end
+      end
+
 
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
         response.status = 200
         message.to_json
+        ##
       end
 
       routing.on 'api/v1' do

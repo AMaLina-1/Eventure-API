@@ -5,4 +5,8 @@ coverage/*
 db/local/*.db
 !db/local/.gitkeep
 .bundle/
+<<<<<<< HEAD
 _cache/
+=======
+_cache/
+>>>>>>> 17188a3 (skip api_activities service)

@@ -27,10 +27,13 @@ class Worker
   shoryuken_options queue: config.QUEUE_URL, auto_delete: true
 
   def perform(_sqs_msg, request)
-#     project = Eventure::Representer::Project
-#       .new(OpenStruct.new).from_json(request)
-#     CodePraise::GitRepo.new(project).clone
-#   rescue CodePraise::GitRepo::Errors::CannotOverwriteLocalGitRepo
-#     puts 'CLONE EXISTS -- ignoring request'
+    activities_payload = Eventure::Representer::ActivityList.new(OpenStruct.new).from_json(request)
+    activities_list = activities_payload.activities
+    
+    puts "Worker received #{activities_list.length} activities to save"
+    Eventure::Repository::Activities.create(activities_list)
+    puts "Successfully saved activities to database"
+  rescue StandardError => e
+    puts "Worker error: #{e.message}"
   end
 end

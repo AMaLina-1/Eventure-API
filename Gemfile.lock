@@ -254,7 +254,6 @@ PLATFORMS
   arm-linux-musl
   arm64-darwin
   arm64-darwin-24
-  ruby
   x86-linux-gnu
   x86-linux-musl
   x86_64-darwin

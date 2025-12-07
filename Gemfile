@@ -9,6 +9,11 @@ gem 'yaml'
 # Networking
 gem 'http', '~> 5.3'
 
+# Asynchronicity
+gem 'aws-sdk-sqs', '~> 1.0'
+gem 'concurrent-ruby', '~> 1.0'
+gem 'shoryuken', '~> 6.0'
+
 # Testing
 group :test do
   gem 'minitest', '~> 5.20'

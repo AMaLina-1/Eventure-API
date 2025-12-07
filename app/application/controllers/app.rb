@@ -50,8 +50,8 @@ module Eventure
           routing.on 'like' do
             routing.post do
               request_data = JSON.parse(routing.body.read)
-              serno = request_data['serno'].to_i
-              user_likes = Array(request_data['user_likes']).map(&:to_i)
+              serno = request_data['serno'].to_s
+              user_likes = Array(request_data['user_likes']).map(&:to_s)
               result = Service::UpdateLikeCounts.new.call(serno: serno, user_likes: user_likes)
 
               if result.failure?

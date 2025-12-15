@@ -31,7 +31,7 @@ module Eventure
         serno = input[:serno].to_s
         likes = Array(input[:user_likes]).map(&:to_s)
 
-        puts 'user_likes before: ', likes if ENV['DEBUG_LIKES']
+        puts 'user_likes before: ', likes
 
         if likes.include?(serno)
           input[:activity].remove_likes
@@ -44,7 +44,7 @@ module Eventure
         likes.uniq!
         input[:user_likes] = likes
 
-        puts 'user_likes after: ', likes if ENV['DEBUG_LIKES']
+        puts 'user_likes after: ', likes
         Success(input)
       rescue StandardError => e
         Failure(Response::ApiResult.new(status: :internal_error, message: e.message))

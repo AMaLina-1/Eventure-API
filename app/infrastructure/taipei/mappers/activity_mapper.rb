@@ -80,7 +80,7 @@ module Eventure
         end
 
         def location
-          Eventure::Value::Location.new(building: '')
+          Eventure::Value::Location.new(building: '', city_name: '台北市')
         end
 
         def voice

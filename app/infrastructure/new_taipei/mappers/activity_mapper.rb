@@ -85,7 +85,7 @@ module Eventure
         end
 
         def location
-          Eventure::Value::Location.new(building: @data['address'])
+          Eventure::Value::Location.new(building: @data['address'], city_name: '新北市')
         end
 
         def voice

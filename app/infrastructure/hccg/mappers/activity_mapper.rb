@@ -91,9 +91,15 @@ module Eventure
         end
 
         def tags
-          tag_texts = @data['subjectclass'].split(',')
-          tag_texts.map do |tag_text|
-            Eventure::Entity::Tag.new(tag: tag_text.split(']')[1])
+          if @data['subjectclass']
+            tag_texts = @data['subjectclass'].split(',')
+            tag_texts.map do |tag_text|
+              Eventure::Entity::Tag.new(tag: tag_text.split(']')[1])
+            end
+          elsif @data[:activity_id]
+            load_tags_from_db(@data[:activity_id])
+          else
+            []
           end
         end
 
@@ -114,6 +120,19 @@ module Eventure
             relate_title: relate_item['relatename'],
             relate_url: relate_item['relateurl']
           )
+        end
+
+        private
+        def load_tags_from_db(activity_id)
+          db = Eventure::App.db
+          tag_rows = db[:activities_tags]
+                    .join(:tags, id: :tag_id)
+                    .where(activity_id: activity_id)
+                    .select(:tag)
+                    .all
+          tag_rows.map do |tag_row|
+            Eventure::Entity::Tag.new(tag: tag_row[:tag])
+          end
         end
       end
     end

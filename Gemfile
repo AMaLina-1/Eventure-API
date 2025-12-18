@@ -67,6 +67,8 @@ gem 'redis-rack-cache', '~> 2.2'
 gem 'hirb'
 gem 'sequel', '~> 5.0'
 
+gem 'google-genai'
+
 group :development, :test do
   gem 'sqlite3', '~> 1.0'
 end

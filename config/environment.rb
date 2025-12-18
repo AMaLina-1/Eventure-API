@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'google/genai'
 require 'roda'
 require 'yaml'
 require 'figaro'

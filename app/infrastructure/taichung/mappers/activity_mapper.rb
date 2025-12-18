@@ -50,8 +50,7 @@ module Eventure
 
         def to_entity
           Eventure::Entity::Activity.new(
-            serno:, name:,
-            detail:,
+            serno:, name:, detail:,
             activity_date: Eventure::Value::ActivityDate.new(
               start_time: start_time,
               end_time: end_time
@@ -81,18 +80,7 @@ module Eventure
         end
 
         def location
-          location_json = @data['location(座標資訊)']
-          address = ''
-          if location_json && !location_json.empty?
-            begin
-              location_data = JSON.parse(location_json)
-              address = location_data['address'] || ''
-            rescue JSON::ParserError
-              address = ''
-            end
-          end
-          normalized = Eventure::Value::Location.normalize_building(address, '台中市')
-          Eventure::Value::Location.new(building: normalized, city_name: '台中市')
+          self.class.build_location(@data, '台中市')
         end
 
         def voice
@@ -103,45 +91,65 @@ module Eventure
           @data['mainunit(主辦單位)']
         end
 
-        def tag_ids
-          # @data['subjectid'].split(',').map(&:to_i)
-        end
-
         def tags
-          class_name = @data['attribute(活動類型)']
-          return [] if class_name.nil? || class_name.empty?
-
-          [Eventure::Entity::Tag.new(tag: class_name)]
+          self.class.build_tags(@data['attribute(活動類型)'])
         end
 
         def relate_data
-          resource_list = @data['relatedLink(相關連結)']
-          return [] unless resource_list
-
-          return [] if resource_list.is_a?(String) && (resource_list.empty? || !resource_list.start_with?('http'))
-
-          resource_list = [resource_list] if resource_list.is_a?(String)
-          return [] unless resource_list.is_a?(Array)
-
-          resource_list.map do |relate_item|
-            self.class.build_relate_data_entity(relate_item)
-          end.compact
+          self.class.build_relate_data(@data['relatedLink(相關連結)'])
         end
 
-        def self.build_relate_data_entity(relate_item)
-          return unless relate_item
+        def self.build_location(data, city)
+          address = extract_address(data['location(座標資訊)'])
+          normalized = Eventure::Value::Location.normalize_building(address, city)
+          Eventure::Value::Location.new(building: normalized, city_name: city)
+        end
 
-          url = if relate_item.is_a?(String)
-                  relate_item
-                else
-                  relate_item['relatedLink(相關連結)']
-                end
+        def self.extract_address(location_json)
+          return '' if location_json.to_s.strip.empty?
+
+          JSON.parse(location_json).fetch('address', '')
+        rescue JSON::ParserError
+          ''
+        end
+
+        def self.build_tags(class_name)
+          name = class_name.to_s.strip
+          return [] if name.empty?
+
+          [Eventure::Entity::Tag.new(tag: name)]
+        end
+
+        def self.build_relate_data(resource)
+          normalize_relate_resource(resource)
+            .map { |item| build_relate_data_entity(item) }
+            .compact
+        end
+
+        def self.build_relate_data_entity(item)
+          url =
+            if item.is_a?(String)
+              item
+            elsif item.is_a?(Hash)
+              item['relatedLink(相關連結)']
+            end
 
           return unless url&.start_with?('http')
 
           Eventure::Entity::RelateData.new(
             relatedata_id: nil, relate_title: '', relate_url: url
           )
+        end
+
+        def self.normalize_relate_resource(resource)
+          case resource
+          when String
+            resource.strip.start_with?('http') ? [resource] : []
+          when Array
+            resource
+          else
+            []
+          end
         end
       end
     end

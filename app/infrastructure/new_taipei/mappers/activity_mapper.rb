@@ -85,7 +85,9 @@ module Eventure
         end
 
         def location
-          Eventure::Value::Location.new(building: @data['address'], city_name: '新北市')
+          raw = @data['address']
+          normalized = Eventure::Value::Location.normalize_building(raw, '新北市')
+          Eventure::Value::Location.new(building: normalized, city_name: '新北市')
         end
 
         def voice

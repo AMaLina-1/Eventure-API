@@ -15,8 +15,8 @@ module Eventure
       # strings (e.g. ["教育文化", "文化藝術"]) can consume the API
       # easily. We accept either OpenStruct/tag objects or plain strings.
       collection :tags, getter: lambda { |represented:, **|
-        Array(represented.tags).map do |t|
-          t.respond_to?(:tag) ? t.tag.to_s : t.to_s
+        Array(represented.tags).map do |tag|
+          tag.respond_to?(:tag) ? tag.tag.to_s : tag.to_s
         end
       }
     end

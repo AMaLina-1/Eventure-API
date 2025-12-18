@@ -124,7 +124,10 @@ module Eventure
       end
 
       def self.rebuild_location(location_string)
-        Eventure::Value::Location.new(building: location_string)
+        Eventure::Value::Location.new(
+          building: location_string,
+          city_name: parse_city_from_building(location_string)
+        )
       end
 
       def self.build_utc_datetime(time)
@@ -139,6 +142,12 @@ module Eventure
 
       def self.rebuild_relate_data(db_relatedata)
         db_relatedata.map { |rel| Relatedata.rebuild_entity(rel) }
+      end
+
+      def self.parse_city_from_building(building)
+        return nil if building.to_s.empty?
+
+        %w[新竹市 台北市 新北市 台中市 台南市 高雄市].find { |name| building.include?(name) }
       end
 
       def self.update_likes(entity)

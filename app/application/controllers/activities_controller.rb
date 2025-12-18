@@ -12,13 +12,19 @@ module Eventure
         @hccg_mapper = Eventure::Hccg::ActivityMapper.new
         @taipei_mapper = Eventure::Taipei::ActivityMapper.new
         @new_taipei_mapper = Eventure::NewTaipei::ActivityMapper.new
+        @taichung_mapper = Eventure::Taichung::ActivityMapper.new
+        @tainan_mapper = Eventure::Tainan::ActivityMapper.new
+        @kaohsiung_mapper = Eventure::Kaohsiung::ActivityMapper.new
       end
 
       def fetch_activities(limit = 100)
         hccg_activities = fetch_hccg_activities(limit)
         taipei_activities = fetch_taipei_activities(limit)
         new_taipei_activities = fetch_new_taipei_activities(limit)
-        hccg_activities + taipei_activities + new_taipei_activities
+        taichung_activities = fetch_taichung_activities(limit)
+        tainan_activities = fetch_tainan_activities(limit)
+        kaohsiung_activities = fetch_kaohsiung_activities(limit)
+        hccg_activities + taipei_activities + new_taipei_activities + taichung_activities + tainan_activities + kaohsiung_activities
       end
 
       def save_activities(top)
@@ -51,6 +57,27 @@ module Eventure
         @new_taipei_mapper.find(limit).map(&:to_entity)
       rescue StandardError => e
         puts "Warning: Failed to fetch New Taipei activities: #{e.message}"
+        []
+      end
+
+      def fetch_taichung_activities(limit)
+        @taichung_mapper.find(limit).map(&:to_entity)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch Taichung activities: #{e.message}"
+        []
+      end
+
+      def fetch_tainan_activities(limit)
+        @tainan_mapper.find(limit).map(&:to_entity)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch Tainan activities: #{e.message}"
+        []
+      end
+
+      def fetch_kaohsiung_activities(limit)
+        @kaohsiung_mapper.find(limit).map(&:to_entity)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch Kaohsiung activities: #{e.message}"
         []
       end
 

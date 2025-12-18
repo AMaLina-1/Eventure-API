@@ -16,10 +16,11 @@ module Eventure
 
       def fetch_cities(input)
         activities = Repository::For.klass(Entity::Activity).all
-        cities = activities.map(&:city).uniq
+        # drop nil/blank cities to avoid empty option in UI
+        cities = activities.map(&:city).map { |city| city.to_s.strip }.reject(&:empty?).uniq
         list = Eventure::Response::CityList.new(cities)
         Response::ApiResult.new(status: :ok, message: list)
-          .then { |result| Success(result) }
+                           .then { |result| Success(result) }
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end

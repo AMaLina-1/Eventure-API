@@ -9,17 +9,19 @@ require_relative '../../../domain/values/location'
 require_relative '../../../domain/values/activity_date'
 
 module Eventure
-  module NewTaipei
-    # data mapper: new taipei api response -> Activity entity
+  module Kaohsiung
+    # data mapper: kaohsiung api response -> Activity entity
     class ActivityMapper
-      def initialize(gateway_class = NewTaipei::Api)
+      def initialize(gateway_class = Kaohsiung::Api)
         @gateway_class = gateway_class
         @gateway = @gateway_class.new
         @parsed_data = nil
       end
 
       def find(top)
-        @parsed_data = @gateway.parsed_json(top)
+        raw = @gateway.parsed_json(top)
+        # Kaohsiung API returns {Data: [...], ...}
+        @parsed_data = raw.is_a?(Array) ? raw : raw['Data']
         build_entity
       end
 
@@ -59,71 +61,67 @@ module Eventure
         end
 
         def serno
-          @data['id'].to_s
+          @data['Id'].to_s
         end
 
         def name
-          @data['title']
+          @data['Name']
         end
 
         def detail
-          @data['description']
+          # @data['content']
+          ''
         end
 
         def start_time
-          date = Date.strptime(@data['activeDate'], '%m/%d/%Y')
-          date.to_datetime.new_offset(0)
+          DateTime.strptime(@data['Start'], '%Y/%m/%d %H:%M').new_offset(0)
         end
 
         def end_time
-          raw = @data['activeEndDate'].to_s.strip
-          return start_time if raw.empty?
-
-          date = Date.strptime(raw, '%m/%d/%Y')
-          date.to_datetime.new_offset(0)
+          DateTime.strptime(@data['End'], '%Y/%m/%d %H:%M').new_offset(0)
         end
 
         def location
-          raw = @data['address']
-          normalized = Eventure::Value::Location.normalize_building(raw, '新北市')
-          Eventure::Value::Location.new(building: normalized, city_name: '新北市')
+          raw = @data['Add']
+          normalized = Eventure::Value::Location.normalize_building(raw, '高雄市')
+          Eventure::Value::Location.new(building: normalized, city_name: '高雄市')
         end
 
         def voice
-          @data['description']
+          # @data['content']
+          ''
         end
 
         def organizer
-          @data['author']
+          @data['Org']
+        end
+
+        def tag_ids
+          # @data['subjectid'].split(',').map(&:to_i)
         end
 
         def tags
-          self.class.build_tags(@data['className'])
+          # Kaohsiung API doesn't have category tag
+          []
         end
 
         def relate_data
-          url = @data['aboutUrl'].to_s.strip
-          return [] if url.empty?
+          # url = @data['link']
+          # return [] if url.nil? || url.empty?
 
-          [self.class.build_relate_data_entity(url)].compact
+          # [self.class.build_relate_data_entity(url)].compact
+          []
         end
 
-        def self.build_relate_data_entity(relate_item)
-          return unless relate_item
+        # def self.build_relate_data_entity(url)
+        #   return unless url&.start_with?('http')
 
-          Eventure::Entity::RelateData.new(
-            relatedata_id: nil,
-            relate_title: '',
-            relate_url: relate_item
-          )
-        end
-
-        def self.build_tags(class_name)
-          name = class_name.to_s.strip
-          return [] if name.empty?
-
-          [Eventure::Entity::Tag.new(tag: name)]
-        end
+        #   Eventure::Entity::RelateData.new(
+        #     relatedata_id: nil,
+        #     relate_title: '',
+        #     relate_url: url
+        #   )
+        # end
       end
     end
   end

@@ -23,6 +23,7 @@ module Eventure
       property :likes_count
       property :start_time
       property :duration
+      property :relate_url
     end
   end
 end

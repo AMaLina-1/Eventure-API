@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
+require 'digest/sha1'
 
 require_relative '../../../domain/entities/activity'
 require_relative '../../../domain/entities/tag'
@@ -20,7 +21,6 @@ module Eventure
 
       def find(top)
         raw = @gateway.parsed_json(top)
-        # Taichung API returns Array directly, not wrapped in {data: [...]}
         @parsed_data = raw.is_a?(Array) ? raw : raw['data']
         build_entity
       end
@@ -44,28 +44,23 @@ module Eventure
 
       # Extracts entity elements from raw data
       class DataMapper
+        CITY = '台南市'
+
         def initialize(data)
           @data = data
         end
 
         def to_entity
           Eventure::Entity::Activity.new(
-            serno:, name:,
-            detail:,
-            activity_date: Eventure::Value::ActivityDate.new(
-              start_time: start_time,
-              end_time: end_time
-            ),
-            location:, voice:, organizer:, tags:, relate_data:
+            serno:, name:, detail:,
+            activity_date: activity_date,
+            location:, voice:, organizer:, tags:,
+            relate_data:
           )
         end
 
         def serno
-          # Tainan API沒有 serno，使用 link 做可重現的雜湊以避免全部寫成同一筆
-          raw = @data['link'].to_s
-          return '' if raw.empty?
-
-          Digest::SHA1.hexdigest(raw)[0, 16]
+          self.class.build_serno(@data['link'])
         end
 
         def name
@@ -76,49 +71,25 @@ module Eventure
           @data['content']
         end
 
-        # act_date 解析起始時間
-        # 例: "2026/02/06 09:00~2026/03/08 17:00"
-        # 或: "2026/01/24 15:00~16:30"
-        def start_time
-          raw = @data['act_date'].to_s.strip
-          return DateTime.now.new_offset(0) if raw.empty?
-
-          parts = raw.split('~').map(&:strip)
-          start_str = parts[0]
-          DateTime.parse(start_str).new_offset(0)
+        def activity_date
+          Eventure::Value::ActivityDate.new(
+            start_time: start_time,
+            end_time: end_time
+          )
         end
 
-        # act_date 解析結束時間
+        def start_time
+          self.class.parse_start_time(@data['act_date'])
+        end
+
         def end_time
-          raw = @data['act_date'].to_s.strip
-          return start_time if raw.empty?
-
-          parts = raw.split('~').map(&:strip)
-          start_str = parts[0]
-
-          end_str =
-            if parts.length > 1
-              right = parts[1]
-              if right =~ %r{\d{4}/\d{2}/\d{2}}
-                # 右邊已包含日期，例如 "2026/03/08 17:00"
-                right
-              else
-                # 右邊只有時間，例如 "16:30" -> 補上左邊的日期 "2026/01/24 16:30"
-                date_part = start_str.split(' ').first
-                "#{date_part} #{right}"
-              end
-            else
-              # 沒有 ~，起訖時間相同
-              start_str
-            end
-
-          DateTime.parse(end_str).new_offset(0)
+          self.class.parse_end_time(@data['act_date'])
         end
 
         def location
           address = @data['address'].to_s
-          normalized = Eventure::Value::Location.normalize_building(address, '台南市')
-          Eventure::Value::Location.new(building: normalized, city_name: '台南市')
+          normalized = Eventure::Value::Location.normalize_building(address, CITY)
+          Eventure::Value::Location.new(building: normalized, city_name: CITY)
         end
 
         def voice
@@ -126,31 +97,69 @@ module Eventure
         end
 
         def organizer
-          # @data['mainunit(主辦單位)']
           ''
         end
 
-        def tag_ids
-          # @data['subjectid'].split(',').map(&:to_i)
-        end
-
         def tags
-          class_name = @data['category']
-          return [] if class_name.nil? || class_name.empty?
-
-          [Eventure::Entity::Tag.new(tag: class_name)]
+          self.class.build_tags(@data['category'])
         end
 
         def relate_data
-          url = @data['link']
-          return [] if url.nil? || url.empty?
+          self.class.build_relate_data(@data['link'])
+        end
 
-          [self.class.build_relate_data_entity(url)].compact
+        def self.build_serno(link)
+          raw = link.to_s.strip
+          return '' if raw.empty?
+
+          Digest::SHA1.hexdigest(raw)[0, 16]
+        end
+
+        def self.parse_start_time(raw)
+          str = raw.to_s.strip
+          return DateTime.now.new_offset(0) if str.empty?
+
+          start_str = str.split('~').first.strip
+          DateTime.parse(start_str).new_offset(0)
+        end
+
+        def self.parse_end_time(raw)
+          parts = split_act_date(raw)
+          end_str = end_time_string(parts)
+          DateTime.parse(end_str).new_offset(0)
+        end
+
+        def self.build_end_str(parts, start_str)
+          return start_str if parts.length < 2
+
+          right = parts[1]
+          return right if right.match?(%r{\d{4}/\d{2}/\d{2}})
+
+          "#{start_str.split.first} #{right}"
+        end
+
+        def self.split_parts(raw)
+          str = raw.to_s.strip
+          return [parse_start_time(raw).strftime('%Y/%m/%d %H:%M')] if str.empty?
+
+          str.split('~').map(&:strip)
+        end
+
+        def self.build_tags(category)
+          name = category.to_s.strip
+          return [] if name.empty?
+
+          [Eventure::Entity::Tag.new(tag: name)]
+        end
+
+        def self.build_relate_data(link)
+          url = link.to_s.strip
+          return [] unless url.start_with?('http')
+
+          [build_relate_data_entity(url)]
         end
 
         def self.build_relate_data_entity(url)
-          return unless url&.start_with?('http')
-
           Eventure::Entity::RelateData.new(
             relatedata_id: nil,
             relate_title: '',

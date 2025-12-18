@@ -75,10 +75,9 @@ module Eventure
           date.to_datetime.new_offset(0)
         end
 
-        # end_time -> activeEndDate
         def end_time
-          raw = @data['activeEndDate']
-          return start_time if raw.nil? || raw.empty?
+          raw = @data['activeEndDate'].to_s.strip
+          return start_time if raw.empty?
 
           date = Date.strptime(raw, '%m/%d/%Y')
           date.to_datetime.new_offset(0)
@@ -99,21 +98,14 @@ module Eventure
         end
 
         def tags
-          class_name = @data['className']
-          return [] if class_name.nil? || class_name.empty?
-
-          [Eventure::Entity::Tag.new(tag: class_name)]
+          self.class.build_tags(@data['className'])
         end
 
         def relate_data
-          url = @data['aboutUrl']
-          return [] if url.nil? || url.empty?
+          url = @data['aboutUrl'].to_s.strip
+          return [] if url.empty?
 
-          resource_list = [url]
-
-          resource_list.map do |relate_item|
-            self.class.build_relate_data_entity(relate_item)
-          end.compact
+          [self.class.build_relate_data_entity(url)].compact
         end
 
         def self.build_relate_data_entity(relate_item)
@@ -124,6 +116,13 @@ module Eventure
             relate_title: '',
             relate_url: relate_item
           )
+        end
+
+        def self.build_tags(class_name)
+          name = class_name.to_s.strip
+          return [] if name.empty?
+
+          [Eventure::Entity::Tag.new(tag: name)]
         end
       end
     end

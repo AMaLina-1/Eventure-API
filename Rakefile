@@ -235,3 +235,25 @@ namespace :worker do
     end
   end
 end
+
+namespace :tags do
+  desc 'Generate AI tags for all activities'
+  task :generate do
+    require_relative 'app/infrastructure/llm/gemini_tag_generator'
+    
+    puts "WARNING: This will REPLACE all existing tags with AI-generated ones."
+    puts "Press Enter to continue, or Ctrl+C to cancel..."
+    $stdin.gets
+    
+    generator = TagGenerator.new
+    generator.process_all_activities(clear_existing: true)
+  end
+
+  desc 'Generate AI tags without clearing existing ones (append only)'
+  task :append do
+    require_relative 'app/infrastructure/llm/gemini_tag_generator'
+    
+    generator = TagGenerator.new
+    generator.process_all_activities(clear_existing: false)
+  end
+end

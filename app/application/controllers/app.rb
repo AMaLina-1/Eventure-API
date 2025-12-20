@@ -19,9 +19,6 @@ module Eventure
       # routing.post '/' do
       puts 'create status database'
       Eventure::Repository::Status.setup!
-      print(Eventure::Repository::Status.get_status('hccg'))
-      print(Eventure::Repository::Status.get_status('new_taipei'))
-      print(Eventure::Repository::Status.get_status('taipei'))
       puts "fetch_api_activities called"
       result = Service::ApiActivities.new.call(total: 100)
       if result.failure?

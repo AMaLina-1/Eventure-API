@@ -20,6 +20,7 @@ module Eventure
       class Request
         def get(url)
           http_response = HTTP.headers('Accept' => 'application/json').get(url)
+          puts http_response.status
           raise 'Request Failed' unless http_response.status.success?
 
           http_response

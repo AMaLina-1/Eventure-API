@@ -4,7 +4,7 @@ module Eventure
   module Repository
     # repository for status
     class Status
-      ALL_API = %w[hccg new_taipei taipei].freeze
+      ALL_API = %w[hccg new_taipei taipei taichung tainan kaohsiung].freeze
 
       def self.db
         Eventure::App.db

@@ -43,7 +43,7 @@ module Eventure
     end
 
     # Database Setup
-    @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
+    @db = Sequel.connect(ENV.fetch('DATABASE_URL'), timeout: 3_000)
     def self.db = @db # rubocop:disable Style/TrivialAccessors
   end
 end

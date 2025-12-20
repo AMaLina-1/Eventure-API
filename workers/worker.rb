@@ -27,13 +27,21 @@ class Worker
   shoryuken_options queue: config.QUEUE_URL, auto_delete: true
 
   def perform(_sqs_msg, request)
-    activities_payload = Eventure::Representer::ActivityList.new(OpenStruct.new).from_json(request)
-    activities_list = activities_payload.activities
-    
-    puts "Worker received #{activities_list.length} activities to save"
-    Eventure::Repository::Activities.create(activities_list)
-    puts "Successfully saved activities to database"
+    activities_payload = Eventure::Representer::WorkerFetchData.new(OpenStruct.new).from_json(request)
+    activities_api_name = activities_payload.api_name
+    activities_number = activities_payload.number
+    # cache = Eventure::Cache::Client.new(App.config)
+
+    if activities_api_name == 'HCCG'
+      puts 'start fetching hccg activities'
+      activities = Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
+      Eventure::Repository::Activities.create(activities)
+      # cache.set('fetch_hccg', true)
+      Eventure::Repository::Status.write_true('hccg')
+      puts 'successfully store hccg activities'
+    end
   rescue StandardError => e
     puts "Worker error: #{e.message}"
+    raise e
   end
 end

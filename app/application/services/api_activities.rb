@@ -10,11 +10,11 @@ module Eventure
       include Dry::Transaction
 
       step :define_parameters
-      step :fetch_hccg_activities
-      step :fetch_taipei_activities
-      step :fetch_new_taipei_activities
-      step :combine_activities
-      step :save_activities
+      step :store_hccg_activities
+      # step :fetch_taipei_activities
+      # step :fetch_new_taipei_activities
+      # step :combine_activities
+      # step :save_activities
       step :wrap_in_response
 
       private
@@ -25,9 +25,14 @@ module Eventure
         Success(input)
       end
 
-      def fetch_hccg_activities(input)
-        input[:hccg_activities] = Eventure::Hccg::ActivityMapper.new.find(input[:total]).map(&:to_entity)
-        Success(input)
+      def store_hccg_activities(input)
+        # cache = Eventure::Cache::Client.new(App.config)
+        # return Success(input) if cache.get('fetch_hccg') == 'true'
+        return Success(input) if Eventure::Repository::Status.get_status('hccg') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'HCCG', number: input[:total])).to_json)
+        Failure(Response::ApiResult.new(status: :processing, message: 'Fetching HCCG activities now. Please check back later'))
       rescue StandardError => e
         puts "Warning: Failed to fetch HCCG activities: #{e.message}"
         input[:hccg_activities] = []
@@ -35,6 +40,17 @@ module Eventure
         Success(input)
         # Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch HCCG activities'))
       end
+
+      # def fetch_hccg_activities(input)
+      #   input[:hccg_activities] = Eventure::Hccg::ActivityMapper.new.find(input[:total]).map(&:to_entity)
+      #   Success(input)
+      # rescue StandardError => e
+      #   puts "Warning: Failed to fetch HCCG activities: #{e.message}"
+      #   input[:hccg_activities] = []
+      #   input[:missing] << 'HCCG'
+      #   Success(input)
+      #   # Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch HCCG activities'))
+      # end
 
       def fetch_taipei_activities(input)
         input[:taipei_activities] = Eventure::Taipei::ActivityMapper.new.find(1).map(&:to_entity)

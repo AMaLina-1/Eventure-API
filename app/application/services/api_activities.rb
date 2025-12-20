@@ -11,10 +11,11 @@ module Eventure
 
       step :define_parameters
       step :store_hccg_activities
-      # step :fetch_taipei_activities
-      # step :fetch_new_taipei_activities
-      # step :combine_activities
-      # step :save_activities
+      # step :store_taipei_activities
+      step :store_new_taipei_activities
+      step :store_taichung_activities
+      # step :store_tainan_activities
+      step :store_kaohsiung_activities
       step :wrap_in_response
 
       private
@@ -22,6 +23,7 @@ module Eventure
       def define_parameters(input)
         # calculate api parameters for each api source
         input[:missing] = []
+        input[:processing] = []
         Success(input)
       end
 
@@ -31,63 +33,85 @@ module Eventure
         return Success(input) if Eventure::Repository::Status.get_status('hccg') == 'true'
 
         Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'HCCG', number: input[:total])).to_json)
-        Failure(Response::ApiResult.new(status: :processing, message: 'Fetching HCCG activities now. Please check back later'))
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'hccg', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching HCCG activities now. Please check back later'))
+        input[:processing] << 'HCCG'
+        Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch HCCG activities: #{e.message}"
-        input[:hccg_activities] = []
         input[:missing] << 'HCCG'
         Success(input)
         # Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch HCCG activities'))
       end
 
-      # def fetch_hccg_activities(input)
-      #   input[:hccg_activities] = Eventure::Hccg::ActivityMapper.new.find(input[:total]).map(&:to_entity)
-      #   Success(input)
-      # rescue StandardError => e
-      #   puts "Warning: Failed to fetch HCCG activities: #{e.message}"
-      #   input[:hccg_activities] = []
-      #   input[:missing] << 'HCCG'
-      #   Success(input)
-      #   # Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch HCCG activities'))
-      # end
+      def store_taipei_activities(input)
+        return Success(input) if Eventure::Repository::Status.get_status('taipei') == 'true'
 
-      def fetch_taipei_activities(input)
-        input[:taipei_activities] = Eventure::Taipei::ActivityMapper.new.find(1).map(&:to_entity)
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'taipei', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Taipei activities now. Please check back later'))
+        input[:processing] << 'Taipei'
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Taipei activities: #{e.message}"
-        input[:taipei_activities] = []
         input[:missing] << 'Taipei'
         Success(input)
-        # Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch Taipei activities'))
       end
 
-      def fetch_new_taipei_activities(input)
-        input[:new_taipei_activities] = Eventure::NewTaipei::ActivityMapper.new.find(input[:total]).map(&:to_entity) || []
+      def store_new_taipei_activities(input)
+        return Success(input) if Eventure::Repository::Status.get_status('new_taipei') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'new_taipei', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching New Taipei activities now. Please check back later'))
+        input[:processing] << 'New Taipei'
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch New Taipei activities: #{e.message}"
-        input[:new_taipei_activities] = []
         input[:missing] << 'New Taipei'
         Success(input)
-        # Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch New Taipei activities'))
       end
 
-      def combine_activities(input)
-        input[:combined_activities] = input[:hccg_activities] + input[:taipei_activities] + input[:new_taipei_activities]
+      def store_taichung_activities(input)
+        return Success(input) if Eventure::Repository::Status.get_status('taichung') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'taichung', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Taichung activities now. Please check back later'))
+        input[:processing] << 'Taichung'
         Success(input)
       rescue StandardError => e
-        puts "Warning: Failed to combine activities: #{e.message}"
-        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot combine activities'))
+        puts "Warning: Failed to fetch Taichung activities: #{e.message}"
+        input[:missing] << 'Taichung'
+        Success(input)
       end
 
-      def save_activities(input)
-        Repository::For.entity(input[:combined_activities].first).create(input[:combined_activities])
+      def store_tainan_activities(input)
+        return Success(input) if Eventure::Repository::Status.get_status('tainan') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'tainan', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Tainan activities now. Please check back later'))
+        input[:processing] << 'Tainan'
         Success(input)
       rescue StandardError => e
-        puts "Error saving activities: #{e.message}"
-        Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot save activities'))
+        puts "Warning: Failed to fetch Tainan activities: #{e.message}"
+        input[:missing] << 'Tainan'
+        Success(input)
+      end
+
+      def store_kaohsiung_activities(input)
+        return Success(input) if Eventure::Repository::Status.get_status('kaohsiung') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'kaohsiung', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Kaohsiung activities now. Please check back later'))
+        input[:processing] << 'Kaohsiung'
+        Success(input)
+      rescue StandardError => e
+        puts "Warning: Failed to fetch Kaohsiung activities: #{e.message}"
+        input[:missing] << 'Kaohsiung'
+        Success(input)
       end
 
       def wrap_in_response(input)

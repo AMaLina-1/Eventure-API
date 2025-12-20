@@ -44,7 +44,7 @@ describe 'Tests hccg activity API library' do
       _(@data[idx].name).wont_be_nil
       _(@data[idx].name).must_equal CORRECT[idx]['subject']
       _(@data[idx].detail).must_equal CORRECT[idx]['detailcontent']
-      _(@data[idx].location.to_s).must_equal CORRECT[idx]['activityplace']
+      _(@data[idx].location.to_s).must_equal "新竹市#{CORRECT[idx]['activityplace']}"
       _(@data[idx].voice).must_equal CORRECT[idx]['voice']
       _(@data[idx].organizer).wont_be_nil
       _(@data[idx].organizer).must_equal CORRECT[idx]['hostunit']

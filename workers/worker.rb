@@ -32,16 +32,27 @@ class Worker
     activities_number = activities_payload.number
     # cache = Eventure::Cache::Client.new(App.config)
 
-    if activities_api_name == 'HCCG'
-      puts 'start fetching hccg activities'
+    puts "start fetching #{activities_api_name} activities"
+    if activities_api_name == 'hccg'
       activities = Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
-      Eventure::Repository::Activities.create(activities)
-      # cache.set('fetch_hccg', true)
-      Eventure::Repository::Status.write_true('hccg')
-      puts 'successfully store hccg activities'
+    elsif activities_api_name == 'taipei'
+      activities = Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    elsif activities_api_name == 'new_taipei'
+      activities = Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    elsif activities_api_name == 'taichung'
+      activities = Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    elsif activities_api_name == 'tainan'
+      activities = Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    elsif activities_api_name == 'kaohsiung'
+      activities = Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
     end
+
+    Eventure::Repository::Activities.create(activities)
+    # cache.set('fetch_hccg', true)
+    Eventure::Repository::Status.write_true(activities_api_name)
+    puts "successfully store #{activities_api_name} activities"
   rescue StandardError => e
-    puts "Worker error: #{e.message}"
+    print('other worker error', e)
     raise e
   end
 end

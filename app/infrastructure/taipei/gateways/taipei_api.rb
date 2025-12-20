@@ -19,8 +19,8 @@ module Eventure
       # use 'top' to get http response
       class Request
         def get(url)
-          http_response = HTTP.headers('Accept' => 'application/json', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'
-).get(url)
+          http_response = HTTP.headers('Accept' => 'application/json').get(url)
+          puts http_response.status
           raise 'Request Failed' unless http_response.status.success?
 
           http_response

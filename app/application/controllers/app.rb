@@ -17,12 +17,18 @@ module Eventure
       # sync on each HTTP request. If you want periodic sync, run a rake
       # task or background job at startup/cron instead.
       # routing.post '/' do
+      puts 'create status database'
+      Eventure::Repository::Status.setup!
+      print(Eventure::Repository::Status.get_status('hccg'))
+      print(Eventure::Repository::Status.get_status('new_taipei'))
+      print(Eventure::Repository::Status.get_status('taipei'))
       puts "fetch_api_activities called"
       result = Service::ApiActivities.new.call(total: 100)
       if result.failure?
-        print('Failed to fetch api activities')
-          # failed = Representer::HttpResponse.new(result.failure)
+        # print('Failed to fetch api activities')
+          failed = Representer::HttpResponse.new(result.failure)
           # response.status = failed.http_status_code
+          print(failed.http_status_code)
           # failed.to_json
       else
         puts 'successfully fetched and saved activities'

@@ -1,10 +1,26 @@
 # frozen_string_literal: true
 
 require 'roda'
+<<<<<<< HEAD
 require 'rack'
+=======
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
 # require_relative '../services/api_activities'
 require_relative '../../infrastructure/database/repositories/status'
 require_relative '../services/api_activities'
+
+
+# ================== Write Database ==================
+puts 'create status database'
+Eventure::Repository::Status.setup!
+puts "fetch_api_activities called"
+result = Eventure::Service::ApiActivities.new.call(total: 100)
+if result.failure?
+  failed = Representer::HttpResponse.new(result.failure)
+  print(failed.http_status_code)
+else
+  puts 'successfully fetched and saved activities'
+end
 
 module Eventure
   class App < Roda
@@ -14,6 +30,7 @@ module Eventure
 
     route do |routing|
       response['Content-Type'] = 'application/json'
+<<<<<<< HEAD
       # ================== Write Database ==================
       # The app previously saved activities on every request which causes
       # frequent writes and locks (SQLite busy). Commented out so we don't
@@ -78,6 +95,13 @@ module Eventure
         puts e.backtrace.first(5)
         response.status = 500
         { status: 'error', message: e.message }.to_json
+=======
+    
+      routing.root do
+        message = { status: 'ok', message: 'Eventure API v1' }
+        response.status = 200
+        message.to_json
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
       end
 
       routing.on 'api/v1' do

@@ -14,7 +14,11 @@ module Eventure
       # step :store_taipei_activities
       step :store_new_taipei_activities
       step :store_taichung_activities
+<<<<<<< HEAD
       step :store_tainan_activities
+=======
+      # step :store_tainan_activities
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
       step :store_kaohsiung_activities
       step :wrap_in_response
 
@@ -38,6 +42,7 @@ module Eventure
         end
 
         Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+<<<<<<< HEAD
                         .send(fetch_request_json(input, 'hccg'))
         # .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'hccg', number: input[:total])).to_json)
         # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching HCCG activities now. Please check back later'))
@@ -46,6 +51,11 @@ module Eventure
         #   status: :processing,
         #   message: { request_id: input[:request_id], api_name: 'hccg', msg: PROCESSING_MSG }
         # ))
+=======
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'hccg', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching HCCG activities now. Please check back later'))
+        input[:processing] << 'HCCG'
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch HCCG activities: #{e.message}"
@@ -55,6 +65,7 @@ module Eventure
       end
 
       def store_taipei_activities(input)
+<<<<<<< HEAD
         if Eventure::Repository::Status.get_status('taipei') == 'true'
           input[:processing].delete('Taipei')
           return Success(input)
@@ -68,6 +79,14 @@ module Eventure
         #   status: :processing,
         #   message: { request_id: input[:request_id], api_name: 'taipei', msg: PROCESSING_MSG }
         # ))
+=======
+        return Success(input) if Eventure::Repository::Status.get_status('taipei') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'taipei', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Taipei activities now. Please check back later'))
+        input[:processing] << 'Taipei'
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Taipei activities: #{e.message}"
@@ -76,6 +95,7 @@ module Eventure
       end
 
       def store_new_taipei_activities(input)
+<<<<<<< HEAD
         if Eventure::Repository::Status.get_status('new_taipei') == 'true'
           input[:processing].delete('New Taipei')
           return Success(input)
@@ -89,6 +109,14 @@ module Eventure
         #   status: :processing,
         #   message: { request_id: input[:request_id], api_name: 'new_taipei', msg: PROCESSING_MSG }
         # ))
+=======
+        return Success(input) if Eventure::Repository::Status.get_status('new_taipei') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'new_taipei', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching New Taipei activities now. Please check back later'))
+        input[:processing] << 'New Taipei'
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch New Taipei activities: #{e.message}"
@@ -97,6 +125,7 @@ module Eventure
       end
 
       def store_taichung_activities(input)
+<<<<<<< HEAD
         if Eventure::Repository::Status.get_status('taichung') == 'true'
           input[:processing].delete('Taichung')
           return Success(input) 
@@ -110,6 +139,14 @@ module Eventure
         #   status: :processing,
         #   message: { request_id: input[:request_id], api_name: 'taichung', msg: PROCESSING_MSG }
         # ))
+=======
+        return Success(input) if Eventure::Repository::Status.get_status('taichung') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'taichung', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Taichung activities now. Please check back later'))
+        input[:processing] << 'Taichung'
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Taichung activities: #{e.message}"
@@ -118,6 +155,7 @@ module Eventure
       end
 
       def store_tainan_activities(input)
+<<<<<<< HEAD
         if Eventure::Repository::Status.get_status('tainan') == 'true'
           input[:processing].delete('Tainan')
           return Success(input)
@@ -131,6 +169,14 @@ module Eventure
         #   status: :processing,
         #   message: { request_id: input[:request_id], api_name: 'tainan', msg: PROCESSING_MSG }
         # ))
+=======
+        return Success(input) if Eventure::Repository::Status.get_status('tainan') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'tainan', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Tainan activities now. Please check back later'))
+        input[:processing] << 'Tainan'
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Tainan activities: #{e.message}"
@@ -139,6 +185,7 @@ module Eventure
       end
 
       def store_kaohsiung_activities(input)
+<<<<<<< HEAD
         if Eventure::Repository::Status.get_status('kaohsiung') == 'true'
           input[:processing].delete('Kaohsiung')
           return Success(input)
@@ -152,6 +199,14 @@ module Eventure
         #   status: :processing,
         #   message: { request_id: input[:request_id], api_name: 'kaohsiung', msg: PROCESSING_MSG }
         # ))
+=======
+        return Success(input) if Eventure::Repository::Status.get_status('kaohsiung') == 'true'
+
+        Messaging::Queue.new(App.config.QUEUE_URL, App.config)
+          .send(Eventure::Representer::WorkerFetchData.new(OpenStruct.new(api_name: 'kaohsiung', number: input[:total])).to_json)
+        # Failure(Response::ApiResult.new(status: :processing, message: 'Fetching Kaohsiung activities now. Please check back later'))
+        input[:processing] << 'Kaohsiung'
+>>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Kaohsiung activities: #{e.message}"

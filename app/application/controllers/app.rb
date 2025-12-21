@@ -24,6 +24,8 @@ module Eventure
 
         # Trigger fetching activities once via POST '/'
         routing.post do
+          response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+
           puts 'Initializing application...'
           puts 'create status database'
           Eventure::Repository::Status.setup!
@@ -34,8 +36,13 @@ module Eventure
           if result.failure?
             failed = Eventure::Representer::HttpResponse.new(result.failure)
             puts "Failed to fetch activities: #{failed.http_status_code}"
+            failed = Representer::HttpResponse.new(result.failure)
+            response.status = failed.http_status_code
+            failed.to_json
           else
             puts 'successfully fetched and saved activities'
+            response.status = 200
+              { status: 'ok', message: 'Fetch started' }.to_json
           end
           # request_id = [Time.now.to_f, Time.now.to_f].hash
 

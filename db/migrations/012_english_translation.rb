@@ -5,8 +5,7 @@ Sequel.migration do
     alter_table(:activities) do
       add_column :name_en, String, null: true
       add_column :detail_en, :text, null: true
-      add_column :city_en, String, null: true
-      add_column :district_en, String, null: true
+      add_column :location_en, String, null: true
       add_column :organizer_en, String, null: true
     end
 

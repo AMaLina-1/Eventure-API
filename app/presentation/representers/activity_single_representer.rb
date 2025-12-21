@@ -21,18 +21,10 @@ module Eventure
       property :location
       property :city, getter: lambda { |args|
         lang = args[:user_options]&.dig(:language) || 'zh-TW'
-        if lang == 'en' && respond_to?(:city_en) && city_en &&  !city_en.empty?
-          city_en
+        if lang == 'en' && respond_to?(:location_en) && location_en &&  !location_en.empty?
+          location_en
         else
           city
-        end
-      }
-      property :district, getter: lambda { |args|
-        lang = args[:user_options]&.dig(:language) || 'zh-TW'
-        if lang == 'en' && respond_to?(:district_en) && district_en &&  !district_en.empty?
-          district_en
-        else
-          district
         end
       }
       property :building

@@ -8,12 +8,6 @@ module Eventure
   module Repository
     # repository for activities
     class Activities
-      # --- 每次都同步（不看 DB 是否為空） ---
-      # def self.sync_from?(service, limit: 100)
-      #   Array(service.fetch_activities(limit)).each { |entity| db_find_or_create(entity) }
-      #   true
-      # end
-
       def self.all
         Database::ActivityOrm.all.map { |db_activity| rebuild_entity(db_activity) }
       end
@@ -39,17 +33,6 @@ module Eventure
         Eventure::Database::ActivityOrm.first(serno: entity.serno)&.tap do |activity|
           activity.update(filtered_attrs)
         end || Eventure::Database::ActivityOrm.create(**attr_hash, likes_count: entity.likes_count || 0)
-        # db_activity = Eventure::Database::ActivityOrm.first(serno: entity.serno)
-        # attr_hash = Eventure::Hccg::ActivityMapper.to_attr_hash(entity)
-        # if db_activity
-        #   db_activity.update(attr_hash.reject { |attr_name, _| attr_name.to_s == 'likes_count' })
-        # else
-        #   db_activity = Eventure::Database::ActivityOrm.create(
-        #     **attr_hash.merge(likes_count: 0).reject { |attr_name, _| attr_name.to_s == 'likes_count' },
-        #     likes_count: entity.likes_count
-        #   )
-        # end
-        # db_activity
       end
 
       def self.build_activity_record(entity)
@@ -58,18 +41,34 @@ module Eventure
           start_time: entity.start_time.to_time.utc,
           end_time: entity.end_time.to_time.utc,
           location: entity.location, voice: entity.voice,
-          organizer: entity.organizer, likes_count: 0 # db_record.likes_count.to_i
+          organizer: entity.organizer, likes_count: 0
         )
       end
 
       def self.assign_tags(db_activity, tags)
-        # 先移除所有舊的 tag 關聯，避免重複累積
-        db_activity.remove_all_tags
-
-        # 重新建立 tag 關聯
-        Array(tags).each do |tag|
-          tag_orm = find_or_create_tag(tag)
-          db_activity.add_tag(tag_orm)
+        # Use database transaction with retry logic for SQLite locks
+        retry_count = 0
+        max_retries = 3
+        
+        begin
+          Eventure::App.db.transaction do
+            # Remove all old tags
+            db_activity.remove_all_tags
+            
+            # Add new tags
+            Array(tags).each do |tag|
+              tag_orm = find_or_create_tag(tag)
+              db_activity.add_tag(tag_orm)
+            end
+          end
+        rescue Sequel::DatabaseError => e
+          if e.message.include?('database is locked') && retry_count < max_retries
+            retry_count += 1
+            sleep(0.5 * retry_count) # Exponential backoff
+            retry
+          else
+            raise
+          end
         end
       end
 
@@ -98,23 +97,19 @@ module Eventure
         # Add English field accessors to the entity
         entity.instance_variable_set(:@name_en, db_record.name_en)
         entity.instance_variable_set(:@detail_en, db_record.detail_en)
-        entity.instance_variable_set(:@city_en, db_record.city_en)
-        entity.instance_variable_set(:@district_en, db_record.district_en)
+        entity.instance_variable_set(:@location_en, db_record.location_en)
         entity.instance_variable_set(:@organizer_en, db_record.organizer_en)
         
         # Define reader methods for English fields
         entity.define_singleton_method(:name_en) { @name_en }
         entity.define_singleton_method(:detail_en) { @detail_en }
-        entity.define_singleton_method(:city_en) { @city_en }
-        entity.define_singleton_method(:district_en) { @district_en }
+        entity.define_singleton_method(:location_en) { @location_en }
         entity.define_singleton_method(:organizer_en) { @organizer_en }
 
         entity
       end
 
       def self.rebuild_entity_attributes(db_record)
-        # db_tags = db_record.tags
-
         { **base_attributes(db_record), **time_relate_attributes(db_record, db_record.tags) }
       end
 
@@ -167,16 +162,7 @@ module Eventure
       def self.update_likes(entity)
         db_activity = Database::ActivityOrm.first(serno: entity.serno)
         db_activity.update(likes_count: entity.likes_count)
-        # db_activity
       end
-
-      # 交易包起來；若撞到唯一鍵（代表已存在），就改取既有那筆
-      # def self.with_unique_retry(serno, &)
-      #   Eventure::App.db.transaction(&)
-      # rescue Sequel::UniqueConstraintViolation
-      #   find_existing_by_serno(serno)
-      # end
-      # private_class_method :with_unique_retry
     end
   end
 end

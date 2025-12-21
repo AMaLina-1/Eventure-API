@@ -20,7 +20,7 @@ class TagGenerator
   end
 
   def generate_tags(activity)
-    subject = activity[:name].to_s.strip
+    subject = activity[:name].to_s.strip  # Fixed: was activity['subject']
     detail = activity[:detail].to_s.strip
     if subject.empty? && detail.empty?
       return []
@@ -38,16 +38,16 @@ class TagGenerator
     prompt = <<~PROMPT
       You are a tag generator for community events and activities in Taiwan.
       
-      Analyze this activity and generate relevant tags from the existing tag list below.
+      Analyze this activity and assign relevant tags from the existing tag list below.
       If absolutely necessary, you may create 1 new tag, but prefer reusing existing tags.
       
-      Activity Title: #{activity['subject']}
+      Activity Title: #{subject}
       Activity Content: #{clean_detail}
 
       Existing Tags: #{existing_tags_list}
 
       Requirements:
-      1. Generate tags in Traditional Chinese that describe the main topics/themes
+      1. Assign tags in Traditional Chinese that describe the main topics/themes
       2. Reuse existing tags when possible
       3. Only create a new tag if no existing tag fits well
       4. Use common, reusable tags when possible (e.g., "健康", "教育", "商業", "家庭", "藝術", "運動")
@@ -80,40 +80,49 @@ class TagGenerator
       []
     end
   rescue => e
-    puts "Error generating tags for #{activity['serno']}: #{e.message}"
+    puts "Error generating tags for #{activity[:serno]}: #{e.message}"
     []
   end
 
   def find_or_create_tag(tag_obj)
     tag_name = tag_obj['tag']
     tag_en = tag_obj['tag_en']
-    tag = @db[:tags].where(tag: tag_name).first
     
-    if tag
-      if tag[:tag_en].nil? || tag[:tag_en].empty?
-        @db[:tags].where(id: tag[:id]).update(tag_en: tag_en)
+    # Use transaction to avoid database locks
+    @db.transaction do
+      tag = @db[:tags].where(tag: tag_name).first
+      
+      if tag
+        if tag[:tag_en].nil? || tag[:tag_en].empty?
+          @db[:tags].where(id: tag[:id]).update(tag_en: tag_en)
+        end
+        tag[:id]
+      else
+        @db[:tags].insert(tag: tag_name, tag_en: tag_en)
       end
-      tag[:id]
-    else
-      @db[:tags].insert(tag: tag_name, tag_en: tag_en)
     end
   end
 
   def link_activity_to_tags(activity_id, tag_ids)
-    @db[:activities_tags].where(activity_id: activity_id).delete
-    
-    tag_ids.each do |tag_id|
-      @db[:activities_tags].insert(
-        activity_id: activity_id,
-        tag_id: tag_id
-      )
+    # Use transaction to avoid locks
+    @db.transaction do
+      @db[:activities_tags].where(activity_id: activity_id).delete
+      
+      tag_ids.each do |tag_id|
+        @db[:activities_tags].insert(
+          activity_id: activity_id,
+          tag_id: tag_id
+        )
+      end
     end
   end
 
   def clear_all_tags
     puts "Clearing all existing tags..."
-    @db[:activities_tags].delete
-    @db[:tags].delete
+    @db.transaction do
+      @db[:activities_tags].delete
+      @db[:tags].delete
+    end
     puts "All old tags cleared!"
   end
 
@@ -158,9 +167,11 @@ class TagGenerator
       
       sleep(0.5)
     end
+    
+    puts "\n=== Summary ==="
     puts "Successfully tagged: #{success_count}"
     puts "Skipped: #{skipped_count}"
-    puts "All activities have been tagged!"
+    puts "\n=== All Tags ==="
     @db[:tags].all.each do |tag|
       puts "Tag: #{tag[:tag]} (#{tag[:tag_en]})"
     end

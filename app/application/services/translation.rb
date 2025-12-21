@@ -19,9 +19,9 @@ module Eventure
       def translate_activity(activity)
         name = activity[:name].to_s.strip
         detail = activity[:detail].to_s.strip
-        city = activity[:city].to_s.strip
-        district = activity[:district].to_s.strip
+        location = activity[:location].to_s.strip
         organizer = activity[:organizer].to_s.strip
+        
         if name.empty? && detail.empty?
           return {}
         end
@@ -32,16 +32,15 @@ module Eventure
 
           Title: #{activity[:name]}
           Detail: #{activity[:detail]}
-          City: #{activity[:city]}
-          District: #{activity[:district]}
+          Location: #{activity[:location]}
           Organizer: #{activity[:organizer]}
 
           Return only a JSON object with these fields: 
           {
             "name_en": "translated title",
             "detail_en": "translated detail",
-            "city_en": "translated city",
-            "district_en": "translated district",
+            "tag_en": "translated tags",
+            "location_en": "translated location",
             "organizer_en": "translated organizer"
           }
         PROMPT
@@ -75,6 +74,7 @@ module Eventure
           serno = activity[:serno] || 'UNKNOWN'
           if activity[:name_en] && !activity[:name_en].empty?
             puts "#{index + 1}/#{activities.length} - #{activity[:serno]}: Already translated, skipping"
+            skipped_count += 1
             next
           end
 
@@ -96,8 +96,8 @@ module Eventure
           @db[:activities].where(activity_id: activity[:activity_id]).update(
             name_en: translations['name_en'],
             detail_en: translations['detail_en'],
-            city_en: translations['city_en'],
-            district_en: translations['district_en'],
+            tag_en: translations['tag_en'],
+            location_en: translations['location_en'],
             organizer_en: translations['organizer_en']
           )
           
@@ -106,8 +106,6 @@ module Eventure
           
           sleep(0.5)
         end
-
-        puts "Successfully translated #{success_count}/#{activities.length} activities!"
       end
 
       def translate_new_activities
@@ -133,8 +131,8 @@ module Eventure
           @db[:activities].where(activity_id: activity[:activity_id]).update(
             name_en: translations['name_en'],
             detail_en: translations['detail_en'],
-            city_en: translations['city_en'],
-            district_en: translations['district_en'],
+            tag_en: translations['tag_en'],
+            location_en: translations['location_en'],
             organizer_en: translations['organizer_en']
           )
           

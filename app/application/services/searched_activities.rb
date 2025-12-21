@@ -47,7 +47,7 @@ module Eventure
 
           name_en_match = activity.name_en.to_s.downcase.include?(pattern) if activity.respond_to?(:name_en)
           detail_en_match = activity.detail_en.to_s.downcase.include?(pattern) if activity.respond_to?(:detail_en)
-          city_en_match = activity.city_en.to_s.downcase.include?(pattern) if activity.respond_to?(:city_en)
+          location_en_match = activity.location_en.to_s.downcase.include?(pattern) if activity.respond_to?(:location_en)
 
           tags = Array(activity.tags).flat_map do |t|
             result = []
@@ -58,7 +58,7 @@ module Eventure
           tags_match = tags.any? { |t| t.include?(pattern) }
 
           name_match || detail_match || city_match || 
-            name_en_match || detail_en_match || city_en_match || tags_match
+            name_en_match || detail_en_match || location_en_match || tags_match
         end
         
         Success(input)

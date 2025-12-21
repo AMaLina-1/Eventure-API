@@ -31,7 +31,7 @@ class Worker
 
   def perform(_sqs_msg, request)
     job = FetchApi::JobReporter.new(request, Worker.config)
-    job.report(FetchApi::FetchMonitor.starting_percent)
+    # job.report(FetchApi::FetchMonitor.starting_percent)
     activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
 
     activities_api_name = activities_payload.api_name
@@ -57,9 +57,10 @@ class Worker
     # cache.set('fetch_hccg', true)
     Eventure::Repository::Status.write_true(activities_api_name)
     puts "successfully store #{activities_api_name} activities"
+    job.report_api_progress(activities_api_name)
 
     # Keep sending finished status to any latecoming subscribers
-    job.report_each_second(5) { FetchMonitor.finished_percent }
+    # job.report_each_second(5) { FetchMonitor.finished_percent }
   rescue StandardError => e
     print('other worker error', e)
     # raise e

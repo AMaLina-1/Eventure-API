@@ -14,6 +14,7 @@ module Eventure
 
     route do |routing|
       response['Content-Type'] = 'application/json'
+<<<<<<< HEAD
       # ================== Write Database ==================
       # The app previously saved activities on every request which causes
       # frequent writes and locks (SQLite busy). Commented out so we don't
@@ -22,6 +23,8 @@ module Eventure
       # svc = Eventure::Services::ActivityService.new
       # svc.save_activities(100)
 
+=======
+>>>>>>> origin/mary-multiple-api
     
       # Root path handlers - MUST come before other routing
       routing.root do

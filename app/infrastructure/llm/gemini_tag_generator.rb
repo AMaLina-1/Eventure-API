@@ -177,9 +177,3 @@ class TagGenerator
     end
   end
 end
-
-# Run the generator
-if __FILE__ == $PROGRAM_NAME
-  generator = TagGenerator.new
-  generator.process_all_activities(clear_existing: true)
-end

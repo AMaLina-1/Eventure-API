@@ -257,3 +257,117 @@ namespace :tags do
     generator.process_all_activities(clear_existing: false)
   end
 end
+
+namespace :translation do
+  desc 'Translate all activities (LOCAL ONLY - costs money!)'
+  task :translate do
+    require_relative 'app/application/services/translation'
+    
+    translator = Eventure::Service::Translation.new
+    translator.translate_all_activities
+  end
+  
+  desc 'Translate only new activities (LOCAL ONLY)'
+  task :new do
+    require_relative 'app/application/services/translation'
+    
+    translator = Eventure::Service::Translation.new
+    translator.translate_new_activities
+  end
+end
+
+# Add this to your existing Rakefile (inside the namespace :db block)
+
+namespace :db do
+  desc 'Export local SQLite data and sync to Heroku PostgreSQL'
+  task sync_to_heroku: :config do  # Add :config dependency
+    puts "=" * 70
+    puts "SYNCING LOCAL DATABASE TO HEROKU"
+    puts "=" * 70
+    
+    # Create tmp directory if it doesn't exist
+    FileUtils.mkdir_p('tmp')
+    
+    # 1. Export from local SQLite
+    puts "\n📤 Step 1: Exporting from local SQLite..."
+    local_db = app.db  # Use app.db instead of Eventure::App
+    
+    # Export activities
+    activities = local_db[:activities].all
+    puts "   Exported #{activities.length} activities"
+    
+    # Export tags
+    tags = local_db[:tags].all
+    puts "   Exported #{tags.length} tags"
+    
+    # Export activities_tags relationships
+    activities_tags = local_db[:activities_tags].all
+    puts "   Exported #{activities_tags.length} tag relationships"
+    
+    # Save to JSON files for transfer
+    File.write('tmp/activities.json', activities.to_json)
+    File.write('tmp/tags.json', tags.to_json)
+    File.write('tmp/activities_tags.json', activities_tags.to_json)
+    
+    puts "\n✅ Data exported to tmp/ folder"
+    puts "\n📋 Next steps:"
+    puts "1. Push these files to Heroku:"
+    puts "   git add tmp/*.json"
+    puts "   git commit -m 'Add exported data'"
+    puts "   git push heroku main"
+    puts ""
+    puts "2. Run import on Heroku:"
+    puts "   heroku run rake db:import_from_json"
+    puts "=" * 70
+  end
+  
+  desc 'Import JSON data into database (run on Heroku)'
+  task import_from_json: :config do  # Add :config dependency
+    puts "=" * 70
+    puts "IMPORTING DATA FROM JSON FILES"
+    puts "=" * 70
+    
+    db = app.db
+    
+    # Check if files exist
+    unless File.exist?('tmp/tags.json')
+      puts "❌ Error: tmp/tags.json not found"
+      puts "Make sure you've pushed the JSON files to Heroku"
+      exit 1
+    end
+    
+    # Clear existing data
+    puts "\n🗑️  Clearing existing data..."
+    db[:activities_tags].delete
+    db[:tags].delete
+    db[:activities].delete
+    
+    # Import tags first (needed for foreign keys)
+    puts "\n📥 Importing tags..."
+    tags_data = JSON.parse(File.read('tmp/tags.json'))
+    tags_data.each do |tag|
+      db[:tags].insert(tag)
+    end
+    puts "   ✅ Imported #{tags_data.length} tags"
+    
+    # Import activities
+    puts "\n📥 Importing activities..."
+    activities_data = JSON.parse(File.read('tmp/activities.json'))
+    activities_data.each do |activity|
+      db[:activities].insert(activity)
+    end
+    puts "   ✅ Imported #{activities_data.length} activities"
+    
+    # Import relationships
+    puts "\n📥 Importing tag relationships..."
+    relationships_data = JSON.parse(File.read('tmp/activities_tags.json'))
+    relationships_data.each do |rel|
+      db[:activities_tags].insert(rel)
+    end
+    puts "   ✅ Imported #{relationships_data.length} relationships"
+    
+    puts "\n" + "=" * 70
+    puts "✅ DATA IMPORT COMPLETE!"
+    puts "=" * 70
+  end
+end

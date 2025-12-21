@@ -46,7 +46,7 @@ module Eventure
         PROMPT
 
         response = @client.models.generate_content(
-          model: "gemini-2.0-flash",
+          model: "gemini-2.0-flash-lite",
           contents: prompt
         )
 
@@ -146,10 +146,4 @@ module Eventure
       end
     end
   end
-end
-
-# Run the translator if called directly
-if __FILE__ == $PROGRAM_NAME
-  translator = Eventure::Service::Translation.new
-  translator.translate_all_activities
 end

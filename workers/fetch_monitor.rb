@@ -6,7 +6,7 @@ module FetchApi
   # Infrastructure to fetch while yielding progress
   module FetchMonitor
     # 總共有多少個 API 需要 fetch
-    TOTAL_APIS = 6
+    TOTAL_APIS = 5
     
     # 每個 API 完成時增加的百分比（100 / 6 ≈ 16.67，四捨五入為 17）
     PERCENT_PER_API = (100.0 / TOTAL_APIS).round

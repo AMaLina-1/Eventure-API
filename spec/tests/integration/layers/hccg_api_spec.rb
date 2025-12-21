@@ -40,11 +40,7 @@ describe 'Tests hccg activity API library' do
     it 'HAPPY: should provide correct information' do
       idx = rand(@data.length)
       _(@data[idx].serno).must_be_kind_of String
-<<<<<<< HEAD
       _(@data[idx].serno).must_equal CORRECT[idx]['serno'].to_s
-=======
-      _(@data[idx].serno).must_equal CORRECT[idx]['serno']
->>>>>>> origin/mary-multiple-api
       _(@data[idx].name).wont_be_nil
       _(@data[idx].name).must_equal CORRECT[idx]['subject']
       _(@data[idx].detail).must_equal CORRECT[idx]['detailcontent']

@@ -62,6 +62,6 @@ class Worker
     # job.report_each_second(5) { FetchMonitor.finished_percent }
   rescue StandardError => e
     print('other worker error', e)
-    # raise e
+    raise e
   end
 end

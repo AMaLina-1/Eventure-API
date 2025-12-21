@@ -33,7 +33,7 @@ module Eventure
 
         puts "fetch_api_activities called"
         request_id = [Time.now.to_f, Time.now.to_f].hash
-        result = Eventure::Service::ApiActivities.new.call(total: 100, request_id: request_id, config: Eventure::App.config)
+        result = Eventure::Service::ApiActivities.new.call(total: 20, request_id: request_id, config: Eventure::App.config)
         if result.failure?
           failed = Eventure::Representer::HttpResponse.new(result.failure)
           puts "Failed to fetch activities: #{failed.http_status_code}"
@@ -50,7 +50,7 @@ module Eventure
         response.status = 500
         { status: 'error', message: e.message }.to_json
       end
-      
+
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
         response.status = 200

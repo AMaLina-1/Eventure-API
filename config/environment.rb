@@ -48,3 +48,7 @@ module Eventure
     def self.db = @db # rubocop:disable Style/TrivialAccessors
   end
 end
+
+# Auto-initialize Status table on app startup
+require_relative '../app/infrastructure/database/repositories/status'
+Eventure::Repository::Status.setup!

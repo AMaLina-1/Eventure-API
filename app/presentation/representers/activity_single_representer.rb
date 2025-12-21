@@ -10,15 +10,61 @@ module Eventure
       include Roar::JSON
 
       property :serno
-      property :name
+      property :name, getter: lambda { |args|
+        lang = args[:user_options]&.dig(:language) || 'zh-TW'
+        if lang == 'en' && respond_to?(:name_en) && name_en &&  !name_en.empty?
+          name_en
+        else
+          name
+        end
+      }
       property :location
-      property :city
-      property :district
+      property :city, getter: lambda { |args|
+        lang = args[:user_options]&.dig(:language) || 'zh-TW'
+        if lang == 'en' && respond_to?(:city_en) && city_en &&  !city_en.empty?
+          city_en
+        else
+          city
+        end
+      }
+      property :district, getter: lambda { |args|
+        lang = args[:user_options]&.dig(:language) || 'zh-TW'
+        if lang == 'en' && respond_to?(:district_en) && district_en &&  !district_en.empty?
+          district_en
+        else
+          district
+        end
+      }
       property :building
-      property :detail
-      property :organizer
+      property :detail, getter: lambda { |args|
+        lang = args[:user_options]&.dig(:language) || 'zh-TW'
+        if lang == 'en' && respond_to?(:detail_en) && detail_en &&  !detail_en.empty?
+          detail_en
+        else
+          detail
+        end
+      }
+      property :organizer, getter: lambda { |args|
+        lang = args[:user_options]&.dig(:language) || 'zh-TW'
+        if lang == 'en' && respond_to?(:organizer_en) && organizer_en &&  !organizer_en.empty?
+          organizer_en
+        else
+          organizer
+        end
+      }
       property :voice
-      property :tag
+      property :tag, getter: lambda { |args|
+        lang = args[:user_options]&.dig(:language) || 'zh-TW'
+        Array(tags).map do |t|
+          if lang == 'en' && t.respond_to?(:tag_en) && t.tag_en && !t.tag_en.empty?
+            t.tag_en
+          elsif t.respond_to?(:tag)
+            t.tag
+          else
+            t.to_s
+          end
+        end
+      }
       property :status
       property :likes_count
       property :start_time

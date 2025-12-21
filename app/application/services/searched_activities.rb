@@ -20,6 +20,7 @@ module Eventure
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
         input[:filtered_activities] = input[:all_activities]
+        input[:language] = input[:language] || 'zh-TW'
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
@@ -36,6 +37,7 @@ module Eventure
         return Success(input) if kw.nil? || kw.to_s.strip.empty?
 
         pattern = kw.to_s.downcase
+        lang = input[:language]
 
         input[:filtered_activities] = input[:filtered_activities].select do |activity|
           name_match = activity.name.to_s.downcase.include?(pattern)
@@ -43,12 +45,22 @@ module Eventure
           # organizer_match = activity.organizer.to_s.downcase.include?(pattern)
           city_match = activity.city.to_s.downcase.include?(pattern)
 
-          tags = Array(activity.tags).map { |t| t.respond_to?(:tag) ? t.tag.to_s.downcase : t.to_s.downcase }
+          name_en_match = activity.name_en.to_s.downcase.include?(pattern) if activity.respond_to?(:name_en)
+          detail_en_match = activity.detail_en.to_s.downcase.include?(pattern) if activity.respond_to?(:detail_en)
+          city_en_match = activity.city_en.to_s.downcase.include?(pattern) if activity.respond_to?(:city_en)
+
+          tags = Array(activity.tags).flat_map do |t|
+            result = []
+            result << (t.respond_to?(:tag) ? t.tag.to_s.downcase : t.to_s.downcase)
+            result << t.tag_en.to_s.downcase if t.respond_to?(:tag_en) && t.tag_en
+            result
+          end
           tags_match = tags.any? { |t| t.include?(pattern) }
 
-          name_match || detail_match || city_match || tags_match
+          name_match || detail_match || city_match || 
+            name_en_match || detail_en_match || city_en_match || tags_match
         end
-
+        
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))

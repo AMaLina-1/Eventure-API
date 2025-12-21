@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require 'google/genai'
-require 'yaml'
+require 'bundler/setup'
 require 'json'
 
 require_relative '../../../config/environment'
 
 API_KEY = Eventure::App.config.GEMINI_API_KEY
-YAML_FILE = 'spec/fixtures/results.yml'
 
 class TagGenerator
   def initialize
@@ -16,37 +15,59 @@ class TagGenerator
   end
 
   def clean_html(text)
-    # Remove HTML tags for better processing
+    return '' if text.nil?
     text.gsub(/<[^>]*>/, ' ').gsub(/\s+/, ' ').strip
   end
 
   def generate_tags(activity)
-    clean_detail = clean_html(activity['detailcontent'])
-    
+    subject = activity[:name].to_s.strip
+    detail = activity[:detail].to_s.strip
+    if subject.empty? && detail.empty?
+      return []
+    end
+    clean_detail = clean_html(detail)
+
+    # Get existing tags from database
+    existing_tags = @db[:tags].select(:tag, :tag_en).all
+    existing_tags_list = if existing_tags.empty?
+                          'None, create initial tags'
+                        else
+                          existing_tags.map { |t| "#{t[:tag]} (#{t[:tag_en]})" }.join(', ')
+                        end
+
     prompt = <<~PROMPT
-      You are a tag generator for community events and activities in Hsinchu City, Taiwan.
+      You are a tag generator for community events and activities in Taiwan.
       
-      Analyze this activity and generate 3-5 relevant topic-based tags.
+      Analyze this activity and generate relevant tags from the existing tag list below.
+      If absolutely necessary, you may create 1 new tag, but prefer reusing existing tags.
       
       Activity Title: #{activity['subject']}
-      Activity Description: #{clean_detail[0..500]}
-      Location: #{activity['activityplace']}
-      
+      Activity Content: #{clean_detail}
+
+      Existing Tags: #{existing_tags_list}
+
       Requirements:
-      1. Generate 3-5 tags that describe the main topics/themes
-      2. Use common, reusable tags when possible (e.g., "Health", "Education", "Business", "Family", "Arts", "Sports")
-      3. Use Title Case for tags (e.g., "Mental Health", "Job Training")
-      4. If the activity is clearly free or paid, include a "Free" or "Paid" tag
+      1. Generate tags in Traditional Chinese that describe the main topics/themes
+      2. Reuse existing tags when possible
+      3. Only create a new tag if no existing tag fits well
+      4. Use common, reusable tags when possible (e.g., "健康", "教育", "商業", "家庭", "藝術", "運動")
       5. Focus on what users would search for
       6. Keep tags concise and searchable
-      
-      Return ONLY a JSON array of tags, nothing else. Example format:
-      ["Mental Health", "Community", "Support", "Free"]
+      7. Do not use location-based tags like city names
+      8. Keep total unique tags across all activities under 10-15
+
+      Return ONLY a JSON array of objects with Chinese tag and English translation. Example format:
+      [{"tag": "心理健康", "tag_en": "Mental Health"}, {"tag": "健康", "tag_en": "Wellness"}]
     PROMPT
     
     response = @client.models.generate_content(
       model: "gemini-2.0-flash",
-      contents: prompt
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }]
+        }
+      ]
     )
     
     response_text = response.text.strip
@@ -63,22 +84,24 @@ class TagGenerator
     []
   end
 
-  def find_or_create_tag(tag_name)
-    # Find existing tag or create new one
+  def find_or_create_tag(tag_obj)
+    tag_name = tag_obj['tag']
+    tag_en = tag_obj['tag_en']
     tag = @db[:tags].where(tag: tag_name).first
     
     if tag
+      if tag[:tag_en].nil? || tag[:tag_en].empty?
+        @db[:tags].where(id: tag[:id]).update(tag_en: tag_en)
+      end
       tag[:id]
     else
-      @db[:tags].insert(tag: tag_name)
+      @db[:tags].insert(tag: tag_name, tag_en: tag_en)
     end
   end
 
   def link_activity_to_tags(activity_id, tag_ids)
-    # Remove existing tag relationships for this activity
     @db[:activities_tags].where(activity_id: activity_id).delete
     
-    # Create new relationships
     tag_ids.each do |tag_id|
       @db[:activities_tags].insert(
         activity_id: activity_id,
@@ -95,46 +118,57 @@ class TagGenerator
   end
 
   def process_all_activities(clear_existing: true)
-    # Clear existing tags if requested
     clear_all_tags if clear_existing
     
-    # Load activities from YAML
-    activities = YAML.load_file(YAML_FILE)
-    puts "Loaded #{activities.length} activities from YAML"
+    activities = @db[:activities].all
+    puts "Loaded #{activities.length} activities from database"
+
+    if activities.first
+      puts "Available columns: #{activities.first.keys.inspect}"
+      puts "First activity sample: #{activities.first.inspect}"
+    end
     
     success_count = 0
-    all_generated_tags = []
+    skipped_count = 0
     
     activities.each_with_index do |activity, index|
-      serno = activity['serno']
-      
-      # Find the activity in database
-      db_activity = @db[:activities].where(serno: serno).first
-      unless db_activity
-        puts " Not found in database, skipping"
+      serno = activity[:serno] || 'UNKNOWN'
+      activity_id = activity[:activity_id]
+
+      if activity_id.nil?
+        puts "#{index + 1}/#{activities.length} - #{serno}: No activity ID, skipping"
+        skipped_count += 1
         next
       end
-      
-      activity_id = db_activity[:activity_id]
-      
-      # Generate tags
+
       generated_tags = generate_tags(activity)
-      
+
       if generated_tags.empty?
-        puts "No tags generated"
+        puts "#{index + 1}/#{activities.length} - #{serno}: No tags generated"
+        skipped_count += 1
         next
       end
-      
-      # Track all generated tags
-      all_generated_tags.concat(generated_tags)
-      
-      # Insert tags and create relationships
-      tag_ids = generated_tags.map { |tag_name| find_or_create_tag(tag_name) }
+
+      tag_display = generated_tags.map { |t| "#{t['tag']} (#{t['tag_en']})" }.join(', ')
+      puts "#{index + 1}/#{activities.length} - #{serno}: #{tag_display}"
+
+      tag_ids = generated_tags.map { |tag_obj| find_or_create_tag(tag_obj) }
       link_activity_to_tags(activity_id, tag_ids)
       success_count += 1
       
       sleep(0.5)
     end
+    puts "Successfully tagged: #{success_count}"
+    puts "Skipped: #{skipped_count}"
     puts "All activities have been tagged!"
+    @db[:tags].all.each do |tag|
+      puts "Tag: #{tag[:tag]} (#{tag[:tag_en]})"
+    end
   end
+end
+
+# Run the generator
+if __FILE__ == $PROGRAM_NAME
+  generator = TagGenerator.new
+  generator.process_all_activities(clear_existing: true)
 end

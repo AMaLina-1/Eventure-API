@@ -11,7 +11,17 @@ module Eventure
     class ActivityList < Roar::Decorator
       include Roar::JSON
 
+      def initialize(represented, language: 'zh-TW')
+        super(represented)
+        @language = language
+      end
+
       collection :activities, extend: ActivitySingle, class: OpenStruct
+
+      # override to_json to accept language option
+      def to_json(*args)
+        to_hash(user_options: { language: @language }).to_json
+      end
     end
   end
 end

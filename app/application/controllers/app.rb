@@ -16,8 +16,8 @@ module Eventure
       # frequent writes and locks (SQLite busy). Commented out so we don't
       # sync on each HTTP request. If you want periodic sync, run a rake
       # task or background job at startup/cron instead.
-      svc = Eventure::Services::ActivityService.new
-      svc.save_activities(100)
+      # svc = Eventure::Services::ActivityService.new
+      # svc.save_activities(100)
 
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
@@ -26,11 +26,15 @@ module Eventure
       end
 
       routing.on 'api/v1' do
+        lang = routing.params['lang'] || 'zh-TW'
         routing.on 'activities' do
           routing.is do
             routing.get do
               # Always use SearchedActivities; it returns the full list when no keyword
-              result = Service::SearchedActivities.new.call(keyword: routing.params['keyword'])
+              result = Service::SearchedActivities.new.call(
+                keyword: routing.params['keyword'],
+                language: lang
+              )
 
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
@@ -42,7 +46,10 @@ module Eventure
                 http_response = Representer::HttpResponse.new(api_result)
                 response.status = http_response.http_status_code
                 # ActivityList expects an object with `activities` collection
-                Representer::ActivityList.new(OpenStruct.new(activities: activities_list)).to_json
+                Representer::ActivityList.new(
+                  OpenStruct.new(activities: activities_list),
+                  language: lang
+                ).to_json
               end
             end
           end
@@ -82,7 +89,8 @@ module Eventure
               city: filters['city']&.to_s || '',
               districts: Array(filters['districts']).map(&:to_s).reject(&:empty?),
               start_date: filters['start_date']&.to_s || '',
-              end_date: filters['end_date']&.to_s || ''
+              end_date: filters['end_date']&.to_s || '',
+              language: lang
             }
             # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
@@ -98,14 +106,14 @@ module Eventure
 
               result_activities = api_result.message[:activities]
               activities_list = OpenStruct.new(activities: result_activities)
-              Representer::ActivityList.new(activities_list).to_json
+              Representer::ActivityList.new(activities_list, language: lang).to_json
             end
           end
         end
 
         routing.on 'cities' do
           routing.get do
-            result = Service::ListCity.new.call({})
+            result = Service::ListCity.new.call(language: lang)
 
             if result.failure?
               failed = Representer::HttpResponse.new(result.failure)
@@ -116,14 +124,14 @@ module Eventure
               cities_list = api_result.message
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
-              Representer::CityList.new(cities_list).to_json
+              Representer::CityList.new(cities_list, language: lang).to_json
             end
           end
         end
 
         routing.on 'districts' do
           routing.get do
-            result = Service::ListDistrict.new.call({})
+            result = Service::ListDistrict.new.call(language: lang)
 
             if result.failure?
               failed = Representer::HttpResponse.new(result.failure)
@@ -141,7 +149,7 @@ module Eventure
 
         routing.on 'tags' do
           routing.get do
-            result = Service::ListTag.new.call({})
+            result = Service::ListTag.new.call(language: lang)
 
             if result.failure?
               failed = Representer::HttpResponse.new(result.failure)
@@ -152,7 +160,7 @@ module Eventure
               tags_list = api_result.message
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
-              Representer::TagList.new(tags_list).to_json
+              Representer::TagList.new(tags_list, language: lang).to_json
             end
           end
         end

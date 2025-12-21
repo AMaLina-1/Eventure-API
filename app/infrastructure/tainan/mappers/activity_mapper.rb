@@ -124,8 +124,9 @@ module Eventure
         end
 
         def self.parse_end_time(raw)
-          parts = split_act_date(raw)
-          end_str = end_time_string(parts)
+          parts = split_parts(raw)
+          start_str = parts.first
+          end_str = build_end_str(parts, start_str)
           DateTime.parse(end_str).new_offset(0)
         end
 

@@ -5,7 +5,7 @@ require 'dry-types'
 
 module Eventure
   module Value
-    # value object for activities
+    # Value object representing an activity location (city + building/address)
     class Location < Dry::Struct
       include Dry.Types
 
@@ -16,23 +16,29 @@ module Eventure
         building
       end
 
-      # Prefix city to building when missing; use city when building blank
       def self.normalize_building(building, city_name)
-        b = building.to_s.strip
-        c = city_name.to_s.strip
-        return c if b.empty?
-        return b if c.empty?
+        building_str = building.to_s.strip
+        normalized_city = normalize_city(city_name)
 
-        b_norm = b.tr('臺', '台')
-        c_norm = c.tr('臺', '台')
+        return normalized_city if building_str.empty?
+        return building_str if normalized_city.empty?
 
-        return b if b_norm.start_with?(c_norm)
+        prefix_city_unless_present(building_str, normalized_city)
+      end
 
-        "#{c}#{b}"
+      def self.prefix_city_unless_present(building_str, normalized_city)
+        normalized_building = normalize_city(building_str)
+        return building_str if normalized_building.start_with?(normalized_city)
+
+        "#{normalized_city}#{building_str}"
+      end
+
+      def self.normalize_city(str)
+        str.to_s.strip.tr('臺', '台')
       end
 
       def city
-        city_name
+        self.class.normalize_city(city_name)
       end
 
       def district

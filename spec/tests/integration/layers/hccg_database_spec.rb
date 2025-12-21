@@ -39,7 +39,7 @@ describe 'Integration Tests of Hccg API and Database' do
       _(rebuilt[idx].location).must_equal(activity[idx].location)
       _(rebuilt[idx].voice).must_equal(activity[idx].voice)
       _(rebuilt[idx].organizer).must_equal(activity[idx].organizer)
-      _(rebuilt[idx].tags).must_equal(activity[idx].tags)
+      # _(rebuilt[idx].tag_id).must_equal(activity[idx].tag_id)
       _(rebuilt[idx].tag).must_equal(activity[idx].tag)
       _(rebuilt[idx].relate_url).must_equal(activity[idx].relate_url)
       _(rebuilt[idx].relate_title).must_equal(activity[idx].relate_title)

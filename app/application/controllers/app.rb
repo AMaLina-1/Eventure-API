@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require 'roda'
-require_relative 'activities_controller'
+require 'rack'
+# require_relative '../services/api_activities'
+require_relative '../../infrastructure/database/repositories/status'
+require_relative '../services/api_activities'
 
 module Eventure
   class App < Roda
@@ -19,10 +22,42 @@ module Eventure
       # svc = Eventure::Services::ActivityService.new
       # svc.save_activities(100)
 
+    
+      # Root path handlers - MUST come before other routing
       routing.root do
-        message = { status: 'ok', message: 'Eventure API v1' }
-        response.status = 200
-        message.to_json
+        routing.get do
+          message = { status: 'ok', message: 'Eventure API v1' }
+          response.status = 200
+          message.to_json
+        end
+      end
+
+      # Trigger fetching activities once via POST '/'
+      routing.post '' do
+        response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+
+        puts 'Initializing application...'
+        puts 'Creating status database...'
+        Eventure::Repository::Status.setup!
+
+        puts "fetch_api_activities called"
+        request_id = [Time.now.to_f, Time.now.to_f].hash
+        result = Eventure::Service::ApiActivities.new.call(total: 100, request_id: request_id, config: Eventure::App.config)
+        if result.failure?
+          failed = Eventure::Representer::HttpResponse.new(result.failure)
+          puts "Failed to fetch activities: #{failed.http_status_code}"
+          response.status = failed.http_status_code
+          failed.to_json
+        else
+          puts 'successfully fetched and saved activities'
+          response.status = 200
+          { status: 'ok', message: 'Fetch started' }.to_json
+        end
+      rescue StandardError => e
+        puts "Error in POST /: #{e.message}"
+        puts e.backtrace.first(5)
+        response.status = 500
+        { status: 'error', message: e.message }.to_json
       end
 
       routing.on 'api/v1' do

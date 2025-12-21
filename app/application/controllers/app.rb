@@ -1,22 +1,10 @@
 # frozen_string_literal: true
 
 require 'roda'
+require 'rack'
 # require_relative '../services/api_activities'
 require_relative '../../infrastructure/database/repositories/status'
 require_relative '../services/api_activities'
-
-
-# ================== Write Database ==================
-puts 'create status database'
-Eventure::Repository::Status.setup!
-puts "fetch_api_activities called"
-result = Eventure::Service::ApiActivities.new.call(total: 100)
-if result.failure?
-  failed = Representer::HttpResponse.new(result.failure)
-  print(failed.http_status_code)
-else
-  puts 'successfully fetched and saved activities'
-end
 
 module Eventure
   class App < Roda

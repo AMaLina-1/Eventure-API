@@ -12,6 +12,9 @@ gem 'http', '~> 5.3'
 # Asynchronicity
 gem 'aws-sdk-sqs', '~> 1.0'
 gem 'concurrent-ruby', '~> 1.0'
+
+# worker
+gem 'faye', '~> 1'
 gem 'shoryuken', '~> 6.0'
 
 # Testing

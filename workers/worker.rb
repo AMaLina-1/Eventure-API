@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require_relative '../require_app'
+require_relative 'fetch_monitor'
+require_relative 'job_reporter'
 require_app
 
 require 'figaro'
 require 'shoryuken'
 
-# Shoryuken worker class to clone repos in parallel
+# Shoryuken worker class to fetch activities in parallel
 class Worker
   # Environment variables setup
   Figaro.application = Figaro::Application.new(
@@ -23,11 +25,15 @@ class Worker
   )
 
   include Shoryuken::Worker
-
+  Shoryuken.sqs_client_receive_message_opts = { wait_time_seconds: 20 }
   shoryuken_options queue: config.QUEUE_URL, auto_delete: true
 
   def perform(_sqs_msg, request)
-    activities_payload = Eventure::Representer::WorkerFetchData.new(OpenStruct.new).from_json(request)
+    job = FetchApi::JobReporter.new(request, Worker.config)
+    job.report(FetchApi::FetchMonitor.starting_percent)
+    activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
+    
+    
     activities_api_name = activities_payload.api_name
     activities_number = activities_payload.number
     # cache = Eventure::Cache::Client.new(App.config)
@@ -51,6 +57,9 @@ class Worker
     # cache.set('fetch_hccg', true)
     Eventure::Repository::Status.write_true(activities_api_name)
     puts "successfully store #{activities_api_name} activities"
+
+    # Keep sending finished status to any latecoming subscribers
+      job.report_each_second(5) { FetchMonitor.finished_percent }
   rescue StandardError => e
     print('other worker error', e)
     raise e

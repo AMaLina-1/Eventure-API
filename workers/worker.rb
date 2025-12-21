@@ -25,7 +25,6 @@ class Worker
   )
 
   include Shoryuken::Worker
-
   Shoryuken.sqs_client_receive_message_opts = { wait_time_seconds: 20 }
   shoryuken_options queue: config.QUEUE_URL, auto_delete: true
 

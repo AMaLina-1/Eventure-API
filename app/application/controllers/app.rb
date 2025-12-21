@@ -1,26 +1,10 @@
 # frozen_string_literal: true
 
 require 'roda'
-<<<<<<< HEAD
 require 'rack'
-=======
->>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
 # require_relative '../services/api_activities'
 require_relative '../../infrastructure/database/repositories/status'
 require_relative '../services/api_activities'
-
-
-# ================== Write Database ==================
-puts 'create status database'
-Eventure::Repository::Status.setup!
-puts "fetch_api_activities called"
-result = Eventure::Service::ApiActivities.new.call(total: 100)
-if result.failure?
-  failed = Representer::HttpResponse.new(result.failure)
-  print(failed.http_status_code)
-else
-  puts 'successfully fetched and saved activities'
-end
 
 module Eventure
   class App < Roda
@@ -29,37 +13,7 @@ module Eventure
     plugin :all_verbs # allows DELETE and other HTTP verbs beyond GET/POST
 
     route do |routing|
-      response['Content-Type'] = 'application/json'
-<<<<<<< HEAD
-      # ================== Write Database ==================
-      # The app previously saved activities on every request which causes
-      # frequent writes and locks (SQLite busy). Commented out so we don't
-      # sync on each HTTP request. If you want periodic sync, run a rake
-      # task or background job at startup/cron instead.
-      # routing.post '/' do
-      # puts 'create status database'
-      # Eventure::Repository::Status.setup!
-      # puts "fetch_api_activities called"
-      # result = Service::ApiActivities.new.call(total: 100)
-      # if result.failure?
-      #   # print('Failed to fetch api activities')
-      #     failed = Representer::HttpResponse.new(result.failure)
-      #     response.status = failed.http_status_code
-      #     failed.to_json
-      #   else
-      #     puts 'successfully fetched and saved activities'
-      #     api_result = result.value!
-
-      #     http_response = Representer::HttpResponse.new(api_result)
-      #     response.status = http_response.http_status_code
-
-      #     fetch_result_msg = api_result.message[:msg]
-      #     fetch_result = OpenStruct.new(msg: fetch_result_msg)
-      #     Representer::FetchApiData.new(fetch_result).to_json
-      #   end
-      # end
-
-    
+      response['Content-Type'] = 'application/json'   
       # Root path handlers - MUST come before other routing
       routing.root do
         routing.get do
@@ -95,13 +49,12 @@ module Eventure
         puts e.backtrace.first(5)
         response.status = 500
         { status: 'error', message: e.message }.to_json
-=======
-    
+      end
+      
       routing.root do
         message = { status: 'ok', message: 'Eventure API v1' }
         response.status = 200
         message.to_json
->>>>>>> 2bd4b32 (hccg, new_taipei, taichung, kaohsiung api data)
       end
 
       routing.on 'api/v1' do

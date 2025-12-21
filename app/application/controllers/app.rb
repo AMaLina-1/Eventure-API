@@ -90,7 +90,7 @@ module Eventure
               districts: Array(filters['districts']).map(&:to_s).reject(&:empty?),
               start_date: filters['start_date']&.to_s || '',
               end_date: filters['end_date']&.to_s || '',
-              language: lang
+              language: filters['language']&.to_s || lang
             }
             # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
@@ -106,7 +106,8 @@ module Eventure
 
               result_activities = api_result.message[:activities]
               activities_list = OpenStruct.new(activities: result_activities)
-              Representer::ActivityList.new(activities_list, language: lang).to_json
+              actual_language = clean_filters[:language]
+              Representer::ActivityList.new(activities_list, language: actual_language).to_json
             end
           end
         end

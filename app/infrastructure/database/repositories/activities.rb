@@ -95,6 +95,20 @@ module Eventure
         entity = Eventure::Entity::Activity.new(rebuild_entity_attributes(db_record))
         entity.instance_variable_set(:@likes_count, db_record.likes_count.to_i)
 
+        # Add English field accessors to the entity
+        entity.instance_variable_set(:@name_en, db_record.name_en)
+        entity.instance_variable_set(:@detail_en, db_record.detail_en)
+        entity.instance_variable_set(:@city_en, db_record.city_en)
+        entity.instance_variable_set(:@district_en, db_record.district_en)
+        entity.instance_variable_set(:@organizer_en, db_record.organizer_en)
+        
+        # Define reader methods for English fields
+        entity.define_singleton_method(:name_en) { @name_en }
+        entity.define_singleton_method(:detail_en) { @detail_en }
+        entity.define_singleton_method(:city_en) { @city_en }
+        entity.define_singleton_method(:district_en) { @district_en }
+        entity.define_singleton_method(:organizer_en) { @organizer_en }
+
         entity
       end
 

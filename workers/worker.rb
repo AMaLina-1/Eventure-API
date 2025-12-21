@@ -25,6 +25,7 @@ class Worker
   )
 
   include Shoryuken::Worker
+
   Shoryuken.sqs_client_receive_message_opts = { wait_time_seconds: 20 }
   shoryuken_options queue: config.QUEUE_URL, auto_delete: true
 
@@ -32,8 +33,7 @@ class Worker
     job = FetchApi::JobReporter.new(request, Worker.config)
     job.report(FetchApi::FetchMonitor.starting_percent)
     activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
-    
-    
+
     activities_api_name = activities_payload.api_name
     activities_number = activities_payload.number
     # cache = Eventure::Cache::Client.new(App.config)
@@ -59,9 +59,9 @@ class Worker
     puts "successfully store #{activities_api_name} activities"
 
     # Keep sending finished status to any latecoming subscribers
-      job.report_each_second(5) { FetchMonitor.finished_percent }
+    job.report_each_second(5) { FetchMonitor.finished_percent }
   rescue StandardError => e
     print('other worker error', e)
-    raise e
+    # raise e
   end
 end

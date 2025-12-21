@@ -15,58 +15,41 @@ module Eventure
     route do |routing|
       response['Content-Type'] = 'application/json'
     
+      # Root path handlers - MUST come before other routing
       routing.root do
         routing.get do
           message = { status: 'ok', message: 'Eventure API v1' }
           response.status = 200
           message.to_json
         end
+      end
 
-        # Trigger fetching activities once via POST '/'
-        routing.post do
-          response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+      # Trigger fetching activities once via POST '/'
+      routing.post '' do
+        response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
 
-          puts 'Initializing application...'
-          puts 'create status database'
-          Eventure::Repository::Status.setup!
+        puts 'Initializing application...'
+        puts 'Creating status database...'
+        Eventure::Repository::Status.setup!
 
-          puts "fetch_api_activities called"
-          request_id = [Time.now.to_f, Time.now.to_f].hash
-          result = Eventure::Service::ApiActivities.new.call(total: 100, request_id: request_id, config: Eventure::App.config)
-          if result.failure?
-            failed = Eventure::Representer::HttpResponse.new(result.failure)
-            puts "Failed to fetch activities: #{failed.http_status_code}"
-            failed = Representer::HttpResponse.new(result.failure)
-            response.status = failed.http_status_code
-            failed.to_json
-          else
-            puts 'successfully fetched and saved activities'
-            response.status = 200
-              { status: 'ok', message: 'Fetch started' }.to_json
-          end
-          # request_id = [Time.now.to_f, Time.now.to_f].hash
-
-          # # if all APIs already marked as fetched, return immediately
-          # all_done = Eventure::Repository::Status::ALL_API.all? do |api|
-          #   Eventure::Repository::Status.get_status(api) == 'true'
-          # end
-
-          # if all_done
-          #   response.status = 200
-          #   { status: 'ok', message: 'Fetch already performed' }.to_json
-          # else
-          #   result = Service::ApiActivities.new.call(total: 100, request_id: request_id, config: Eventure::App.config)
-
-          #   if result.failure?
-          #     failed = Representer::HttpResponse.new(result.failure)
-          #     response.status = failed.http_status_code
-          #     failed.to_json
-          #   else
-          #     response.status = 200
-          #     { status: 'ok', message: 'Fetch started' }.to_json
-          #   end
-          # end
+        puts "fetch_api_activities called"
+        request_id = [Time.now.to_f, Time.now.to_f].hash
+        result = Eventure::Service::ApiActivities.new.call(total: 100, request_id: request_id, config: Eventure::App.config)
+        if result.failure?
+          failed = Eventure::Representer::HttpResponse.new(result.failure)
+          puts "Failed to fetch activities: #{failed.http_status_code}"
+          response.status = failed.http_status_code
+          failed.to_json
+        else
+          puts 'successfully fetched and saved activities'
+          response.status = 200
+          { status: 'ok', message: 'Fetch started' }.to_json
         end
+      rescue StandardError => e
+        puts "Error in POST /: #{e.message}"
+        puts e.backtrace.first(5)
+        response.status = 500
+        { status: 'error', message: e.message }.to_json
       end
 
       routing.on 'api/v1' do

@@ -31,12 +31,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-    
-      # Builds on a predefined action that has Ruby installed 
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-      
+
       # 安裝 shared-mime-info
       - name: Install shared-mime-info (for mimemagic)
         run: |
@@ -47,6 +42,11 @@ jobs:
             brew update
             brew install shared-mime-info
           fi
+    
+      # Builds on a predefined action that has Ruby installed 
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Setup test database
         env: # define secrets in Github project -> settings -> secrets

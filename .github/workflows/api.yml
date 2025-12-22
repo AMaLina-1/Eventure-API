@@ -36,6 +36,11 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      
+      # 安裝 shared-mime-info
+      - name: Install shared-mime-info (for mimemagic)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y shared-mime-info
 
       - name: Setup test database
         env: # define secrets in Github project -> settings -> secrets

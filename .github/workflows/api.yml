@@ -39,8 +39,14 @@ jobs:
       
       # 安裝 shared-mime-info
       - name: Install shared-mime-info (for mimemagic)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y shared-mime-info
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y shared-mime-info
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew update
+            brew install shared-mime-info
+          fi
 
       - name: Setup test database
         env: # define secrets in Github project -> settings -> secrets

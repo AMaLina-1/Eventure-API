@@ -30,9 +30,14 @@ module Eventure
         end
       end
 
-      # 將某 API 設為 true
-      def self.write_true(api_name)
-        table.where(status_name: api_name).update(status: 'true')
+      # 將某 API 設為 success
+      def self.write_success(api_name)
+        table.where(status_name: api_name).update(status: 'success')
+      end
+
+      # 將某 API 設為 failure
+      def self.write_failure(api_name)
+        table.where(status_name: api_name).update(status: 'failure')
       end
 
       # 取得狀態（回傳 true / false / nil）

@@ -51,3 +51,16 @@ Our application provides a **one-stop event discovery platform** that helps user
 - Allowing users to apply `filters` such as `date`, `theme`, and `region` to quickly find relevant activities.
 - Providing a `save` option for users to save those activities they are interested in during a browsing session.
 - Enabling a `like` feature that allows users to express interest in activities, and the system displays their popularity based on the total number of likes.
+
+
+## User Instruction
+
+1. Use `bundle install` to install all required gems.
+
+2. Register an AWS account and create an SQS queue. Fill in the required AWS credentials and SQS configuration in `config/secrets_sample.yml`, then rename it to `config/secrets.yml`.
+
+3. Create database by `rake db:migrate`.
+
+4. Run background worker by `rake worker:run:dev`.
+
+5. Run api-Eventure program by `rake run`.

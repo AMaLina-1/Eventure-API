@@ -26,15 +26,6 @@ module FetchApi
       @publisher.publish percent
     end
 
-    # def report_progress(percent)
-    #   @last_percent ||= 0
-    #   return if percent.to_i < @last_percent
-
-    #   @last_percent = percent.to_i
-    #   @publisher.publish percent
-    # end
-
-
     # 報告 API 完成進度（根據已完成的 API 個數）
     def report_api_progress(api_name = @api_name)
       percent = FetchApi::FetchMonitor.calculate_completed_apis

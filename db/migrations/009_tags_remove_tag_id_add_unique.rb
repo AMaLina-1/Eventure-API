@@ -3,7 +3,7 @@
 Sequel.migration do
   up do
     # 關閉外鍵檢查
-    run 'PRAGMA foreign_keys = OFF' if App.environment != :production
+    run 'PRAGMA foreign_keys = OFF' if Eventure::App.environment != :production
 
     # SQLite 需要重建整個表來修改主鍵
     create_table(:tags_new) do
@@ -29,11 +29,11 @@ Sequel.migration do
     end
 
     # 開啟外鍵檢查
-    run 'PRAGMA foreign_keys = ON' if App.environment != :production
+    run 'PRAGMA foreign_keys = ON' if Eventure::App.environment != :production
   end
 
   down do
-    run 'PRAGMA foreign_keys = OFF' if App.environment != :production
+    run 'PRAGMA foreign_keys = OFF' if Eventure::App.environment != :production
 
     drop_table(:activities_tags)
     create_table(:tags) do
@@ -46,6 +46,6 @@ Sequel.migration do
       primary_key %i[activity_id tag_id]
     end
 
-    run 'PRAGMA foreign_keys = ON' if App.environment != :production
+    run 'PRAGMA foreign_keys = ON' if Eventure::App.environment != :production
   end
 end

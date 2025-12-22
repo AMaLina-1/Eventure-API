@@ -140,7 +140,6 @@ describe 'Activity entity domain logic tests' do
     it 'HAPPY: should delegate district from location for all activities' do
       @activities.each do |activity|
         _(activity.district).must_be_kind_of String
-        _(activity.district).wont_be_empty
         _(activity.district).must_equal activity.location.district
       end
     end

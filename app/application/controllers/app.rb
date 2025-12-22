@@ -33,7 +33,7 @@ module Eventure
 
         puts "fetch_api_activities called"
         request_id = [Time.now.to_f, Time.now.to_f].hash
-        result = Eventure::Service::ApiActivities.new.call(total: 10, request_id: request_id, config: Eventure::App.config)
+        result = Eventure::Service::ApiActivities.new.call(total: 20, request_id: request_id, config: Eventure::App.config)
         if result.failure?
           failed = Eventure::Representer::HttpResponse.new(result.failure)
           puts "Failed to fetch activities: #{failed.http_status_code}"
@@ -157,7 +157,9 @@ module Eventure
               cities_list = api_result.message
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
-              Representer::CityList.new(cities_list, language: lang).to_json
+              representer = Representer::CityList.new(cities_list)
+              representer.language = lang
+              representer.to_json
             end
           end
         end

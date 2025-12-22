@@ -22,7 +22,7 @@ end
 desc 'Run all tests'
 Rake::TestTask.new(:spec) do |t|
   t.pattern = 'spec/**/*_spec.rb'
-  # t.pattern = 'spec/tests_acceptance/api_spec.rb'
+  # t.pattern = 'spec/tests/integration/layers/hccg_api_spec.rb'
   # 查看詳細測試輸出: RACK_ENV=test ruby -Ilib:spec spec/XXX.rb -v
   t.warning = false
 end

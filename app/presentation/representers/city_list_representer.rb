@@ -8,6 +8,8 @@ module Eventure
     # Representer for city list
     class CityList < Roar::Decorator
       include Roar::JSON
+      
+      attr_accessor :language
 
       collection :cities
     end

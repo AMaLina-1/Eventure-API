@@ -157,7 +157,9 @@ module Eventure
               cities_list = api_result.message
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
-              Representer::CityList.new(cities_list, language: lang).to_json
+              representer = Representer::CityList.new(cities_list)
+              representer.language = lang
+              representer.to_json
             end
           end
         end

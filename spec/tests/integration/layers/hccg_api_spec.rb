@@ -44,7 +44,7 @@ describe 'Tests hccg activity API library' do
       _(@data[idx].name).wont_be_nil
       _(@data[idx].name).must_equal CORRECT[idx]['subject']
       _(@data[idx].detail).must_equal CORRECT[idx]['detailcontent']
-      _(@data[idx].location.to_s).must_equal "新竹市#{CORRECT[idx]['activityplace']}"
+      _(@data[idx].location.to_s).must_equal "新竹市#{CORRECT[idx]['activityplace'].sub('新竹市', '')}"
       _(@data[idx].voice).must_equal CORRECT[idx]['voice']
       _(@data[idx].organizer).wont_be_nil
       _(@data[idx].organizer).must_equal CORRECT[idx]['hostunit']
@@ -58,8 +58,6 @@ describe 'Tests hccg activity API library' do
 
     it 'HAPPY: should provide correct tags' do
       idx = rand(@data.length)
-      # _(@data[idx].tag_id).must_be_kind_of Array
-      # _(@data[idx].tag_id[0]).must_be_kind_of Integer
       _(@data[idx].tag).must_equal(CORRECT[idx]['subjectclass'].split(',').map { |item| item.split(']')[1] })
     end
 

@@ -1,0 +1,1621 @@
+---
+- serno: '202512170001'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][文化藝廊]光與火的對話-林瑤農玻璃工藝個展"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">林瑤農，自少年時期便投入玻璃工藝領域，近半世紀的創作生涯以「坩堝窯爐玻璃漿徒手熱塑」聞名。作為新竹市無形文化資產保存者，他傳承的是最原始、最貼近火與工藝本質的技法&mdash;&mdash;以熾熱玻璃在手中拉、擰、擠、推，直接塑形，作品保留了火候、力量與時間在材料上留下的痕跡。<br />
+    &nbsp;<br />
+    本次個展以「光與火的對話」為題，呈現林瑤農跨越年代的創作軌跡，包括器皿、雕塑、意象造型等系列。作品在透明與色彩的層次之間，展現玻璃獨有的流動性；而細緻的拉痕、壓痕與氣泡，更紀錄著瞬間成形的工藝語彙。展覽不僅展示藝術家的技法深度，更回應他與火相伴一生、以雙手與玻璃對話的創作哲學。<br />
+    &nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251217'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '6'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: "林瑤農，自少年時期便投入玻璃工藝領域，近半世紀的創作生涯以「坩堝窯爐玻璃漿徒手熱塑」聞名。作為新竹市無形文化資產保存者，他傳承的是最原始、最貼近火與工藝本質的技法——以熾熱玻璃在手中拉、擰、擠、推，直接塑形，作品保留了火候、力量與時間在材料上留下的痕跡。\n
+    \n本次個展以「光與火的對話」為題，呈現林瑤農跨越年代的創作軌跡，包括器皿、雕塑、意象造型等系列。作品在透明與色彩的層次之間，展現玻璃獨有的流動性；而細緻的拉痕、壓痕與氣泡，更紀錄著瞬間成形的工藝語彙。展覽不僅展示藝術家的技法深度，更回應他與火相伴一生、以雙手與玻璃對話的創作哲學。\n"
+  hostunit: 新竹市文化局
+  jointunit: 新竹市文化局
+  invite: ''
+  activitysdate: '202601070900'
+  activityedate: '202601251700'
+  activityplace: 文化藝廊
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202512170001'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202512170001'
+    detailno: 1
+    flag: pic
+    clientfile: 圖一(兩張都放).jpg
+    serverfile: 202512171336050.jpg
+    expfile: '1'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512171336050.jpg&filedisplay=圖一(兩張都放).jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '444196'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202512170001'
+    detailno: 2
+    flag: pic
+    clientfile: 圖二(兩張都放).jpg
+    serverfile: 202512171336051.jpg
+    expfile: '2'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512171336051.jpg&filedisplay=圖二(兩張都放).jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '331105'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202512030001'
+  pubunitdn: OU=2503,OU=2500,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 綜合事務科
+  subject: 風城耶誕嘉年華 竹塹異國美食節
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">為展現本市對外籍移工的重視與關懷，促進本地居民與外國朋友之間的理解與交流，並推動多元文化共融，特辦理「外國人節慶活動」。透過文化展演、美食共享、才藝互動及法令宣導，營造友善、包容的城市氛圍。<br />
+    <br />
+    <img alt="風城耶誕嘉年華 竹塹異國美食節01" src="/userfiles/2503/images/%E9%A2%A8%E5%9F%8E%E8%80%B6%E8%AA%95%E5%98%89%E5%B9%B4%E8%8F%AF%E7%AB%B9%E5%A1%B9%E7%95%B0%E5%9C%8B%E7%BE%8E%E9%A3%9F%E7%AF%80edm_01.jpg" style="width: 100%; height: auto; padding: 3px;" title="風城耶誕嘉年華 竹塹異國美食節01" /><img alt="風城耶誕嘉年華 竹塹異國美食節02" src="/userfiles/2503/images/%E9%A2%A8%E5%9F%8E%E8%80%B6%E8%AA%95%E5%98%89%E5%B9%B4%E8%8F%AF%E7%AB%B9%E5%A1%B9%E7%95%B0%E5%9C%8B%E7%BE%8E%E9%A3%9F%E7%AF%80edm_02.jpg" style="width: 100%; height: auto; padding: 3px;" title="風城耶誕嘉年華 竹塹異國美食節02" /></div>
+    </div>
+    </div>
+  posterdate: '20251203'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: 03- 5320674
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '551'
+  subjectid: '83'
+  subjectclass: "[860]勞動行政"
+  administationid: '1179'
+  administationclass: "[966]外籍勞工"
+  serviceid: '309'
+  serviceclass: "[951]表演活動"
+  languagetype: chinese
+  copyright: ''
+  voice: 為展現本市對外籍移工的重視與關懷，促進本地居民與外國朋友之間的理解與交流，並推動多元文化共融，特辦理「風城耶誕嘉年華 竹塹異國美食節」。活動日期為114年12月14日17：00至19：00，活動地點於新竹火車站-站前廣場（新竹市東區中正路1號旁）。透過文化展演、美食共享、才藝互動及法令宣導，營造友善、包容的城市氛圍。
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512141700'
+  activityedate: '202512141900'
+  activityplace: 新竹火車站-站前廣場（新竹市東區中正路1號旁）
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202512030001'
+    detailno: 1
+    mserno: '201603080001'
+    msernoname: 活動訊息
+    websitedn: ou=labor,ou=ap_root,o=hccg,c=tw
+    websitename: 勞工處
+    websiteexam: "Y"
+    websiteexamdate: '2025-12-03'
+    websiteexamname: 55+z5puc56aO
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '0'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202512030001'
+    detailno: 1
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm_01.jpg
+    serverfile: 202512031517170.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512031517170.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm_01.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2507324'
+    readnumber: 'null'
+    datasort: 1
+  - serno: '202512030001'
+    detailno: 2
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm_02.jpg
+    serverfile: 202512031517171.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節活動行程edm
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512031517171.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm_02.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2298486'
+    readnumber: 'null'
+    datasort: 2
+  - serno: '202512030001'
+    detailno: 3
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-印尼文_01_0.jpg
+    serverfile: 202512041619570.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-印尼文
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041619570.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-印尼文_01_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2531535'
+    readnumber: 'null'
+    datasort: 5
+  - serno: '202512030001'
+    detailno: 4
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-印尼文_02_0.jpg
+    serverfile: 202512041619571.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm流程-印尼文_
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041619571.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-印尼文_02_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2425376'
+    readnumber: 'null'
+    datasort: 6
+  - serno: '202512030001'
+    detailno: 5
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-英文_01_0.jpg
+    serverfile: 202512041629320.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-英文
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041629320.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-英文_01_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2541741'
+    readnumber: 'null'
+    datasort: 3
+  - serno: '202512030001'
+    detailno: 6
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-英文_02_0.jpg
+    serverfile: 202512041629321.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-英文流程
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041629321.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-英文_02_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2639544'
+    readnumber: 'null'
+    datasort: 4
+  - serno: '202512030001'
+    detailno: 7
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-泰文_01_0.jpg
+    serverfile: 202512041630070.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-泰文
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041630070.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-泰文_01_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2536875'
+    readnumber: 'null'
+    datasort: 9
+  - serno: '202512030001'
+    detailno: 8
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-泰文_02_0.jpg
+    serverfile: 202512041630071.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-泰文流程
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041630071.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-泰文_02_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2460120'
+    readnumber: 'null'
+    datasort: 10
+  - serno: '202512030001'
+    detailno: 9
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-越南文_01_0.jpg
+    serverfile: 202512041630300.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-越南文
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041630300.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-越南文_01_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2642585'
+    readnumber: 'null'
+    datasort: 7
+  - serno: '202512030001'
+    detailno: 10
+    flag: pic
+    clientfile: 風城耶誕嘉年華竹塹異國美食節edm-越南文_02_0.jpg
+    serverfile: 202512041630301.jpg
+    expfile: 風城耶誕嘉年華竹塹異國美食節edm-越南文流程
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202512041630301.jpg&filedisplay=風城耶誕嘉年華竹塹異國美食節edm-越南文_02_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '2707531'
+    readnumber: 'null'
+    datasort: 8
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202512020004'
+  pubunitdn: OU=5003,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 表演藝術科
+  subject: "[表演][演藝廳]聲．韻．流光 公益音樂會"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03"><br />
+    「聲．韻．流光」音樂會由新笙合唱團主辦，並邀請台大EMBA合唱團攜手共同主辦。兩團理念契合，期望以音樂喚起對文化、環境及社會的關懷。節目選曲橫跨古典與當代、東方與西方，兼具莊嚴與抒情、純粹與熱情，展現合唱藝術的多樣風貌。<br />
+    新笙合唱團｜由指揮暨藝術總監沈新欽博士於2018年4月成立，平時致力於推廣新竹音樂教育、合唱樂趣，並以音樂參與慈善公益活動為理念。每年固定舉辦音樂會並積極參與地方演出，曲目風格涵蓋百老匯、世界知名樂曲、本土歌曲、流行、爵士及宗教聖樂等多樣類型的合唱音樂。台大EMBA合唱團｜2003年成立，以合唱歌聲凝聚團員間的向心力，推動本土文化藝術的深耕與發展。2015 年邀請指揮家彭孟賢老師擔任藝術總監暨指揮。鋼琴合作為陳育志老師。團員來自台大EMBA師生、校友及愛好歌唱之親朋好友。<br />
+    <br />
+    <img alt="cover" src="/userfiles/5003/images/%E6%96%B0%E7%AC%99%E5%90%88%E5%94%B1%E5%9C%981227%E5%AE%A3%E5%82%B3%E9%9B%BB%E5%AD%90%E6%AA%941080_1440.jpg" style="width: 99%; height: auto; padding: 3px;" title="cover" /><br />
+    <br />
+    售票OPENTIX兩廳院文化生活300/500/800/1000元<br />
+    【優惠方案】<br />
+    身心障礙人士及陪同者1名5折（入場時應出示身心障礙手冊，陪同者與身障者需同時入場）；團體5人以上8折；新竹市文化局演藝廳會員9折。<br />
+    <br />
+    &nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251202'
+  closedate: '20260103'
+  startusing: '0'
+  liaisonper: 新笙合唱團
+  liaisontel: '0912-245194'
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '70'
+  subjectid: '4,41'
+  subjectclass: "[400]教育文化,[440]文化藝術"
+  administationid: '13,337,1536'
+  administationclass: "[D00]文化及觀光,[D70]視覺與表演藝術,[D72]表演藝術"
+  serviceid: '9,66,309'
+  serviceclass: "[900]休閒旅遊,[950]藝術文化,[951]表演活動"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    售票OPENTIX兩廳院文化生活300/500/800/1000元
+    【優惠方案】
+    身心障礙人士及陪同者1名5折（入場時應出示身心障礙手冊，陪同者與身障者需同時入場）；團體5人以上8折；新竹市文化局演藝廳會員9折。
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512271430'
+  activityedate: '202512271630'
+  activityplace: 本局演藝廳音樂廳
+  activitydateremark: 中場休息20分鐘
+  posterdatalist:
+  - serno: '202512020004'
+    detailno: 1
+    mserno: '202205270002'
+    msernoname: 表演、影展及其他藝文
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist: []
+  resourcedatalist:
+  - serno: '202512020004'
+    detailno: 1
+    relateurl: https://www.opentix.life/event/1966326381702774784
+    relatename: "售票連結\t"
+    target: "Y"
+    readnumber: 
+    datasort: 9999999
+  - serno: '202512020004'
+    detailno: 2
+    relateurl: " https://www.facebook.com/dongda17/posts/pfbid02sgGd1h4Nj1wJnaFYxdsjBMBjFNaKHXTPH6mjGVv9vncKqfEBkkQGP9e3i93M9NaLl"
+    relatename: "因目前新竹市文化局演藝廳周邊工程施作，進館動線和周邊停車資訊請詳見風城演藝公告。\t"
+    target: "Y"
+    readnumber: 
+    datasort: 9999999
+  mapdatalist: []
+- serno: '202512020003'
+  pubunitdn: OU=5003,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 表演藝術科
+  subject: "[表演][演藝廳]新竹市立青少年管樂團《管樂五行》"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03"><br />
+    東方文化以「五行」的概念建構的世界觀，通常以華人「金」、「木」、「水」、「火」、「土」來討論；而西方文化類似的觀念則有「風」、「火」、「水」和「土」來討論地球的基本形成要素。以「五行」為要點的管樂音樂會的主題能作為呼應愛護地球與世界，提醒人類珍愛我們僅有的資源，愛護地球。<br />
+    本次音樂會彙整東西文化，將「五行」元素擴充為「金、土、木、水、風、火」，分別以一首曲目作為主題。講述掏「金」熱的《黃金的秘密》開場，緊接著以充滿愛爾蘭地區風情的《杜拉摩聖地》做為「土」，接續日本小學生音樂教科書教唱的〈紅葉〉襯托出「木」的主題；再以非洲尼羅河溯源的〈尼羅河的源頭〉作為「水」的主題。迪士尼《風中奇緣》選粹吹拂起「風」的元素；再以比利時兩個樂團合併的委託創作《疾風如火》來燃燒「火」的意象。最後以美國原住民音樂頌讚自然元素「天地水火」的《自然元素之歌》作為總結。<br />
+    8杜拉摩聖地CARL WITTROCK: Lord Tullamore<br />
+    9黃金之密OTTO M. SCHWARZ: The Golden Secret<br />
+    8疾風如火BERT APPERMONT: Winds On Fire<br />
+    8尼羅河的源頭THIERRY MULLER: Nil sounkoro (aux sources du Nil)<br />
+    5紅葉&nbsp; 岡野真一: Momiji (The Maple Leaves of Autumn) (Arr. by 保科洋)<br />
+    13風中奇緣組曲 ALAN MENKEN: Highlights From POCAHONTAS (Arr. by JOHN MOSS)<br />
+    9自然元素之歌ROBERT W. SMITH: Songs of Earth, Water, Fire and Sky<br />
+    <br />
+    <img alt="cover" src="/userfiles/5003/images/2025%E7%AE%A1%E6%A8%82%E4%BA%94%E8%A1%8C_post_52x76cm.jpg" style="width: 99%; height: auto; padding: 3px;" title="cover" /><br />
+    <br />
+    售票OPENTIX兩廳院文化生活200/400/500元<br />
+    【優惠方案】<br />
+    學生、軍警8折；新竹市演藝廳會員9折（以上最低票不折扣），更多優惠請詳售票網。<br />
+    <br />
+    &nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251202'
+  closedate: '20251228'
+  startusing: '0'
+  liaisonper: 郭老師
+  liaisontel: '0955-321785'
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '73'
+  subjectid: '4,41'
+  subjectclass: "[400]教育文化,[440]文化藝術"
+  administationid: '13,337,1536'
+  administationclass: "[D00]文化及觀光,[D70]視覺與表演藝術,[D72]表演藝術"
+  serviceid: '9,66,309'
+  serviceclass: "[900]休閒旅遊,[950]藝術文化,[951]表演活動"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    售票OPENTIX兩廳院文化生活200/400/500元
+    【優惠方案】
+    學生、軍警8折；新竹市演藝廳會員9折（以上最低票不折扣），更多優惠請詳售票網。
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512211430'
+  activityedate: '202512211545'
+  activityplace: 本局演藝廳音樂廳
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202512020003'
+    detailno: 1
+    mserno: '202205270002'
+    msernoname: 表演、影展及其他藝文
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist: []
+  resourcedatalist:
+  - serno: '202512020003'
+    detailno: 1
+    relateurl: https://s.opentix.life/p/Pe51e8236
+    relatename: "售票連結\t"
+    target: "Y"
+    readnumber: 
+    datasort: 9999999
+  - serno: '202512020003'
+    detailno: 2
+    relateurl: " https://www.facebook.com/dongda17/posts/pfbid02sgGd1h4Nj1wJnaFYxdsjBMBjFNaKHXTPH6mjGVv9vncKqfEBkkQGP9e3i93M9NaLl"
+    relatename: "因目前新竹市文化局演藝廳周邊工程施作，進館動線和周邊停車資訊請詳見風城演藝公告。\t"
+    target: "Y"
+    readnumber: 
+    datasort: 9999999
+  mapdatalist: []
+- serno: '202512020002'
+  pubunitdn: OU=5003,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 表演藝術科
+  subject: "[表演][演藝廳]新竹市立管樂團三十週年團慶暨常任指揮吳建銘老師榮退音樂會《交響》< Symphonic >"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03"><br />
+    法國大革命後，木管與銅管樂器的改良和閥門發明，使得管樂器新創發明，大型現代管樂團可以實現。<br />
+    19世紀後半，法國採納Adolphe Sax對音響影響深遠的薩克斯號與薩克斯風家族，在管樂團配器法著作提出後，樂團人數增加，木管幾乎倍增，且加入低音提琴等樂器，使配器、分工上更為交響化，法式音響配器已然成熟！<br />
+    20世紀，配器已高度複雜，除了作曲家認可並親自委託改編其管弦作品，也有作曲家以法式交響化編制為基礎原創作品。<br />
+    新竹市立管樂團成立三十年，一路相伴的吳建銘老師將榮退，基於對作品的知識，輔以老師長期任職於國家交響樂團對交響作品認知，忠實呈現法、比的改編與原創！表演團隊｜新竹市立管樂團<br />
+    秉持「音樂即生活、生活即音樂」理念的新竹市立管樂團自1995年成立以來，不斷嘗試開發管樂演出的多樣性，除了發表新創、編管樂作品演出外，亦多次嘗試包含不同元素，如：客家音樂、戲劇的跨界展演。前身是教師管樂團的我們，也不忘藝術教育、推廣紮根的社會責任，除不定期舉辦與民眾互動的戶外音樂會，也為小小聽眾闔家定期規劃親子音樂會演出。<br />
+    <br />
+    <img alt="cover" src="/userfiles/5003/images/20251024%E6%96%B0%E7%AB%B9%E5%B8%82%E6%96%87%E5%8C%96%E5%B1%80%E6%91%BA%E9%A0%81%E6%B5%B7%E5%A0%B1%E6%8F%90%E4%BE%9B.jpg" style="width: 99%; height: auto; padding: 3px;" title="cover" /><br />
+    <br />
+    售票OPENTIX兩廳院文化生活300/500元<br />
+    【優惠方案】<br />
+    新竹市演藝廳會員9折；學生票8折；更多優惠請詳售票網。<br />
+    <br />
+    <br />
+    <br />
+    <br />
+    &nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251202'
+  closedate: '20251227'
+  startusing: '0'
+  liaisonper: 邱先生
+  liaisontel: '0973-209-930'
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '107'
+  subjectid: '4,41'
+  subjectclass: "[400]教育文化,[440]文化藝術"
+  administationid: '13,337,1536'
+  administationclass: "[D00]文化及觀光,[D70]視覺與表演藝術,[D72]表演藝術"
+  serviceid: '9,66,309'
+  serviceclass: "[900]休閒旅遊,[950]藝術文化,[951]表演活動"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    售票OPENTIX兩廳院文化生活300/500元
+    【優惠方案】
+    新竹市演藝廳會員9折；學生票8折；更多優惠請詳售票網。
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512201430'
+  activityedate: '202512201600'
+  activityplace: 本局演藝廳音樂廳
+  activitydateremark: 中場休息20分鐘
+  posterdatalist:
+  - serno: '202512020002'
+    detailno: 1
+    mserno: '202205270002'
+    msernoname: 表演、影展及其他藝文
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist: []
+  resourcedatalist:
+  - serno: '202512020002'
+    detailno: 1
+    relateurl: https://www.opentix.life/event/1960984755842035713
+    relatename: "售票連結\t"
+    target: "Y"
+    readnumber: 
+    datasort: 9999999
+  - serno: '202512020002'
+    detailno: 2
+    relateurl: " https://www.facebook.com/dongda17/posts/pfbid02sgGd1h4Nj1wJnaFYxdsjBMBjFNaKHXTPH6mjGVv9vncKqfEBkkQGP9e3i93M9NaLl"
+    relatename: "因目前新竹市文化局演藝廳周邊工程施作，進館動線和周邊停車資訊請詳見風城演藝公告。\t"
+    target: "Y"
+    readnumber: 
+    datasort: 9999999
+  mapdatalist: []
+- serno: '202511270003'
+  pubunitdn: OU=7200,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 家庭教育中心
+  subject: "【轉知/交通部】宣導交通安全~「減速停讓，安全MVP就是你」，提供相關影片連結，歡迎下載、運用～"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">交通部製作之「減速停讓，安全MVP就是你」等影片連結如下，歡迎下載、運用：<br />
+    (一) 「減速停讓，安全MVP就是你 」：<a href="https://168.motc.gov.tw/theme/video/post/2511071210803" title="https://168.motc.gov.tw/theme/video/post/2511071210803。">https://168.motc.gov.tw/theme/video/post/2511071210803</a><br />
+    (二) 「提早70來換照」：<a href="https://168.motc.gov.tw/theme/video/post/2511041721433">https://168.motc.gov.tw/theme/video/post/2511041721433</a><br />
+    (三) 「路口換新裝，安全更進化」：<a href="https://168.motc.gov.tw/theme/video/post/2510271010239">https://168.motc.gov.tw/theme/video/post/2510271010239</a><br />
+    (四) 「停讓是最溫柔的守護」：<a href="https://168.motc.gov.tw/theme/video/post/2510021155643">https://168.motc.gov.tw/theme/video/post/2510021155643</a><br />
+    (五) 「行人安全全面守護」：<a href="https://168.motc.gov.tw/theme/video/post/2508191801028">https://168.motc.gov.tw/theme/video/post/2508191801028</a><br />
+    (六) 「高風險駕駛駕照縮水」：<a href="https://168.motc.gov.tw/theme/video/post/2508111424418">https://168.motc.gov.tw/theme/video/post/2508111424418</a><br />
+    (七) 「交安任務，最佳保護」：<a href="https://168.motc.gov.tw/theme/video/post/2506041149108">https://168.motc.gov.tw/theme/video/post/2506041149108</a></div>
+    </div>
+    </div>
+  posterdate: '20251127'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '60'
+  subjectid: '61'
+  subjectclass: "[610]交通運輸"
+  administationid: '1102'
+  administationclass: "[853]交通安全宣導"
+  serviceid: '74'
+  serviceclass: "[AZ0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: "【轉知/交通部】宣導交通安全~「減速停讓，安全MVP就是你」"
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511270000'
+  activityedate: '202512310000'
+  activityplace: 無
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202511270003'
+    detailno: 1
+    mserno: '201604260001'
+    msernoname: 活動訊息
+    websitedn: ou=family,ou=ap_root,o=hccg,c=tw
+    websitename: 家庭教育中心
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-12-31'
+    datasort: 9999999
+    examineemail: '0'
+    examineexplain: ''
+  filedatalist: []
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511250001'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][新竹市鐵道藝術村]《路上的紅色滋味｜徐知佑個展》 "
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">▎關於展覽｜<br />
+    《路上的紅色滋味》源自藝術家徐知佑在新竹街巷漫步時的感知經驗。作為台灣最古老的城市之一，新竹的斑駁牆面、防盜窗框、密集的機車、繁麗的廟宇裝飾與散落城區的紅色景緻，皆成為藝術家創作的觸發點。這些風景不僅是外在景象，也引發他對內在記憶的回望，如童年那段曾相信「遊戲也具有意識」的回憶，使陌生城市的畫面呈現如夢境般的流動性，凝聚為記憶與想像的碎片。<br />
+    透過重新組構的場所與物件，這些碎片轉化為意象的源頭與想像的原型，在異域經驗與內在記憶之間持續流動，以創造性的方式不斷變化，並最終形成跨越時空的「存在」意象。藝術家取材自新竹常民生活與日常物件，結合蘊含願望與祥瑞的象徵語彙，使作品在抽象感受與具體形態之間建立連結；展出的雕塑亦非源於預設，而是在場所氛圍、回憶與情緒的交織下自然生成。<br />
+    在《路上的紅色滋味》中，我們將感受到穿越時代、甫抵達此地的城市喧囂。從這份「當下性」出發，徐知佑的雕塑如一種迴響，以「自我復原」的回憶形式與城市共鳴，展現持續生成其存在的生命力。<br />
+    <br />
+    ※以上展訊內容改寫自作者Mo-hee文章，完整資訊請見 ARTTIME 藝術網：</div>
+
+    <div class="main-a_03">https://www.arttime.com.tw/?md=index&amp;cl=artArea&amp;at=artAreaCont&amp;id=16209</div>
+    </div>
+    </div>
+  posterdate: '20251125'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '164'
+  subjectid: '4,41'
+  subjectclass: "[400]教育文化,[440]文化藝術"
+  administationid: '337,1535'
+  administationclass: "[D70]視覺與表演藝術,[D71]視覺藝術"
+  serviceid: '9,66'
+  serviceclass: "[900]休閒旅遊,[950]藝術文化"
+  languagetype: chinese
+  copyright: ''
+  voice: "《路上的紅色滋味》源自藝術家徐知佑在新竹街巷漫步時的感知經驗。作為台灣最古老的城市之一，新竹的斑駁牆面、防盜窗框、密集的機車、繁麗的廟宇裝飾與散落城區的紅色景緻，皆成為藝術家創作的觸發點。這些風景不僅是外在景象，也引發他對內在記憶的回望，如童年那段曾相信「遊戲也具有意識」的回憶，使陌生城市的畫面呈現如夢境般的流動性，凝聚為記憶與想像的碎片。透過重新組構的場所與物件，這些碎片轉化為意象的源頭與想像的原型，在異域經驗與內在記憶之間持續流動，以創造性的方式不斷變化，並最終形成跨越時空的「存在」意象。藝術家取材自新竹常民生活與日常物件，結合蘊含願望與祥瑞的象徵語彙，使作品在抽象感受與具體形態之間建立連結；展出的雕塑亦非源於預設，而是在場所氛圍、回憶與情緒的交織下自然生成。在《路上的紅色滋味》中，我們將感受到穿越時代、甫抵達此地的城市喧囂。從這份「當下性」出發，徐知佑的雕塑如一種迴響，以「自我復原」的回憶形式與城市共鳴，展現持續生成其存在的生命力。"
+  hostunit: 財團法人新竹市文化基金會、新竹市鐵道藝術村、智邦藝術基金會、日本橫濱市黃金町區域管理中心
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511280000'
+  activityedate: '202512140000'
+  activityplace: 將軍村K棟(新竹市東區金城一路71巷5號．戶外庭院區)
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202511250001'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-12-15'
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202511250001'
+    detailno: 1
+    flag: pic
+    clientfile: "[ziu suh] web全(修)-04.png"
+    serverfile: 202511251201220.png
+    expfile: ZIU展覽宣傳
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511251201220.png&filedisplay=[ziu
+      suh] web全(修)-04.png&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '193688'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202510150001'
+  pubunitdn: OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 文化局
+  subject: "[展覽][文化藝廊]<114 年度新竹市小小策展人培力計畫>成果展"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">由新竹市文化局主辦的《114 年度新竹市小小策展人培力計畫》，以「生命故事」為主題，引導學童透過藝術創作與策展，與典藏作品建立連結，思考如何用展覽說出屬於自己的故事。今年共有五所學校、19 位學童參與，在暑期投入五天的策展培力營，學習策展流程、空間配置、創作發想與展覽行銷，並於秋季回到校園實踐策展成果。繼東園國小、關埔國小率先登場後，本週起由華德福實驗教育學校、清華大學附設實驗小學與北門國小接力展出，為校園注入滿滿創意與生命力。</div>
+    </div>
+    </div>
+  posterdate: '20251015'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '262'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '9'
+  serviceclass: "[900]休閒旅遊"
+  languagetype: chinese
+  copyright: ''
+  voice: 由新竹市文化局主辦的《114 年度新竹市小小策展人培力計畫》，以「生命故事」為主題，引導學童透過藝術創作與策展，與典藏作品建立連結，思考如何用展覽說出屬於自己的故事。今年共有五所學校、19
+    位學童參與，在暑期投入五天的策展培力營，學習策展流程、空間配置、創作發想與展覽行銷，並於秋季回到校園實踐策展成果。繼東園國小、關埔國小率先登場後，本週起由華德福實驗教育學校、清華大學附設實驗小學與北門國小接力展出，為校園注入滿滿創意與生命力。
+  hostunit: '新竹市文化局
+
+    '
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511050900'
+  activityedate: '202511231700'
+  activityplace: 文化藝廊
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202510150001'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202510150001'
+    detailno: 1
+    flag: pic
+    clientfile: 小小策展人.png
+    serverfile: 202510151408490.png
+    expfile: '123'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510151408490.png&filedisplay=小小策展人.png&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '477421'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202510130003'
+  pubunitdn: OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 文化局
+  subject: "[展覽][演藝廳A、B展區]世界展望會世界兒童人權日公益畫展"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">為響應 11 月 20 日「世界兒童人權日」，台灣世界展望會北區辦公室特別攜手美學王子兒童藝術與新竹在地藝術家、學校，共同舉辦【世界兒童人權日公益畫展】，展期自 11 月 12 日至 11 月 23 日，於 新竹市演藝廳展覽空間 盛大展出。<br />
+    本次展覽以「愛與關懷、希望與未來」為核心，邀請綠菓幼兒園、梅花國小繪畫班等學校師生，與藝術家攜手完成 八幅大型畫布作品；並展出 500 幅 A4 童/同心作品拼接而成的大型藝術牆，展現孩子們以純真筆觸描繪的夢想與盼望。此外，也特別呈現「米羅藝術共創」成果，讓觀者透過藝術感受孩子的心聲。<br />
+    世界展望會長期致力於守護兒童權益，透過資助計畫、教育關懷、急難救助等服務，幫助弱勢孩子有機會安心就學、健康成長。本次公益畫展不僅是藝術交流，更是孩子們發聲的平台，邀請社會大眾以行動回應，支持更多需要幫助的兒童。<br />
+    誠摯邀請您蒞臨展覽現場，一同走進孩子的創作世界。讓我們透過藝術傳遞善意與愛，為孩子們的未來點亮希望。<br />
+    &nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251013'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '497'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    為響應 11 月 20 日「世界兒童人權日」，台灣世界展望會北區辦公室特別攜手美學王子兒童藝術與新竹在地藝術家、學校，共同舉辦【世界兒童人權日公益畫展】，展期自 11 月 12 日至 11 月 23 日，於 新竹市演藝廳展覽空間 盛大展出。
+    本次展覽以「愛與關懷、希望與未來」為核心，邀請綠菓幼兒園、梅花國小繪畫班等學校師生，與藝術家攜手完成 八幅大型畫布作品；並展出 500 幅 A4 童/同心作品拼接而成的大型藝術牆，展現孩子們以純真筆觸描繪的夢想與盼望。此外，也特別呈現「米羅藝術共創」成果，讓觀者透過藝術感受孩子的心聲。
+    世界展望會長期致力於守護兒童權益，透過資助計畫、教育關懷、急難救助等服務，幫助弱勢孩子有機會安心就學、健康成長。本次公益畫展不僅是藝術交流，更是孩子們發聲的平台，邀請社會大眾以行動回應，支持更多需要幫助的兒童。
+    誠摯邀請您蒞臨展覽現場，一同走進孩子的創作世界。讓我們透過藝術傳遞善意與愛，為孩子們的未來點亮希望。
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511120900'
+  activityedate: '202511231700'
+  activityplace: ''
+  activitydateremark: 一休館、中午12:00-13:00休館
+  posterdatalist:
+  - serno: '202510130003'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202510130003'
+    detailno: 1
+    flag: pic
+    clientfile: LINE_NOTE_250926_1_0.jpg
+    serverfile: 202510131405480.jpg
+    expfile: '1'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510131405480.jpg&filedisplay=LINE_NOTE_250926_1_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '224051'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202510130003'
+    detailno: 2
+    flag: pic
+    clientfile: P1290410_0.jpg
+    serverfile: 202510131405481.jpg
+    expfile: '2'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510131405481.jpg&filedisplay=P1290410_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '555687'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202510130003'
+    detailno: 3
+    flag: pic
+    clientfile: P1320397_0.jpg
+    serverfile: 202510131405482.jpg
+    expfile: '3'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510131405482.jpg&filedisplay=P1320397_0.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '784697'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202510140003'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][美術館]百年的想像之地"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">以新竹市美術館(前新竹市役所)的百年歷史為主軸，透過歷史回顧、文化反思與當代藝術的多元對話，探討以古蹟作為主體的美術館在城市與藝術發展中的意義。策展以遷徙、築徑、知識三組核心概念，建立跨領域的研究與創作架構，並透過田野調查、地景測繪、聲音與植物的檔案建構、口述歷史與教育協作，發展歷史建築、環境與當代藝術的創新對話。</div>
+    </div>
+    </div>
+  posterdate: '20251014'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '396'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: 以新竹市美術館(前新竹市役所)的百年歷史為主軸，透過歷史回顧、文化反思與當代藝術的多元對話，探討以古蹟作為主體的美術館在城市與藝術發展中的意義。策展以遷徙、築徑、知識三組核心概念，建立跨領域的研究與創作架構，並透過田野調查、地景測繪、聲音與植物的檔案建構、口述歷史與教育協作，發展歷史建築、環境與當代藝術的創新對話。
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511040900'
+  activityedate: '202601111700'
+  activityplace: 新竹市美術館
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202510140003'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2026-01-12'
+    datasort: 8
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202510140003'
+    detailno: 1
+    flag: pic
+    clientfile: 十月折頁_完稿.jpg
+    serverfile: 202510141450340.jpg
+    expfile: 主視覺
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510141450340.jpg&filedisplay=十月折頁_完稿.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '10137653'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202510140002'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][241藝術空間][SS藝術空間]《洋蔥－眼淚不會白流　Onion－Tears into Laughters》"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">我用洋蔥敘述人的一生&hellip;</div>
+    </div>
+    </div>
+  posterdate: '20251014'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '296'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: 我用洋蔥敘述人的一生…
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511081000'
+  activityedate: '202512141800'
+  activityplace: 241藝術空間
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202510140002'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-12-15'
+    datasort: 7
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202510140002'
+    detailno: 1
+    flag: pic
+    clientfile: DSC_1606(241SS文宣圖).JPG
+    serverfile: 202510141052270.JPG
+    expfile: 主視覺
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510141052270.JPG&filedisplay=DSC_1606(241SS文宣圖).JPG&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '1593666'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202510130001'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][241藝術空間]好字為之的時代"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">&lt;好字為之&gt;取自好自為之的雙關意涵，探討文字的弦外之音外，也探究文字於當代的角色和意義。<br />
+    好自為之的典故來自&lt;淮南子，主術訓&gt;，原文為:君人者不任能好自為之，則智日困而自負其責也。<br />
+    AI科技興起後，從文字的載體，傳播方式到產出的主體都被改變，一切更快速的時代，權力的集中到釋放都在不同層面顯現。<br />
+    好自為之於當代的語境與意涵已有所不同，我們現在到底身處於哪個好自為之的時代呢</div>
+    </div>
+    </div>
+  posterdate: '20251013'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '555'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: |-
+    <好字為之>取自好自為之的雙關意涵，探討文字的弦外之音外，也探究文字於當代的角色和意義。
+    好自為之的典故來自<准南子，主術訓>，原文為:君人者不任能好自為之，則智日困而自負其責也。
+    AI科技興起後，從文字的載體，傳播方式到產出的主體都被改變，一切更快速的時代，權力的集中到釋放都在不同層面顯現。
+    好自為之於當代的語境與意涵已有所不同，我們現在到底身處於哪個好自為之的時代呢
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511081000'
+  activityedate: '202601181800'
+  activityplace: 241藝術空間
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202510130001'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2026-01-19'
+    datasort: 6
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202510130001'
+    detailno: 1
+    flag: pic
+    clientfile: 11月藝文活動摺頁_19.8x21cm.jpg
+    serverfile: 202510131325270.jpg
+    expfile: ''
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510131325270.jpg&filedisplay=11月藝文活動摺頁_19.8x21cm.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '617738'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202510150002'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][文化藝廊]新竹寫生日成果展"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">「新竹寫生日」於2015年由在地畫家、藝文社團及畫會自主發起，今年有來自台北、新北、桃園、苗栗、台中、彰化及高雄的畫友，共繳交196件作品，並由普思公司贊助遵爵全棉水彩、風琴冊頁本、AP水彩畫布板及馬可威勾勒線筆，給共襄盛舉參與團拍繳件的畫家，希望能有更多人來新竹畫畫，藉由畫筆來展現新竹風情之美！<br />
+    11月30日舉辦開幕典禮，除頒發感謝狀予藝術家外，更邀請新竹寫生日發起人姚植傑老師，進行寫生技法示範「寫生應該怎麼畫？」寫生時應該想什麼？寫生之前應有的準備？歡迎共襄盛舉。<br />
+    本檔展覽將邀請2025年春秋兩季的寫生日作品，共100件精彩創作至文化藝廊展出，內容包含美術館、護城河、228公園、北大教堂、一信、大同舊橋、中央路街景、市政府、東門市場、東門城、長和宮、青少年館、玻工館、樹屋、眷村博物館、十八尖山、新竹公園、火車站、州圖、警務部長官舍、城隍廟、動物園、鄭氏家廟、金香行、燒肉館等，作者包含駱金威、張柏舟、姚植傑、陳顯章、郭正宏、吳瑋茵、邱竹于、許舒晴及黃芝玉等藝術家，歡迎有興趣的朋友一起來欣賞藝術家彩筆下的新竹。</div>
+    </div>
+    </div>
+  posterdate: '20251015'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '792'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '314'
+  serviceclass: "[95Z]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    「新竹寫生日」於2015年由在地畫家、藝文社團及畫會自主發起，今年有來自台北、新北、桃園、苗栗、台中、彰化及高雄的畫友，共繳交196件作品，並由普思公司贊助遵爵全棉水彩、風琴冊頁本、AP水彩畫布板及馬可威勾勒線筆，給共襄盛舉參與團拍繳件的畫家，希望能有更多人來新竹畫畫，藉由畫筆來展現新竹風情之美！
+    11月30日舉辦開幕典禮，除頒發感謝狀予藝術家外，更邀請新竹寫生日發起人姚植傑老師，進行寫生技法示範「寫生應該怎麼畫？」寫生時應該想什麼？寫生之前應有的準備？歡迎共襄盛舉。
+    本檔展覽將邀請2025年春秋兩季的寫生日作品，共100件精彩創作至文化藝廊展出，內容包含美術館、護城河、228公園、北大教堂、一信、大同舊橋、中央路街景、市政府、東門市場、東門城、長和宮、青少年館、玻工館、樹屋、眷村博物館、十八尖山、新竹公園、火車站、州圖、警務部長官舍、城隍廟、動物園、鄭氏家廟、金香行、燒肉館等，作者包含駱金威、張柏舟、姚植傑、陳顯章、郭正宏、吳瑋茵、邱竹于、許舒晴及黃芝玉等藝術家，歡迎有興趣的朋友一起來欣賞藝術家彩筆下的新竹。
+  hostunit: '新竹市文化局
+
+    '
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511260900'
+  activityedate: '202512141700'
+  activityplace: 文化藝廊
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202510150002'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-12-15'
+    datasort: 5
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202510150002'
+    detailno: 1
+    flag: pic
+    clientfile: 寫生日.png
+    serverfile: 202510151429320.png
+    expfile: '123'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202510151429320.png&filedisplay=寫生日.png&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '129661'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511120004'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][演藝廳A、B展區]「有愛無礙，夢想盛開」新竹市114年度特殊教育學生美術比賽曁得獎作品美展"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">今年是新竹市特殊教育學生美術比賽第21週年，本市21年來持續推動這項有意義的比賽，期盼提供特殊需求學生一個盡情揮灑、展現光芒的舞台，另外也透過宣導組比賽項目推廣融合教育，促進更多學生與社會大眾一同尊重關懷生活周遭有特殊需求的人，伸出友誼之手，傳遞社會溫情。<br />
+    本次展覽以「有愛無礙，夢想盛開」為主題，鼓勵參賽者透過藝術創作展現包容與友愛的力量，讓愛與夢想在一個無障礙的環境中，得以燦爛盛開！每一幅畫作，都是孩子眼中純粹美好的世界，他們以豐富創造力與獨特思考模式建構出一個獨特的世界，告訴我們他所看到的美好與希望。<br />
+    本次展出涵蓋繪畫類、漫畫類、電腦繪圖類三大領域，共計 95 件精彩作品；作品多元豐富。我們誠摯邀請新竹市所有市民朋友撥冗前往欣賞，給予新竹在地學子們最大的肯定與鼓勵！</div>
+    </div>
+    </div>
+  posterdate: '20251112'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '393'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: 本次展覽以「有愛無礙，夢想盛開」為主題，今年是新竹市特殊教育學生美術比賽第21週年，期盼提供特殊需求學生一個盡情揮灑、展現光芒的舞台，鼓勵參賽者透過藝術創作展現包容與友愛的力量，讓愛與夢想在一個無障礙的環境中，得以燦爛盛開！每一幅畫作，都是孩子眼中純粹美好的世界，他們以豐富創造力與獨特思考模式建構出一個獨特的世界，告訴大家他所看到的美好與希望。本次展出涵蓋繪畫類、漫畫類、電腦繪圖類三大領域，共計95件精彩作品；作品多元豐富。誠摯邀請新竹市市民朋友撥空前往欣賞，給予新竹在地學子們最大的肯定與鼓勵！
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512100900'
+  activityedate: '202512141700'
+  activityplace: 演藝廳A、B展區
+  activitydateremark: '09:00~17:00 週一休館、中午12:00-13:00休館'
+  posterdatalist:
+  - serno: '202511120004'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-12-15'
+    datasort: 4
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202511120004'
+    detailno: 1
+    flag: pic
+    clientfile: 特教美展1.jpg
+    serverfile: 202511121059230.jpg
+    expfile: '1'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121059230.jpg&filedisplay=特教美展1.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '118555'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202511120004'
+    detailno: 2
+    flag: pic
+    clientfile: 特教美展2.jpg
+    serverfile: 202511121059231.jpg
+    expfile: '2'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121059231.jpg&filedisplay=特教美展2.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '109418'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202511120004'
+    detailno: 3
+    flag: pic
+    clientfile: 特教美展3.jpg
+    serverfile: 202511121059232.jpg
+    expfile: '3'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121059232.jpg&filedisplay=特教美展3.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '112314'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202511120004'
+    detailno: 4
+    flag: pic
+    clientfile: 特教美展4.jpg
+    serverfile: 202511121059450.jpg
+    expfile: '4'
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121059450.jpg&filedisplay=特教美展4.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '155855'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511120003'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][演藝廳A、B展區]香山高中美術工藝科 115級畢業成果展 漫悠遊"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">漫悠遊&mdash;&mdash;香中青春的藝術饗宴<br />
+    「漫悠遊」呼應香山高中美工科學生的特質，<br />
+    我們常常帶著不疾不徐的步伐，以從容與專注去感受藝術的脈動。<br />
+    我們像是在畫布、工藝、設計稿裡悠遊自在，<br />
+    用顏料、線條與想像力表達自己，徜徉在藝術大海當中。<br />
+    在這樣的旅程裡，有時歡欣雀躍，有時憂心迷惘，<br />
+    但這些情感交錯正是青春最真實的底色。<br />
+    「漫悠遊」不僅是一種節奏，更是一種態度，<br />
+    我們選擇不急不躁，在藝術的天地裡恣意徜徉，<br />
+    於成長的過程中創造與思考屬於自己的風景與故事。<br />
+    「漫」象徵自由灑脫、隨性流動。<br />
+    如同筆墨在紙上暈開，沒有拘束卻自成風景；<br />
+    「悠遊」則帶來閒適緩慢的步調，<br />
+    讓人連想到「慢悠悠」的生活姿態，它既是節奏的放慢，也是心靈的舒展。<br />
+    漫悠遊：M&middot;U&middot;U &mdash; Mindful &middot; Unfolding &middot; Unique&nbsp; (用心 &middot; 展開 &middot; 獨特)<br />
+    A contemplative journey through awareness, individuality, and flow.<br />
+    （一場從覺察、到自我、到流動的心靈旅程。）<br />
+    漫，是一種覺察；悠，是一種呼吸；遊，是一種心靈的流動。<br />
+    &nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251112'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '306'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '9'
+  serviceclass: "[900]休閒旅遊"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    「漫悠遊」「漫」象徵自由灑脫、隨性流動。如同筆墨在紙上暈開，沒有拘束卻自成風景；「悠遊」則帶來閒適緩慢的步調，讓人連想到「慢悠悠」的生活姿態，它既是節奏的放慢，也是心靈的舒展。
+    呼應香山高中美工科學生的特質，我們常常帶著不疾不徐的步伐，以從容與專注去感受藝術的脈動。像是在畫布、工藝、設計稿裡悠遊自在，用顏料、線條與想像力表達自己，徜徉在藝術大海當中。在這樣的旅程裡，有時歡欣雀躍，有時憂心迷惘，但這些情感交錯正是青春最真實的底色。
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512170900'
+  activityedate: '202512211700'
+  activityplace: 演藝廳A、B展區
+  activitydateremark: 週一休館、中午12:00-13:00休館
+  posterdatalist:
+  - serno: '202511120003'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-12-22'
+    datasort: 3
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202511120003'
+    detailno: 1
+    flag: pic
+    clientfile: 香山高中.jpg
+    serverfile: 202511121050380.jpg
+    expfile: 主視覺
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121050380.jpg&filedisplay=香山高中.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '1600987'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511120002'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][文化藝廊]李孟蓁、徐江妹雙個展"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03">李孟蓁-<br />
+    童年的生活片段，總在歲月的流轉中，悄然留存在每個生命的旅程裡。記憶中的大自然，如光影般在創作的美感中浮現。<br />
+    對筆者而言，每一次的創作，總會喚醒童年的片段那些視覺的色彩、聽覺的旋律，甚至味覺的氣息，都深深烙印在記憶之中。<br />
+    這些積累的感官記憶，化作內在的能量，成為藝術創作中最深厚的養分，也是情感最真切的流露。<br />
+    徐江妹-<br />
+    作品以頌缽後的心靈意象為出發，融入東方禪學意境，轉化內在感受為藝術表現。創作於後疫情時期的混沌與壓力中，以深藍色層疊的流動感象徵動盪不安的世界，展現焦慮與不確定性。畫面中撕裂般的筆觸，映照創作者面對生活變動的無力與思索，呈現心靈於混沌中尋覓平靜的狀態。</div>
+
+    <div class="main-a_03">&nbsp;</div>
+    </div>
+    </div>
+  posterdate: '20251112'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '262'
+  subjectid: '4'
+  subjectclass: "[400]教育文化"
+  administationid: '1535'
+  administationclass: "[D71]視覺藝術"
+  serviceid: '67'
+  serviceclass: "[9Z0]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: |+
+    李孟蓁-
+    童年的生活片段，總在歲月的流轉中，悄然留存在每個生命的旅程裡。記憶中的大自然，如光影般在創作的美感中浮現。
+    對筆者而言，每一次的創作，總會喚醒童年的片段那些視覺的色彩、聽覺的旋律，甚至味覺的氣息，都深深烙印在記憶之中。
+    這些積累的感官記憶，化作內在的能量，成為藝術創作中最深厚的養分，也是情感最真切的流露。
+    徐江妹-
+    作品以頌缽後的心靈意象為出發，融入東方禪學意境，轉化內在感受為藝術表現。創作於後疫情時期的混沌與壓力中，以深藍色層疊的流動感象徵動盪不安的世界，展現焦慮與不確定性。畫面中撕裂般的筆觸，映照創作者面對生活變動的無力與思索，呈現心靈於混沌中尋覓平靜的狀態。
+
+  hostunit: 新竹市文化局
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512170900'
+  activityedate: '202601041700'
+  activityplace: 文化藝廊
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202511120002'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2026-01-05'
+    datasort: 2
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202511120002'
+    detailno: 1
+    flag: pic
+    clientfile: S__449798149.jpg
+    serverfile: 202511121028060.jpg
+    expfile: 李孟蓁
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121028060.jpg&filedisplay=S__449798149.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '416076'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202511120002'
+    detailno: 2
+    flag: pic
+    clientfile: S__15769705.jpg
+    serverfile: 202511121028061.jpg
+    expfile: 徐江妹
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511121028061.jpg&filedisplay=S__15769705.jpg&flag=pic
+    downloadpdfpath: ''
+    downloadodfpath: ''
+    filesize: '536289'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511110001'
+  pubunitdn: OU=5002,OU=5000,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 視覺藝術科
+  subject: "[展覽][241藝術空間][SS藝術空間]《Eat, Sweep, Rave, Repeat》"
+  detailcontent: |
+    <div class="zbox">
+    <div class="main-a_01">
+    <div class="main-a_03" style="text-align: justify;">創作者司徒丹於2024年移居臺灣後，對每日傍晚人們趕著倒垃圾的場景深感震撼&mdash;&mdash;那是一場融合緊湊節奏、日常勞動與公共表演的奇特儀式，伴隨輕快古典樂聲穿梭於街巷之間。<br />
+    本展邀集多位獨立音樂製作人，將這段具地方特色的實用聲音取樣重組，創作出鼓打貝斯（Drum and Bass）樂曲。作品在扭曲與可辨識之間遊走，探討熟悉的公共聲響如何透過再脈絡化與重複，被轉化為具有文化象徵的聲音符號。此EP以虛構實體發行形式於展覽登場，觀眾可在現場透過多重感官的方式體驗作品。空間中隱約閃爍的橘光、迴盪的節奏與聲音線索，將引領人們重新思考「日常」與「儀式」之間的界線。</div>
+
+    <div class="main-a_03" style="text-align: center;"><img alt="1219" src="/userfiles/5002/images/241_ESRR_Poster%20_2.jpg" style="width: 15%; height: auto; padding: 3px; padding: 3px;" title="1219" /></div>
+    </div>
+    </div>
+  posterdate: '20251111'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '393'
+  subjectid: '41'
+  subjectclass: "[440]文化藝術"
+  administationid: '13'
+  administationclass: "[D00]文化及觀光"
+  serviceid: '9,66'
+  serviceclass: "[900]休閒旅遊,[950]藝術文化"
+  languagetype: chinese
+  copyright: ''
+  voice: "《Eat, Sweep, Rave, Repeat》為一項取材自臺灣垃圾車旋律的聲音藝術計畫。創作者司徒丹於2024年移居臺灣後，對每日傍晚人們趕著倒垃圾的場景深感震撼——那是一場融合緊湊節奏、日常勞動與公共表演的奇特儀式，伴隨輕快古典樂聲穿梭於街巷之間。\n
+    \n本計畫邀集多位獨立音樂製作人，將這段具地方特色的實用聲音取樣重組，創作出鼓打貝斯（Drum and Bass）樂曲。作品在扭曲與可辨識之間遊走，探討熟悉的公共聲響如何透過再脈絡化與重複，被轉化為具有文化象徵的聲音符號。\n
+    \n此EP以虛構實體發行形式於展覽登場，觀眾可在現場透過多重感官的方式體驗作品。空間中隱約閃爍的橘光、迴盪的節奏與聲音線索，將引領人們重新思考「日常」與「儀式」之間的界線。"
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202512191000'
+  activityedate: '202601181800'
+  activityplace: 241藝術空間
+  activitydateremark: 週一休館
+  posterdatalist:
+  - serno: '202511110001'
+    detailno: 1
+    mserno: '201808270001'
+    msernoname: 展覽活動
+    websitedn: ou=hcccb,ou=ap_root,o=hccg,c=tw
+    websitename: 文化局
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2026-01-19'
+    datasort: 1
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist: []
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511180001'
+  pubunitdn: OU=7200,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 家庭教育中心
+  subject: "【分享/教育部】為強化家長數位防護意識，提升兒童及青少年升學與學習品質，教育部已建置免費「數位工具包」資源，詳情請見內文。"
+  detailcontent: |
+    <div class="main-a_13" style="padding:5px">為強化家長數位防護意識，提升兒童及青少年升學與學習品質，教育部已建置免費「數位工具包」資源如下：<br />
+    1.資訊及科技教育司-<a href="https://dept.moe.gov.tw/ED2700/News.aspx?n=B9FB2A800D03E15C&amp;sms=30F37BAF2AEA6314" title="網路防護軟體&gt;&gt;&gt;&nbsp;">網路防護軟體</a>(連結)<br />
+    2.<a href="https://ws.moe.edu.tw/001/Upload/9/relfile/9432/102139/c641e928-d193-4e59-b476-3da7ede42767.pdf" title="家長監護工具懶人包&gt;">家長監護工具懶人包</a>(連結)<br />
+    3.媒體素養及網路安全～<a href="https://eliteracy.edu.tw/Shorts/xiaohongshu.html" title="教育宣導資源及講師資料庫">教育宣導資源及講師資料庫</a></div>
+  posterdate: '20251118'
+  closedate: '20251231'
+  startusing: '0'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '72'
+  subjectid: '38'
+  subjectclass: "[410]教育"
+  administationid: '849'
+  administationclass: "[553]家庭教育"
+  serviceid: '488'
+  serviceclass: "[I5Z]其他"
+  languagetype: chinese
+  copyright: ''
+  voice: "【分享/教育部】為強化家長數位防護意識，提升兒童及青少年升學與學習品質，教育部已建置免費「數位工具包」資源，詳情請見內文。"
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202511180000'
+  activityedate: '202512310000'
+  activityplace: 無
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202511180001'
+    detailno: 1
+    mserno: '201604260001'
+    msernoname: 活動訊息
+    websitedn: ou=family,ou=ap_root,o=hccg,c=tw
+    websitename: 家庭教育中心
+    websiteexam: "Y"
+    websiteexamdate: ''
+    websiteexamname: ''
+    istop: "Y"
+    topdate: '2025-11-30'
+    datasort: 9999999
+    examineemail: '0'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202511180001'
+    detailno: 1
+    flag: doc
+    clientfile: 兒少手機管理工具介紹.pdf
+    serverfile: 202511181525300.pdf
+    expfile: 兒少手機管理工具介紹
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511181525300.pdf&filedisplay=兒少手機管理工具介紹.pdf&flag=doc
+    downloadpdfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=兒少手機管理工具介紹.pdf&flag=pdf
+    downloadodfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=兒少手機管理工具介紹.&flag=odf
+    filesize: '168862'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202511180001'
+    detailno: 2
+    flag: doc
+    clientfile: 家長監護工具懶人包.pdf
+    serverfile: 202511181525301.pdf
+    expfile: 家長監護工具懶人包
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511181525301.pdf&filedisplay=家長監護工具懶人包.pdf&flag=doc
+    downloadpdfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=家長監護工具懶人包.pdf&flag=pdf
+    downloadodfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=家長監護工具懶人包.&flag=odf
+    filesize: '4656475'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202505120004'
+  pubunitdn: OU=0505,OU=0500,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 市場管理科
+  subject: 114年新竹市政府各市場執行台電促協金明細表
+  detailcontent: ''
+  posterdate: '20250815'
+  closedate: ''
+  startusing: '1'
+  liaisonper: ''
+  liaisontel: ''
+  liaisonfax: ''
+  liaisonemail: ''
+  readnumber: '96'
+  subjectid: '9'
+  subjectclass: "[900]綜合行政"
+  administationid: '19'
+  administationclass: "[J00]輔助事務"
+  serviceid: '18'
+  serviceclass: "[I00]公共資訊"
+  languagetype: chinese
+  copyright: ''
+  voice: 114年新竹市政府各市場執行台電促協金明細表
+  hostunit: ''
+  jointunit: ''
+  invite: ''
+  activitysdate: '202501010000'
+  activityedate: '202512310000'
+  activityplace: ''
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202505120004'
+    detailno: 1
+    mserno: '202505120001'
+    msernoname: 台電促協金
+    websitedn: ou=construction,ou=ap_root,o=hccg,c=tw
+    websitename: 產業發展處
+    websiteexam: "Y"
+    websiteexamdate: '2025-11-13'
+    websiteexamname: 6YSt56uL5ZSv
+    istop: "N"
+    topdate: ''
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist:
+  - serno: '202505120004'
+    detailno: 1
+    flag: doc
+    clientfile: 114年第二季新竹市政府執行台電促協金明細表.docx.pdf
+    serverfile: 202508151721020.pdf
+    expfile: 114年第二季新竹市政府執行台電促協金明細表
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202508151721020.pdf&filedisplay=114年第二季新竹市政府執行台電促協金明細表.docx.pdf&flag=doc
+    downloadpdfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=114年第二季新竹市政府執行台電促協金明細表.pdf&flag=pdf
+    downloadodfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=114年第二季新竹市政府執行台電促協金明細表.&flag=odf
+    filesize: '101913'
+    readnumber: 'null'
+    datasort: 9999999
+  - serno: '202505120004'
+    detailno: 2
+    flag: doc
+    clientfile: 114年第三季新竹市政府執行台電促協金明細表.pdf
+    serverfile: 202511131105280.pdf
+    expfile: ''
+    downloadpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/202511131105280.pdf&filedisplay=114年第三季新竹市政府執行台電促協金明細表.pdf&flag=doc
+    downloadpdfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=114年第三季新竹市政府執行台電促協金明細表.pdf&flag=pdf
+    downloadodfpath: https://www.hccg.gov.tw/uploaddowndoc?file=activity/&filedisplay=114年第三季新竹市政府執行台電促協金明細表.&flag=odf
+    filesize: '76116'
+    readnumber: 'null'
+    datasort: 9999999
+  resourcedatalist: []
+  mapdatalist: []
+- serno: '202511110002'
+  pubunitdn: OU=4317,OU=4300,OU=hsinchu,DC=hccg,DC=local
+  pubunitname: 心理健康科
+  subject: "「放鬆‧連結‧療癒——芳香實作工作坊」"
+  detailcontent: "<div class=\"zbox\">\n<div class=\"main-a_13\" style=\"padding:5px\"><img
+    alt=\"「放鬆‧連結‧療癒——芳香實作工作坊」\" src=\"/userfiles/4317/images/1141122%E5%AD%95%E7%94%A2%E5%A9%A6%E7%85%A7%E8%AD%B7%E4%BA%BA%E5%93%A1%E6%95%99%E8%82%B2%E8%A8%93%E7%B7%B4%E6%94%BE%E9%AC%86%E9%80%A3%E7%B5%90%E7%99%82%E7%99%92%E5%AD%95%E7%94%A2%E7%85%A7%E8%AD%B7%E8%8A%B3%E9%A6%99%E5%AF%A6%E4%BD%9C%E5%B7%A5%E4%BD%9C%E5%9D%8A1115%E5%A0%B1%E5%90%8D%E6%88%AA%E6%AD%A2.png\"
+    style=\"width: 100%; height: auto; padding: 3px;\" title=\"「放鬆‧連結‧療癒——芳香實作工作坊」\"
+    />\n<ol style=\"list-style-type:lower-alpha;\">\n\t<li value=\"23\">日期：114年11月22日(星期六)</li>\n\t<li
+    value=\"23\">時間：下午1時30分至5時30分</li>\n\t<li value=\"23\">地點：衛生社福大樓8樓婦女加油站(新竹市東區中央路241號)</li>\n\t<li
+    value=\"23\">參與人數及對象：25名，一般民眾。(名額有限，快來參加!!)</li>\n</ol>\n(本課程含精油體驗，若有過敏、懷孕初期、皮膚敏感或特殊健康狀況者，請審慎評估後參加。)<br
+    />\n&nbsp;<br />\n報名期間及方式\n<ol style=\"list-style-type:lower-alpha;\">\n\t<li
+    value=\"23\">報名期間：即日起至114年11月15日(星期六)中午12時</li>\n\t<li value=\"23\">報名方式：採線上報名，請掃QR-code或網址登錄</li>\n\t<li
+    value=\"23\">報名網址：<a href=\"https://forms.gle/MAc4Ue5R2Gi4ZPAr6\" title=\"https://forms.gle/MAc4Ue5R2Gi4ZPAr6\">https://forms.gle/MAc4Ue5R2Gi4ZPAr6</a></li>\n</ol>\n&nbsp;<br
+    />\n聯絡方式：<br />\n承辦人：任小姐<br />\n市話：03-5355191#502<br />\nEmail：71853@ems.hccg.gov.tw<br
+    />\n&nbsp;</div>\n</div>\n"
+  posterdate: '20251111'
+  closedate: ''
+  startusing: '1'
+  liaisonper: 任小姐
+  liaisontel: 03-5355191#502
+  liaisonfax: ''
+  liaisonemail: 71853@ems.hccg.gov.tw
+  readnumber: '159'
+  subjectid: '1'
+  subjectclass: "[100]內政及國土"
+  administationid: '1'
+  administationclass: "[100]內政及國土安全"
+  serviceid: '1'
+  serviceclass: "[100]生育保健"
+  languagetype: chinese
+  copyright: ''
+  voice: |
+    課程資訊
+    日期：114年11月22日(星期六)
+    時間：下午1時30分至5時30分
+    地點：衛生社福大樓8樓婦女加油站(新竹市東區中央路241號)
+    參與人數及對象：25名，一般民眾。(名額有限，快來參加!!)
+    (本課程含精油體驗，若有過敏、懷孕初期、皮膚敏感或特殊健康狀況者，請審慎評估後參加。)
+
+    報名期間及方式
+    報名期間：即日起至114年11月15日(星期六)中午12時
+    報名方式：採線上報名，請掃QR-code或網址登錄
+    報名網址：https://forms.gle/MAc4Ue5R2Gi4ZPAr6
+
+    聯絡方式：
+    承辦人：任小姐
+    市話：03-5355191#502
+    Email：71853@ems.hccg.gov.tw
+  hostunit: ''
+  jointunit: ''
+  invite: 一般民眾
+  activitysdate: '202511221330'
+  activityedate: '202511221730'
+  activityplace: 衛生社福大樓8樓婦女加油站(新竹市東區中央路241號)
+  activitydateremark: ''
+  posterdatalist:
+  - serno: '202511110002'
+    detailno: 1
+    mserno: '202209270001'
+    msernoname: 心理衛生中心活動訊息
+    websitedn: ou=mhc,ou=ap_root,o=hccg,c=tw
+    websitename: 新竹社區心理衛生中心
+    websiteexam: "Y"
+    websiteexamdate: '2025-11-11'
+    websiteexamname: 5a2f5rmE6Iqz
+    istop: "Y"
+    topdate: '2025-11-22'
+    datasort: 9999999
+    examineemail: '1'
+    examineexplain: ''
+  filedatalist: []
+  resourcedatalist: []
+  mapdatalist: []

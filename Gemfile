@@ -71,6 +71,7 @@ gem 'hirb'
 gem 'sequel', '~> 5.0'
 
 gem 'google-genai'
+gem 'mimemagic', '~> 0.4.3'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.0'

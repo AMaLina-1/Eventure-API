@@ -328,6 +328,7 @@ DEPENDENCIES
   hirb
   http (~> 5.3)
   logger (~> 1.0)
+  mimemagic (~> 0.4.3)
   minitest (~> 5.20)
   minitest-rg (~> 5.2)
   multi_json (~> 1.15)

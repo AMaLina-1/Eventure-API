@@ -3,7 +3,8 @@
 Sequel.migration do
   up do
     # 關閉外鍵檢查
-    run 'PRAGMA foreign_keys = OFF' if Eventure::App.environment != :production
+    run 'PRAGMA foreign_keys = OFF' if database_type == :sqlite
+    # drop_table(:tags, cascade: true) if Eventure::App.environment != :production
 
     # SQLite 需要重建整個表來修改主鍵
     create_table(:tags_new) do
@@ -12,16 +13,28 @@ Sequel.migration do
     end
 
     # 複製資料（如果有的話）
-    run 'INSERT INTO tags_new (tag) SELECT DISTINCT tag FROM tags WHERE tag IS NOT NULL'
+    # run 'INSERT INTO tags_new (tag) SELECT DISTINCT tag FROM tags WHERE tag IS NOT NULL'
+    if table_exists?(:tags)
+      run <<~SQL
+        INSERT INTO tags_new (tag)
+        SELECT DISTINCT tag FROM tags WHERE tag IS NOT NULL
+      SQL
+    end
 
     # 刪除舊表
-    drop_table(:tags)
+    drop_table(:activities_tags) if table_exists?(:activities_tags)
+    if database_type == :postgres
+      drop_table(:tags, cascade: true)
+    else
+      drop_table(:tags)
+    end
+    # drop_table(:tags)
 
     # 重命名新表
     rename_table(:tags_new, :tags)
 
     # 重建關聯表
-    drop_table(:activities_tags) if table_exists?(:activities_tags)
+    # drop_table(:activities_tags) if table_exists?(:activities_tags)
     create_table(:activities_tags) do
       foreign_key :activity_id, :activities, on_delete: :cascade
       foreign_key :tag_id, :tags, on_delete: :cascade
@@ -29,13 +42,15 @@ Sequel.migration do
     end
 
     # 開啟外鍵檢查
-    run 'PRAGMA foreign_keys = ON' if Eventure::App.environment != :production
+    run 'PRAGMA foreign_keys = ON' if database_type == :sqlite
   end
 
   down do
-    run 'PRAGMA foreign_keys = OFF' if Eventure::App.environment != :production
+    run 'PRAGMA foreign_keys = OFF' if database_type == :sqlite
 
     drop_table(:activities_tags)
+    drop_table(:tags) if database_type == :postgres
+
     create_table(:tags) do
       Integer :tag_id, primary_key: true
       String :tag, null: true
@@ -46,6 +61,6 @@ Sequel.migration do
       primary_key %i[activity_id tag_id]
     end
 
-    run 'PRAGMA foreign_keys = ON' if Eventure::App.environment != :production
+    run 'PRAGMA foreign_keys = ON' if database_type == :sqlite
   end
 end

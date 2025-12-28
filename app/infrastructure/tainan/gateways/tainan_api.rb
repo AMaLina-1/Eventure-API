@@ -18,7 +18,7 @@ module Eventure
       # use 'top' to get http response
       class Request
         def get(url)
-          http_response = HTTP.headers('Accept' => 'application/json').get(url)
+          http_response = HTTP.timeout(10).headers('Accept' => 'application/json').get(url)
           raise 'Request Failed' unless http_response.status.success?
 
           http_response

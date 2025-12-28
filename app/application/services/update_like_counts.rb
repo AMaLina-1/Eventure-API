@@ -13,10 +13,10 @@ module Eventure
       step :save_like_db
       step :wrap_in_response
 
-      private
-
       DB_ERR = 'Cannot access database'
       NOT_FOUND = 'Activity not found'
+
+      private
 
       def fetch_activity(input)
         input[:activity] = Eventure::Repository::Activities.find_serno(input[:serno])
@@ -31,20 +31,12 @@ module Eventure
         serno = input[:serno].to_s
         likes = Array(input[:user_likes]).map(&:to_s)
 
-        puts 'user_likes before: ', likes
+        input[:user_likes] = if likes.include?(serno)
+                               processing_removing(input[:activity], likes, serno)
+                             else
+                               processing_adding(input[:activity], likes, serno)
+                             end
 
-        if likes.include?(serno)
-          input[:activity].remove_likes
-          likes.delete(serno)
-        else
-          input[:activity].add_likes
-          likes << serno
-        end
-
-        likes.uniq!
-        input[:user_likes] = likes
-
-        puts 'user_likes after: ', likes
         Success(input)
       rescue StandardError => e
         Failure(Response::ApiResult.new(status: :internal_error, message: e.message))
@@ -63,6 +55,18 @@ module Eventure
         Success(Response::ApiResult.new(status: :ok, message: result))
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot wrap response'))
+      end
+
+      def processing_removing(activity, likes, serno)
+        activity.remove_likes
+        likes.delete(serno)
+        likes.uniq
+      end
+
+      def processing_adding(activity, likes, serno)
+        activity.add_likes
+        likes << serno
+        likes.uniq
       end
     end
   end

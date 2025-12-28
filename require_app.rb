@@ -4,9 +4,6 @@
 # Params:
 # - (opt) folders: Array of root folder names, or String of single folder name
 # Usage:
-#  require_app
-#  require_app(%w[infrastructure models])
-# def require_app(folders = %w[models infrastructure views controllers])
 def require_app(folders = %w[domain infrastructure presentation application])
   app_list = Array(folders).map { |folder| "app/#{folder}" }
   full_list = ['config', app_list].flatten.join(',')

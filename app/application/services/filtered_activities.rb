@@ -15,21 +15,19 @@ module Eventure
       step :filter_by_dates
       step :wrap_in_response
 
-      private
-
       BAD_REQ = 'Start date cannot be later than end date'
+
+      private
 
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
         input[:filtered_activities] = input[:all_activities]
-        # puts input['all_activities'].length
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch all activities'))
       end
 
       def filter_by_tags(input)
-        
         tag_set = input[:filters][:tag]
 
         unless tag_set.nil? || tag_set.empty?
@@ -91,7 +89,6 @@ module Eventure
             ad&.start_time && ad.start_time <= end_dt
           end
         end
-        # puts input['all_activities'].length
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fileter by dates'))

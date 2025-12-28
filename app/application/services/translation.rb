@@ -19,23 +19,22 @@ module Eventure
       def translate_activity(activity)
         name = activity[:name].to_s.strip
         detail = activity[:detail].to_s.strip
-        location = activity[:location].to_s.strip
-        organizer = activity[:organizer].to_s.strip
-        
-        if name.empty? && detail.empty?
-          return {}
-        end
+        # location = activity[:location].to_s.strip
+        # organizer = activity[:organizer].to_s.strip
+
+        return {} if name.empty? && detail.empty?
+
 
         prompt = <<~PROMPT
           Translate the following activity information from Traditional Chinese to English.
-          Keep the translation natural and concise. 
+          Keep the translation natural and concise.
 
           Title: #{activity[:name]}
           Detail: #{activity[:detail]}
           Location: #{activity[:location]}
           Organizer: #{activity[:organizer]}
 
-          Return only a JSON object with these fields: 
+          Return only a JSON object with these fields:
           {
             "name_en": "translated title",
             "detail_en": "translated detail",
@@ -46,7 +45,7 @@ module Eventure
         PROMPT
 
         response = @client.models.generate_content(
-          model: "gemini-2.0-flash",
+          model: 'gemini-2.0-flash',
           contents: prompt
         )
 
@@ -66,10 +65,10 @@ module Eventure
       def translate_all_activities
         activities = @db[:activities].all
         puts "Translating #{activities.length} activities..."
-        
+
         success_count = 0
         skipped_count = 0
-        
+
         activities.each_with_index do |activity, index|
           serno = activity[:serno] || 'UNKNOWN'
           if activity[:name_en] && !activity[:name_en].empty?
@@ -85,14 +84,14 @@ module Eventure
             skipped_count += 1
             next
           end
-          
+
           translations = translate_activity(activity)
-          
+
           if translations.empty?
             puts "#{index + 1}/#{activities.length} - #{activity[:serno]}: Translation failed"
             next
           end
-          
+
           @db[:activities].where(activity_id: activity[:activity_id]).update(
             name_en: translations['name_en'],
             detail_en: translations['detail_en'],
@@ -100,34 +99,34 @@ module Eventure
             location_en: translations['location_en'],
             organizer_en: translations['organizer_en']
           )
-          
+
           success_count += 1
           puts "#{index + 1}/#{activities.length} - #{activity[:serno]}: Translated"
-          
+
           sleep(0.5)
         end
       end
 
       def translate_new_activities
         untranslated = @db[:activities].where(Sequel.or(name_en: nil, name_en: '')).all
-        
+
         if untranslated.empty?
           puts "All activities are already translated!"
           return
         end
-        
+
         puts "Found #{untranslated.length} untranslated activities"
-        
+
         success_count = 0
-        
+
         untranslated.each_with_index do |activity, index|
           translations = translate_activity(activity)
-          
+
           if translations.empty?
             puts "#{index + 1}/#{untranslated.length} - #{activity[:serno]}: Translation failed"
             next
           end
-          
+
           @db[:activities].where(activity_id: activity[:activity_id]).update(
             name_en: translations['name_en'],
             detail_en: translations['detail_en'],
@@ -135,13 +134,13 @@ module Eventure
             location_en: translations['location_en'],
             organizer_en: translations['organizer_en']
           )
-          
+
           success_count += 1
           puts "#{index + 1}/#{untranslated.length} - #{activity[:serno]}: ✓ Translated"
-          
+
           sleep(0.5)
         end
-        
+
         puts "\n✓ Successfully translated #{success_count}/#{untranslated.length} activities!"
       end
     end

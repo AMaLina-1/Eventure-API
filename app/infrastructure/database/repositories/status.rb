@@ -4,7 +4,8 @@ module Eventure
   module Repository
     # repository for status
     class Status
-      ALL_API = %w[hccg new_taipei taipei taichung tainan kaohsiung].freeze
+      ALL_API = %w[hccg new_taipei taichung tainan kaohsiung].freeze
+      TOTAL_APIS = ALL_API.size
 
       def self.db
         Eventure::App.db
@@ -20,10 +21,7 @@ module Eventure
           row = table.where(status_name: api_name)
 
           if row.empty?
-            table.insert(
-              status_name: api_name,
-              status: 'false'
-            )
+            table.insert(status_name: api_name, status: 'false')
           else
             row.update(status: 'false')
           end

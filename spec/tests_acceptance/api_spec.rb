@@ -62,7 +62,7 @@ describe 'Test API routes' do
       response = JSON.parse(last_response.body)
       _(response['status']).must_be_kind_of String
       _(response['message']).must_be_kind_of Hash
-      
+
       response['message'].each do |city, districts|
         _(city).must_be_kind_of String
         _(districts).must_be_kind_of Array
@@ -141,13 +141,13 @@ describe 'Test API routes' do
     it 'toggles like for an activity (if activities exist)' do
       get '/api/v1/activities'
       activities_response = JSON.parse(last_response.body)
-      
+
       skip 'No activities in database' if activities_response['activities'].empty?
-      
+
       first_activity_serno = activities_response['activities'].first['serno']
-      
+
       params = { serno: first_activity_serno }
-      
+
       post '/api/v1/activities/like', params.to_json, { 'CONTENT_TYPE' => 'application/json' }
       _(last_response.status).must_equal 200
 
@@ -159,7 +159,7 @@ describe 'Test API routes' do
 
     it 'returns not found for non-existent activity' do
       params = { serno: '999999' }
-      
+
       post '/api/v1/activities/like', params.to_json, { 'CONTENT_TYPE' => 'application/json' }
       _(last_response.status).must_equal 404
 

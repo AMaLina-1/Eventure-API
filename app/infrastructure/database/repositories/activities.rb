@@ -49,12 +49,12 @@ module Eventure
         # Use database transaction with retry logic for SQLite locks
         retry_count = 0
         max_retries = 3
-        
+
         begin
           Eventure::App.db.transaction do
             # Remove all old tags
             db_activity.remove_all_tags
-            
+
             # Add new tags
             Array(tags).each do |tag|
               tag_orm = find_or_create_tag(tag)
@@ -99,7 +99,7 @@ module Eventure
         entity.instance_variable_set(:@detail_en, db_record.detail_en)
         entity.instance_variable_set(:@location_en, db_record.location_en)
         entity.instance_variable_set(:@organizer_en, db_record.organizer_en)
-        
+
         # Define reader methods for English fields
         entity.define_singleton_method(:name_en) { @name_en }
         entity.define_singleton_method(:detail_en) { @detail_en }

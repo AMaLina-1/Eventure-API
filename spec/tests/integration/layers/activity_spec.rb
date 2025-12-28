@@ -22,7 +22,7 @@ describe 'Activity entity domain logic tests' do
     it 'HAPPY: should load activities from API with correct datatypes' do
       _(@activities.length).must_be :>, 0
       _(@activities.length).must_be :<=, TOP
-      
+
       @activities.each do |activity|
         _(activity).must_be_kind_of Eventure::Entity::Activity
         _(activity.serno).must_be_kind_of String
@@ -105,7 +105,7 @@ describe 'Activity entity domain logic tests' do
 
     it 'HAPPY: should provide valid status from activity_date' do
       valid_statuses = %w[Archived Expired Ongoing Upcoming Scheduled]
-      
+
       @activities.each do |activity|
         status = activity.status
         _(status).must_be_kind_of String
@@ -165,7 +165,7 @@ describe 'Activity entity domain logic tests' do
         tag_strings = activity.tag
         _(tag_strings).must_be_kind_of Array
         _(tag_strings.length).must_equal activity.tags.length
-        
+
         if activity.tags.any?
           _(tag_strings.all? { |t| t.is_a?(String) }).must_equal true
           _(tag_strings.all? { |t| !t.empty? }).must_equal true
@@ -184,7 +184,7 @@ describe 'Activity entity domain logic tests' do
     it 'HAPPY: should parse tag strings correctly from subjectclass' do
       activities_with_tags = @activities.select { |a| a.tags.any? }
       _(activities_with_tags.length).must_be :>, 0
-      
+
       activities_with_tags.each do |activity|
         activity.tag.each do |tag_string|
           # Tags from API are like "[100]內政及國土", mapper extracts "內政及國土"
@@ -201,7 +201,7 @@ describe 'Activity entity domain logic tests' do
         urls = activity.relate_url
         _(urls).must_be_kind_of Array
         _(urls.length).must_equal activity.relate_data.length
-        
+
         if activity.relate_data.any?
           _(urls.all? { |url| url.is_a?(String) }).must_equal true
         end
@@ -213,7 +213,7 @@ describe 'Activity entity domain logic tests' do
         titles = activity.relate_title
         _(titles).must_be_kind_of Array
         _(titles.length).must_equal activity.relate_data.length
-        
+
         if activity.relate_data.any?
           _(titles.all? { |title| title.is_a?(String) }).must_equal true
         end
@@ -225,7 +225,7 @@ describe 'Activity entity domain logic tests' do
         extracted_urls = activity.relate_url
         entity_urls = activity.relate_data.map(&:relate_url)
         _(extracted_urls).must_equal entity_urls
-        
+
         extracted_titles = activity.relate_title
         entity_titles = activity.relate_data.map(&:relate_title)
         _(extracted_titles).must_equal entity_titles
@@ -234,7 +234,7 @@ describe 'Activity entity domain logic tests' do
 
     it 'HAPPY: should return empty arrays for activities without relate_data' do
       activities_without_relate = @activities.select { |a| a.relate_data.empty? }
-      
+
       activities_without_relate.each do |activity|
         _(activity.relate_url).must_be_empty
         _(activity.relate_title).must_be_empty
@@ -256,7 +256,7 @@ describe 'Activity entity domain logic tests' do
     it 'HAPPY: should increment likes count' do
       initial_count = @test_activity.likes_count
       @test_activity.add_likes
-      
+
       _(@test_activity.likes_count).must_equal initial_count + 1
     end
 
@@ -268,13 +268,13 @@ describe 'Activity entity domain logic tests' do
     it 'HAPPY: should decrement likes count' do
       2.times { @test_activity.add_likes }
       @test_activity.remove_likes
-      
+
       _(@test_activity.likes_count).must_equal 1
     end
 
     it 'HAPPY: should not allow negative likes count' do
       5.times { @test_activity.remove_likes }
-      
+
       _(@test_activity.likes_count).must_equal 0
       _(@test_activity.likes_count).must_be :>=, 0
     end
@@ -285,17 +285,17 @@ describe 'Activity entity domain logic tests' do
       @test_activity.add_likes
       @test_activity.remove_likes
       @test_activity.add_likes
-      
+
       _(@test_activity.likes_count).must_equal 3
     end
 
     it 'HAPPY: should maintain independent like counts per activity' do
       activity1 = @activities[0]
       activity2 = @activities[1]
-      
+
       2.times { activity1.add_likes }
       1.times { activity2.add_likes }
-      
+
       _(activity1.likes_count).must_equal 2
       _(activity2.likes_count).must_equal 1
     end
@@ -315,7 +315,7 @@ describe 'Activity entity domain logic tests' do
     it 'HAPPY: should have unique serial numbers across all activities' do
       sernos = @activities.map(&:serno)
       unique_sernos = sernos.uniq
-      
+
       _(unique_sernos.length).must_equal sernos.length
     end
 
@@ -347,13 +347,13 @@ describe 'Activity entity domain logic tests' do
       original_activity = @activities.first
       original_name = original_activity.name
       original_tags_count = original_activity.tags.length
-      
+
       # Access various attributes
       _name = original_activity.name
       _tags = original_activity.tag
       _city = original_activity.city
       _status = original_activity.status
-      
+
       # Original should remain unchanged
       _(original_activity.name).must_equal original_name
       _(original_activity.tags.length).must_equal original_tags_count

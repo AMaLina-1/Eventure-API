@@ -37,10 +37,10 @@ class TagGenerator
 
     prompt = <<~PROMPT
       You are a tag generator for community events and activities in Taiwan.
-      
+
       Analyze this activity and assign relevant tags from the existing tag list below.
       If absolutely necessary, you may create 1 new tag, but prefer reusing existing tags.
-      
+
       Activity Title: #{subject}
       Activity Content: #{clean_detail}
 
@@ -59,7 +59,7 @@ class TagGenerator
       Return ONLY a JSON array of objects with Chinese tag and English translation. Example format:
       [{"tag": "心理健康", "tag_en": "Mental Health"}, {"tag": "健康", "tag_en": "Wellness"}]
     PROMPT
-    
+
     response = @client.models.generate_content(
       model: "gemini-2.0-flash",
       contents: [
@@ -69,9 +69,9 @@ class TagGenerator
         }
       ]
     )
-    
+
     response_text = response.text.strip
-    
+
     # Extract JSON from response
     json_match = response_text.match(/\[.*\]/m)
     if json_match
@@ -87,11 +87,11 @@ class TagGenerator
   def find_or_create_tag(tag_obj)
     tag_name = tag_obj['tag']
     tag_en = tag_obj['tag_en']
-    
+
     # Use transaction to avoid database locks
     @db.transaction do
       tag = @db[:tags].where(tag: tag_name).first
-      
+
       if tag
         if tag[:tag_en].nil? || tag[:tag_en].empty?
           @db[:tags].where(id: tag[:id]).update(tag_en: tag_en)
@@ -107,7 +107,7 @@ class TagGenerator
     # Use transaction to avoid locks
     @db.transaction do
       @db[:activities_tags].where(activity_id: activity_id).delete
-      
+
       tag_ids.each do |tag_id|
         @db[:activities_tags].insert(
           activity_id: activity_id,
@@ -128,7 +128,7 @@ class TagGenerator
 
   def process_all_activities(clear_existing: true)
     clear_all_tags if clear_existing
-    
+
     activities = @db[:activities].all
     puts "Loaded #{activities.length} activities from database"
 
@@ -136,10 +136,10 @@ class TagGenerator
       puts "Available columns: #{activities.first.keys.inspect}"
       puts "First activity sample: #{activities.first.inspect}"
     end
-    
+
     success_count = 0
     skipped_count = 0
-    
+
     activities.each_with_index do |activity, index|
       serno = activity[:serno] || 'UNKNOWN'
       activity_id = activity[:activity_id]
@@ -164,10 +164,10 @@ class TagGenerator
       tag_ids = generated_tags.map { |tag_obj| find_or_create_tag(tag_obj) }
       link_activity_to_tags(activity_id, tag_ids)
       success_count += 1
-      
+
       sleep(0.5)
     end
-    
+
     puts "\n=== Summary ==="
     puts "Successfully tagged: #{success_count}"
     puts "Skipped: #{skipped_count}"

@@ -23,7 +23,7 @@ require_relative 'vcr_helper'
 TOP = 20
 CONFIG = YAML.safe_load_file('config/secrets.yml') if File.exist?('config/secrets.yml')
 # API_KEY = CONFIG['API_KEY']
-CORRECT = YAML.safe_load_file('spec/fixtures/results_new.yml')
+CORRECT = YAML.safe_load_file('spec/fixtures/hccg_results.yml')
 
 CASSETTES_FOLDER = 'spec/fixtures/cassettes'
 CASSETTE_FILE = 'hccg_api'

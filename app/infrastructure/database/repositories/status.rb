@@ -5,6 +5,7 @@ module Eventure
     # repository for status
     class Status
       ALL_API = %w[hccg new_taipei taipei taichung tainan kaohsiung].freeze
+      TOTAL_APIS = ALL_API.size
 
       def self.db
         Eventure::App.db

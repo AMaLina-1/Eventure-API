@@ -29,7 +29,7 @@ module FetchApi
     # 報告 API 完成進度（根據已完成的 API 個數）
     def report_api_progress(api_name = @api_name)
       percent = FetchApi::FetchMonitor.calculate_completed_apis
-      puts "[#{api_name}] Progress: #{percent}% (#{FetchApi::FetchMonitor.count_completed_apis}/#{FetchMonitor::TOTAL_APIS} APIs completed)"
+      puts "[#{api_name}] Progress: #{percent}% (#{FetchApi::FetchMonitor.count_completed_apis}/#{Eventure::Repository::Status::TOTAL_APIS} APIs completed)"
       report_progress(percent)
     end
 

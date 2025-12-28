@@ -5,7 +5,7 @@ require_relative '../app/infrastructure/database/repositories/status'
 module FetchApi
   # Infrastructure to fetch while yielding progress
   module FetchMonitor
-    TOTAL_APIS = 6
+    # TOTAL_APIS = 6
     # PERCENT_PER_API = (100.0 / TOTAL_APIS).round
 
     def self.starting_percent
@@ -26,7 +26,7 @@ module FetchApi
 
     # 計算已完成的 API 個數
     def self.count_completed_apis
-      Eventure::Repository::Status::ALL_API.count { |api| Eventure::Repository::Status.get_status(api) == 'success' }
+      Eventure::Repository::Status::ALL_API.count { |api| Eventure::Repository::Status.get_status(api) != 'false' }  # success or failure
     end
 
     # 列出還未完成的 API

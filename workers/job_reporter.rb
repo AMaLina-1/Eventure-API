@@ -10,7 +10,7 @@ module FetchApi
 
     def initialize(request_json, config)
       fetch_request = Eventure::Representer::FetchRequest
-                      .new(Struct.new)
+                      .new(OpenStruct.new)
                       .from_json(request_json)
 
       @api_name = fetch_request.api_name

@@ -31,7 +31,7 @@ class Worker
 
   def perform(_sqs_msg, request)
     job = FetchApi::JobReporter.new(request, Worker.config)
-    activities_payload = Eventure::Representer::FetchRequest.new(Struct.new).from_json(request)
+    activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
 
     activities_api_name = activities_payload.api_name
     activities_number = activities_payload.number

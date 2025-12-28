@@ -79,7 +79,7 @@ module Eventure
                 response.status = http_response.http_status_code
                 # ActivityList expects an object with `activities` collection
                 Representer::ActivityList.new(
-                  Struct.new(activities: activities_list),
+                  OpenStruct.new(activities: activities_list),
                   language: lang
                 ).to_json
               end
@@ -100,7 +100,7 @@ module Eventure
               else
                 api_result = result.value!
                 result_data = api_result.message
-                like_response = Struct.new(serno: result_data[:serno], likes_count: result_data.like_counts,
+                like_response = OpenStruct.new(serno: result_data[:serno], likes_count: result_data.like_counts,
                                                user_likes: result_data[:user_likes])
 
                 http_response = Representer::HttpResponse.new(api_result)
@@ -136,7 +136,7 @@ module Eventure
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
 
-              activities_list = Struct.new(activities: api_result.message[:activities])
+              activities_list = OpenStruct.new(activities: api_result.message[:activities])
               actual_language = clean_filters[:language]
               Representer::ActivityList.new(activities_list, language: actual_language).to_json
             end

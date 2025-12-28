@@ -56,9 +56,19 @@ class Worker
     Eventure::Repository::Status.write_success(activities_api_name)
     puts "successfully store #{activities_api_name} activities"
     job.report_api_progress(activities_api_name)
+  rescue HTTP::TimeoutError => e
+    Eventure::Repository::Status.write_failure(activities_api_name)
+    puts "ERROR: #{activities_api_name} API request timed out (10s): #{e.message}"
+    job.report_api_progress(activities_api_name)
+  rescue HTTP::ConnectionError => e
+    Eventure::Repository::Status.write_failure(activities_api_name)
+    puts "ERROR: #{activities_api_name} API connection failed: #{e.message}"
+    job.report_api_progress(activities_api_name)
   rescue StandardError => e
     Eventure::Repository::Status.write_failure(activities_api_name)
-    print('other worker error', e)
+    puts "ERROR: #{activities_api_name} API fetch failed: #{e.class} - #{e.message}"
+    # puts e.backtrace.join("\n")
+    # job.report_api_progress(activities_api_name)
     raise e
   end
 end

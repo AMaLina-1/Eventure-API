@@ -69,6 +69,7 @@ class Worker
     puts "ERROR: #{activities_api_name} API fetch failed: #{e.class} - #{e.message}"
     # puts e.backtrace.join("\n")
     # job.report_api_progress(activities_api_name)
+    e.set_backtrace([]) if e.respond_to?(:set_backtrace)
     raise e
   end
 end

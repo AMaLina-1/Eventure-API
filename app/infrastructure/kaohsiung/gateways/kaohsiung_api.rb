@@ -23,8 +23,8 @@ module Eventure
 
           http_response
         
-        rescue HTTP::TimeoutError, HTTP::ConnectionError => e
-          raise "Request Failed: #{e.class} - #{e.message}"
+        # rescue HTTP::TimeoutError, HTTP::ConnectionError => e
+        #   raise "Request Failed: #{e.class} - #{e.message}"
         end
       end
     end

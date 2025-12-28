@@ -40,7 +40,7 @@ class Worker
     activities = select_activities_api(activities_api_name, activities_number)
 
     Eventure::Repository::Activities.create(activities)
-    mark_success(activities_api_name)
+    mark_success(activities_api_name, job)
   rescue HTTP::TimeoutError, HTTP::ConnectionError => e
     mark_error(activities_api_name, e, 'http', job)
   rescue StandardError => e
@@ -86,7 +86,7 @@ class Worker
     end
   end
 
-  def mark_success(api_name)
+  def mark_success(api_name, job)
     Eventure::Repository::Status.write_success(api_name)
     puts "Successfully store #{api_name} activities"
     job.report_api_progress(api_name)

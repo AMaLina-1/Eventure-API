@@ -31,7 +31,7 @@ module Eventure
         #   input[:processing].delete('HCCG')
         #   return Success(input)
         # end
-        input[:processing] = put_processing(input[:processing], 'hccg', 'HCCG')
+        input[:processing] = put_processing(input, 'hccg', 'HCCG')
         # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
         #                 .send(fetch_request_json(input, 'hccg'))
         # input[:processing] << 'HCCG'
@@ -50,7 +50,7 @@ module Eventure
         # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
         #                 .send(fetch_request_json(input, 'taipei'))
         # input[:processing] << 'Taipei'
-        input[:processing] = put_processing(input[:processing], 'taipei', 'Taipei')
+        input[:processing] = put_processing(input, 'taipei', 'Taipei')
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Taipei activities: #{e.message}"
@@ -63,7 +63,7 @@ module Eventure
         #   input[:processing].delete('New Taipei')
         #   return Success(input)
         # end
-        input[:processing] = put_processing(input[:processing], 'new_taipei', 'New Taipei')
+        input[:processing] = put_processing(input, 'new_taipei', 'New Taipei')
         # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
         #                 .send(fetch_request_json(input, 'new_taipei'))
         # input[:processing] << 'New Taipei'
@@ -79,7 +79,7 @@ module Eventure
         #   input[:processing].delete('Taichung')
         #   return Success(input)
         # end
-        input[:processing] = put_processing(input[:processing], 'taichung', 'Taichung')
+        input[:processing] = put_processing(input, 'taichung', 'Taichung')
         # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
         #                 .send(fetch_request_json(input, 'taichung'))
         # input[:processing] << 'Taichung'
@@ -98,7 +98,7 @@ module Eventure
         # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
         #                 .send(fetch_request_json(input, 'tainan'))
         # input[:processing] << 'Tainan'
-        input[:processing] = put_processing(input[:processing], 'tainan', 'Tainan')
+        input[:processing] = put_processing(input, 'tainan', 'Tainan')
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Tainan activities: #{e.message}"
@@ -111,7 +111,7 @@ module Eventure
         #   input[:processing].delete('Kaohsiung')
         #   return Success(input)
         # end
-        input[:processing] = put_processing(input[:processing], 'kaohsiung', 'Kaohsiung')
+        input[:processing] = put_processing(input, 'kaohsiung', 'Kaohsiung')
         # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
         #                 .send(fetch_request_json(input, 'kaohsiung'))
         # input[:processing] << 'Kaohsiung'
@@ -141,15 +141,16 @@ module Eventure
                               .then(&:to_json)
       end
 
-      def put_processing(processing_list, api_name, show_name)
+      def put_processing(input, api_name, show_name)
+        # processing_list = input[:processing]
         if Eventure::Repository::Status.get_status(api_name) == 'true'
-          processing_list.delete(show_name)
+          input[:processing].delete(show_name)
         else
           Messaging::Queue.new(App.config.QUEUE_URL, App.config)
                           .send(fetch_request_json(input, api_name))
-          processing_list << show_name
+          input[:processing] << show_name
         end
-        processing_list
+        input[:processing]
       end
 
       def wrap_result(missing = nil)

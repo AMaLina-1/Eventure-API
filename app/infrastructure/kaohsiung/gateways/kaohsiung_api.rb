@@ -22,9 +22,6 @@ module Eventure
           raise 'Request Failed' unless http_response.status.success?
 
           http_response
-        
-        # rescue HTTP::TimeoutError, HTTP::ConnectionError => e
-        #   raise "Request Failed: #{e.class} - #{e.message}"
         end
       end
     end

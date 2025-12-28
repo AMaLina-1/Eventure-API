@@ -25,6 +25,7 @@ class Worker
   )
 
   include Shoryuken::Worker
+
   Shoryuken.sqs_client_receive_message_opts = { wait_time_seconds: 20 }
   shoryuken_options queue: config.QUEUE_URL, auto_delete: true
 
@@ -37,32 +38,29 @@ class Worker
     # cache = Eventure::Cache::Client.new(App.config)
 
     puts "start fetching #{activities_api_name} activities"
-    if activities_api_name == 'hccg'
-      activities = Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    elsif activities_api_name == 'taipei'
-      activities = Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    elsif activities_api_name == 'new_taipei'
-      activities = Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    elsif activities_api_name == 'taichung'
-      activities = Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    elsif activities_api_name == 'tainan'
-      activities = Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    elsif activities_api_name == 'kaohsiung'
-      activities = Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    end
+    activities = case activities_api_name
+                 when 'hccg'
+                   Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
+                 when 'taipei'
+                   Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+                 when 'new_taipei'
+                   Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+                 when 'taichung'
+                   Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+                 when 'tainan'
+                   Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
+                 when 'kaohsiung'
+                   Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+                 end
 
     Eventure::Repository::Activities.create(activities)
     # cache.set('fetch_hccg', true)
     Eventure::Repository::Status.write_success(activities_api_name)
     puts "successfully store #{activities_api_name} activities"
     job.report_api_progress(activities_api_name)
-  rescue HTTP::TimeoutError => e
+  rescue HTTP::TimeoutError, HTTP::ConnectionError => e
     Eventure::Repository::Status.write_failure(activities_api_name)
-    puts "ERROR: #{activities_api_name} API request timed out (10s): #{e.message}"
-    job.report_api_progress(activities_api_name)
-  rescue HTTP::ConnectionError => e
-    Eventure::Repository::Status.write_failure(activities_api_name)
-    puts "ERROR: #{activities_api_name} API connection failed: #{e.message}"
+    puts "ERROR: #{activities_api_name} has errors during connection: #{e.message}"
     job.report_api_progress(activities_api_name)
   rescue StandardError => e
     Eventure::Repository::Status.write_failure(activities_api_name)

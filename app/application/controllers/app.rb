@@ -2,18 +2,18 @@
 
 require 'roda'
 require 'rack'
-# require_relative '../services/api_activities'
 require_relative '../../infrastructure/database/repositories/status'
 require_relative '../services/api_activities'
 
 module Eventure
+  # Application controller
   class App < Roda
     plugin :flash
     plugin :halt
     plugin :all_verbs # allows DELETE and other HTTP verbs beyond GET/POST
 
     route do |routing|
-      response['Content-Type'] = 'application/json'   
+      response['Content-Type'] = 'application/json'
       # Root path handlers - MUST come before other routing
       routing.root do
         routing.get do
@@ -31,7 +31,7 @@ module Eventure
         puts 'Creating status database...'
         Eventure::Repository::Status.setup!
 
-        puts "fetch_api_activities called"
+        puts 'fetch_api_activities called'
         request_id = [Time.now.to_f, Time.now.to_f].hash
         result = Eventure::Service::ApiActivities.new.call(total: 20, request_id: request_id, config: Eventure::App.config)
         if result.failure?
@@ -118,11 +118,11 @@ module Eventure
 
             clean_filters = {
               tag: Array(filters['tag']).map(&:to_s).reject(&:empty?),
-              city: filters['city']&.to_s || '',
+              city: filters['city'].to_s,
               districts: Array(filters['districts']).map(&:to_s).reject(&:empty?),
-              start_date: filters['start_date']&.to_s || '',
-              end_date: filters['end_date']&.to_s || '',
-              language: filters['language']&.to_s || lang
+              start_date: filters['start_date'].to_s,
+              end_date: filters['end_date'].to_s,
+              language: filters['language'].to_s # || lang
             }
             # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
@@ -136,8 +136,7 @@ module Eventure
               http_response = Representer::HttpResponse.new(api_result)
               response.status = http_response.http_status_code
 
-              result_activities = api_result.message[:activities]
-              activities_list = OpenStruct.new(activities: result_activities)
+              activities_list = OpenStruct.new(activities: api_result.message[:activities])
               actual_language = clean_filters[:language]
               Representer::ActivityList.new(activities_list, language: actual_language).to_json
             end

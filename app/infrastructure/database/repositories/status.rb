@@ -21,10 +21,7 @@ module Eventure
           row = table.where(status_name: api_name)
 
           if row.empty?
-            table.insert(
-              status_name: api_name,
-              status: 'false'
-            )
+            table.insert(status_name: api_name, status: 'false')
           else
             row.update(status: 'false')
           end

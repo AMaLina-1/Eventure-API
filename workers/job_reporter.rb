@@ -10,8 +10,8 @@ module FetchApi
 
     def initialize(request_json, config)
       fetch_request = Eventure::Representer::FetchRequest
-        .new(OpenStruct.new)
-        .from_json(request_json)
+                      .new(OpenStruct.new)
+                      .from_json(request_json)
 
       @api_name = fetch_request.api_name
       @number = fetch_request.number
@@ -29,7 +29,10 @@ module FetchApi
     # 報告 API 完成進度（根據已完成的 API 個數）
     def report_api_progress(api_name = @api_name)
       percent = FetchApi::FetchMonitor.calculate_completed_apis
-      puts "[#{api_name}] Progress: #{percent}% (#{FetchApi::FetchMonitor.count_completed_apis}/#{Eventure::Repository::Status::TOTAL_APIS} APIs completed)"
+      n_success = FetchApi::FetchMonitor.success_count
+      n_failure = FetchApi::FetchMonitor.failure_count
+      n_remaining = FetchApi::FetchMonitor.remaining_count
+      puts "[#{api_name}] Progress: #{percent}% (#{n_success} succeeded, #{n_failure} failed, #{n_remaining} remaining)"
       report_progress(percent)
     end
 

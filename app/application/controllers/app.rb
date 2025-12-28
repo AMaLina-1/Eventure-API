@@ -124,7 +124,6 @@ module Eventure
               end_date: filters['end_date'].to_s,
               language: filters['language'].to_s # || lang
             }
-            # puts clean_filters
             result = Service::FilteredActivities.new.call(filters: clean_filters)
             if result.failure?
               failed = Representer::HttpResponse.new(result.failure)

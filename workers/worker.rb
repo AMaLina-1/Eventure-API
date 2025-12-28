@@ -31,10 +31,6 @@ class Worker
 
   def perform(_sqs_msg, request)
     job = FetchApi::JobReporter.new(request, Worker.config)
-    # activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
-
-    # activities_api_name = activities_payload.api_name
-    # activities_number = activities_payload.number
     (activities_api_name, activities_number) = split_name_number(request)
 
     activities = select_activities_api(activities_api_name, activities_number)
@@ -45,8 +41,6 @@ class Worker
     mark_error(activities_api_name, e, 'http', job)
   rescue StandardError => e
     mark_error(activities_api_name, e, 'standard', job)
-    # e.set_backtrace([]) if e.respond_to?(:set_backtrace)
-    # raise e
   end
 
   private
@@ -60,7 +54,7 @@ class Worker
   end
 
   def select_activities_api(api_name, activities_number)
-    puts "start fetching #{api_name} activities"
+    puts "Start fetching #{api_name} activities"
     mappers = {
       'hccg' => Eventure::Hccg::ActivityMapper,
       # 'taipei' => Eventure::Taipei::ActivityMapper,

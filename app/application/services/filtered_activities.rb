@@ -15,9 +15,9 @@ module Eventure
       step :filter_by_dates
       step :wrap_in_response
 
-      private
-
       BAD_REQ = 'Start date cannot be later than end date'
+
+      private
 
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
@@ -29,7 +29,6 @@ module Eventure
       end
 
       def filter_by_tags(input)
-        
         tag_set = input[:filters][:tag]
 
         unless tag_set.nil? || tag_set.empty?

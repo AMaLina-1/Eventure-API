@@ -22,7 +22,6 @@ module Eventure
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
         input[:filtered_activities] = input[:all_activities]
-        # puts input['all_activities'].length
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fetch all activities'))
@@ -90,7 +89,6 @@ module Eventure
             ad&.start_time && ad.start_time <= end_dt
           end
         end
-        # puts input['all_activities'].length
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'Cannot fileter by dates'))

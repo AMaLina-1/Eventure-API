@@ -93,6 +93,3 @@ module Eventure
     end
   end
 end
-
-# start_time = DateTime.parse("2025-11-01T19:00:00")
-# end_time = DateTime.parse("2025-11-03T7:10:00")

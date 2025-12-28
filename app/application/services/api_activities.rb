@@ -27,14 +27,7 @@ module Eventure
       end
 
       def store_hccg_activities(input)
-        # if Eventure::Repository::Status.get_status('hccg') == 'true'
-        #   input[:processing].delete('HCCG')
-        #   return Success(input)
-        # end
         input[:processing] = put_processing(input, 'hccg', 'HCCG')
-        # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-        #                 .send(fetch_request_json(input, 'hccg'))
-        # input[:processing] << 'HCCG'
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch HCCG activities: #{e.message}"
@@ -43,13 +36,6 @@ module Eventure
       end
 
       def store_taipei_activities(input)
-        # if Eventure::Repository::Status.get_status('taipei') == 'true'
-        #   input[:processing].delete('Taipei')
-        #   return Success(input)
-        # end
-        # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-        #                 .send(fetch_request_json(input, 'taipei'))
-        # input[:processing] << 'Taipei'
         input[:processing] = put_processing(input, 'taipei', 'Taipei')
         Success(input)
       rescue StandardError => e
@@ -59,14 +45,7 @@ module Eventure
       end
 
       def store_new_taipei_activities(input)
-        # if Eventure::Repository::Status.get_status('new_taipei') == 'true'
-        #   input[:processing].delete('New Taipei')
-        #   return Success(input)
-        # end
         input[:processing] = put_processing(input, 'new_taipei', 'New Taipei')
-        # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-        #                 .send(fetch_request_json(input, 'new_taipei'))
-        # input[:processing] << 'New Taipei'
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch New Taipei activities: #{e.message}"
@@ -75,14 +54,7 @@ module Eventure
       end
 
       def store_taichung_activities(input)
-        # if Eventure::Repository::Status.get_status('taichung') == 'true'
-        #   input[:processing].delete('Taichung')
-        #   return Success(input)
-        # end
         input[:processing] = put_processing(input, 'taichung', 'Taichung')
-        # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-        #                 .send(fetch_request_json(input, 'taichung'))
-        # input[:processing] << 'Taichung'
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Taichung activities: #{e.message}"
@@ -91,13 +63,6 @@ module Eventure
       end
 
       def store_tainan_activities(input)
-        # if Eventure::Repository::Status.get_status('tainan') == 'true'
-        #   input[:processing].delete('Tainan')
-        #   return Success(input)
-        # end
-        # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-        #                 .send(fetch_request_json(input, 'tainan'))
-        # input[:processing] << 'Tainan'
         input[:processing] = put_processing(input, 'tainan', 'Tainan')
         Success(input)
       rescue StandardError => e
@@ -107,14 +72,7 @@ module Eventure
       end
 
       def store_kaohsiung_activities(input)
-        # if Eventure::Repository::Status.get_status('kaohsiung') == 'true'
-        #   input[:processing].delete('Kaohsiung')
-        #   return Success(input)
-        # end
         input[:processing] = put_processing(input, 'kaohsiung', 'Kaohsiung')
-        # Messaging::Queue.new(App.config.QUEUE_URL, App.config)
-        #                 .send(fetch_request_json(input, 'kaohsiung'))
-        # input[:processing] << 'Kaohsiung'
         Success(input)
       rescue StandardError => e
         puts "Warning: Failed to fetch Kaohsiung activities: #{e.message}"
@@ -142,7 +100,6 @@ module Eventure
       end
 
       def put_processing(input, api_name, show_name)
-        # processing_list = input[:processing]
         if Eventure::Repository::Status.get_status(api_name) == 'true'
           input[:processing].delete(show_name)
         else

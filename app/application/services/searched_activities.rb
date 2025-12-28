@@ -13,9 +13,9 @@ module Eventure
       step :filter_by_keyword
       step :wrap_in_response
 
-      private
-
       DB_ERR = 'Cannot access database'
+
+      private
 
       def fetch_all_activities(input)
         input[:all_activities] = Eventure::Repository::Activities.all
@@ -60,7 +60,7 @@ module Eventure
           name_match || detail_match || city_match || 
             name_en_match || detail_en_match || location_en_match || tags_match
         end
-        
+
         Success(input)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))

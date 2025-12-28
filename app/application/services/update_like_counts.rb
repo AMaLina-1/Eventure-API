@@ -28,24 +28,15 @@ module Eventure
       end
 
       def update_like_session(input)
-        # puts "type of serno: #{input[:serno].class}"
-        # puts "type of user_likes: #{input[:user_likes].class}"
-        # puts "user_likes content: #{Array(input[:user_likes])[0].class}"
         serno = input[:serno].to_s
         likes = Array(input[:user_likes]).map(&:to_s)
 
-        # if likes.include?(serno)
-        #   input[:user_likes] = processing_removing(input[:activity], likes, serno)
-        # else
-        #   input[:user_likes] = processing_adding(input[:activity], likes, serno)
-        # end
         input[:user_likes] = if likes.include?(serno)
                                processing_removing(input[:activity], likes, serno)
                              else
                                processing_adding(input[:activity], likes, serno)
                              end
 
-        # input[:user_likes] = likes.uniq
         Success(input)
       rescue StandardError => e
         Failure(Response::ApiResult.new(status: :internal_error, message: e.message))

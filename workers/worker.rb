@@ -31,27 +31,29 @@ class Worker
 
   def perform(_sqs_msg, request)
     job = FetchApi::JobReporter.new(request, Worker.config)
-    activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
+    activities_payload = Eventure::Representer::FetchRequest.new(Struct.new).from_json(request)
 
     activities_api_name = activities_payload.api_name
     activities_number = activities_payload.number
     # cache = Eventure::Cache::Client.new(App.config)
 
     puts "start fetching #{activities_api_name} activities"
-    activities = case activities_api_name
-                 when 'hccg'
-                   Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
-                 when 'taipei'
-                   Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-                 when 'new_taipei'
-                   Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-                 when 'taichung'
-                   Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-                 when 'tainan'
-                   Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
-                 when 'kaohsiung'
-                   Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-                 end
+    # activities = case activities_api_name
+    #              when 'hccg'
+    #                Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    #              when 'taipei'
+    #                Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    #              when 'new_taipei'
+    #                Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    #              when 'taichung'
+    #                Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    #              when 'tainan'
+    #                Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    #              when 'kaohsiung'
+    #                Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    #              end
+
+    activities = select_activities_api(activities_api_name, activities_number)
 
     Eventure::Repository::Activities.create(activities)
     # cache.set('fetch_hccg', true)
@@ -69,5 +71,24 @@ class Worker
     # job.report_api_progress(activities_api_name)
     e.set_backtrace([]) if e.respond_to?(:set_backtrace)
     raise e
+  end
+
+  private
+
+  def select_activities_api(api_name, activities_number)
+    case api_name
+    when 'hccg'
+      Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    when 'taipei'
+      Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    when 'new_taipei'
+      Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    when 'taichung'
+      Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    when 'tainan'
+      Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    when 'kaohsiung'
+      Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    end
   end
 end

@@ -31,64 +31,64 @@ class Worker
 
   def perform(_sqs_msg, request)
     job = FetchApi::JobReporter.new(request, Worker.config)
-    activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
+    # activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
 
-    activities_api_name = activities_payload.api_name
-    activities_number = activities_payload.number
-    # cache = Eventure::Cache::Client.new(App.config)
-
-    puts "start fetching #{activities_api_name} activities"
-    # activities = case activities_api_name
-    #              when 'hccg'
-    #                Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    #              when 'taipei'
-    #                Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    #              when 'new_taipei'
-    #                Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    #              when 'taichung'
-    #                Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    #              when 'tainan'
-    #                Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    #              when 'kaohsiung'
-    #                Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    #              end
+    # activities_api_name = activities_payload.api_name
+    # activities_number = activities_payload.number
+    (activities_api_name, activities_number) = split_name_number(request)
 
     activities = select_activities_api(activities_api_name, activities_number)
 
     Eventure::Repository::Activities.create(activities)
-    # cache.set('fetch_hccg', true)
-    Eventure::Repository::Status.write_success(activities_api_name)
-    puts "successfully store #{activities_api_name} activities"
-    job.report_api_progress(activities_api_name)
+    mark_success(activities_api_name)
   rescue HTTP::TimeoutError, HTTP::ConnectionError => e
-    Eventure::Repository::Status.write_failure(activities_api_name)
-    puts "ERROR: #{activities_api_name} has errors during connection: #{e.message}"
-    job.report_api_progress(activities_api_name)
+    mark_error(activities_api_name, e, 'http', job)
   rescue StandardError => e
-    Eventure::Repository::Status.write_failure(activities_api_name)
-    puts "ERROR: #{activities_api_name} API fetch failed: #{e.class} - #{e.message}"
-    # puts e.backtrace.join("\n")
-    # job.report_api_progress(activities_api_name)
-    e.set_backtrace([]) if e.respond_to?(:set_backtrace)
-    raise e
+    mark_error(activities_api_name, e, 'standard', job)
+    # e.set_backtrace([]) if e.respond_to?(:set_backtrace)
+    # raise e
   end
 
   private
 
+  def split_name_number(request)
+    activities_payload = Eventure::Representer::FetchRequest.new(OpenStruct.new).from_json(request)
+
+    activities_api_name = activities_payload.api_name
+    activities_number = activities_payload.number
+    [activities_api_name, activities_number]
+  end
+
   def select_activities_api(api_name, activities_number)
-    case api_name
-    when 'hccg'
-      Eventure::Hccg::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    when 'taipei'
-      Eventure::Taipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    when 'new_taipei'
-      Eventure::NewTaipei::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    when 'taichung'
-      Eventure::Taichung::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    when 'tainan'
-      Eventure::Tainan::ActivityMapper.new.find(activities_number).map(&:to_entity)
-    when 'kaohsiung'
-      Eventure::Kaohsiung::ActivityMapper.new.find(activities_number).map(&:to_entity)
+    puts "start fetching #{activities_api_name} activities"
+    mappers = {
+      'hccg' => Eventure::Hccg::ActivityMapper,
+      # 'taipei' => Eventure::Taipei::ActivityMapper,
+      'new_taipei' => Eventure::NewTaipei::ActivityMapper,
+      'taichung' => Eventure::Taichung::ActivityMapper,
+      'tainan' => Eventure::Tainan::ActivityMapper,
+      'kaohsiung' => Eventure::Kaohsiung::ActivityMapper
+    }
+
+    return [] unless mappers[api_name] # 預設空陣列，避免 nil
+
+    mappers[api_name].new.find(activities_number).map(&:to_entity)
+  end
+
+  def mark_error(api_name, error, type, job)
+    Eventure::Repository::Status.write_failure(api_name)
+    puts "[ERROR] Failed to fetch #{api_name} API: #{error.message}"
+    if type == 'http'
+      job.report_api_progress(api_name)
+    else
+      error.set_backtrace([]) if error.respond_to?(:set_backtrace)
+      raise error
     end
+  end
+
+  def mark_success(api_name)
+    Eventure::Repository::Status.write_success(api_name)
+    puts "Successfully store #{api_name} activities"
+    job.report_api_progress(api_name)
   end
 end

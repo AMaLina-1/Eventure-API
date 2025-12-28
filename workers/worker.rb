@@ -60,7 +60,7 @@ class Worker
   end
 
   def select_activities_api(api_name, activities_number)
-    puts "start fetching #{activities_api_name} activities"
+    puts "start fetching #{api_name} activities"
     mappers = {
       'hccg' => Eventure::Hccg::ActivityMapper,
       # 'taipei' => Eventure::Taipei::ActivityMapper,

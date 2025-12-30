@@ -8,6 +8,7 @@ require_relative '../../../config/environment'
 
 API_KEY = Eventure::App.config.GEMINI_API_KEY
 
+# Gemini Tag Generator for Activities
 class TagGenerator
   def initialize
     @client = Google::Genai::Client.new(api_key: API_KEY)
@@ -16,24 +17,24 @@ class TagGenerator
 
   def clean_html(text)
     return '' if text.nil?
+
     text.gsub(/<[^>]*>/, ' ').gsub(/\s+/, ' ').strip
   end
 
   def generate_tags(activity)
-    subject = activity[:name].to_s.strip  # Fixed: was activity['subject']
+    subject = activity[:name].to_s.strip # Fixed: was activity['subject']
     detail = activity[:detail].to_s.strip
-    if subject.empty? && detail.empty?
-      return []
-    end
+    return [] if subject.empty? && detail.empty?
+
     clean_detail = clean_html(detail)
 
     # Get existing tags from database
     existing_tags = @db[:tags].select(:tag, :tag_en).all
     existing_tags_list = if existing_tags.empty?
-                          'None, create initial tags'
-                        else
-                          existing_tags.map { |t| "#{t[:tag]} (#{t[:tag_en]})" }.join(', ')
-                        end
+                           'None, create initial tags'
+                         else
+                           existing_tags.map { |t| "#{t[:tag]} (#{t[:tag_en]})" }.join(', ')
+                         end
 
     prompt = <<~PROMPT
       You are a tag generator for community events and activities in Taiwan.
@@ -61,10 +62,10 @@ class TagGenerator
     PROMPT
 
     response = @client.models.generate_content(
-      model: "gemini-2.0-flash",
+      model: 'gemini-2.0-flash',
       contents: [
         {
-          role: "user",
+          role: 'user',
           parts: [{ text: prompt }]
         }
       ]
@@ -79,7 +80,7 @@ class TagGenerator
     else
       []
     end
-  rescue => e
+  rescue StandardError => e
     puts "Error generating tags for #{activity[:serno]}: #{e.message}"
     []
   end
@@ -93,9 +94,8 @@ class TagGenerator
       tag = @db[:tags].where(tag: tag_name).first
 
       if tag
-        if tag[:tag_en].nil? || tag[:tag_en].empty?
-          @db[:tags].where(id: tag[:id]).update(tag_en: tag_en)
-        end
+        @db[:tags].where(id: tag[:id]).update(tag_en: tag_en) if tag[:tag_en].nil? || tag[:tag_en].empty?
+
         tag[:id]
       else
         @db[:tags].insert(tag: tag_name, tag_en: tag_en)
@@ -118,12 +118,12 @@ class TagGenerator
   end
 
   def clear_all_tags
-    puts "Clearing all existing tags..."
+    puts 'Clearing all existing tags...'
     @db.transaction do
       @db[:activities_tags].delete
       @db[:tags].delete
     end
-    puts "All old tags cleared!"
+    puts 'All old tags cleared!'
   end
 
   def process_all_activities(clear_existing: true)

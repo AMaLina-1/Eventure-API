@@ -111,7 +111,7 @@ module Eventure
         untranslated = @db[:activities].where(Sequel.or(name_en: nil, name_en: '')).all
 
         if untranslated.empty?
-          puts "All activities are already translated!"
+          puts 'All activities are already translated!'
           return
         end
 

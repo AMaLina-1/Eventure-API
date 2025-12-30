@@ -12,7 +12,7 @@ module Eventure
       property :serno
       property :name, getter: lambda { |args|
         lang = args[:user_options]&.dig(:language) || 'zh-TW'
-        if lang == 'en' && respond_to?(:name_en) && name_en &&  !name_en.empty?
+        if lang == 'en' && respond_to?(:name_en) && name_en && !name_en.empty?
           name_en
         else
           name
@@ -21,7 +21,7 @@ module Eventure
       property :location
       property :city, getter: lambda { |args|
         lang = args[:user_options]&.dig(:language) || 'zh-TW'
-        if lang == 'en' && respond_to?(:location_en) && location_en &&  !location_en.empty?
+        if lang == 'en' && respond_to?(:location_en) && location_en && !location_en.empty?
           location_en
         else
           city
@@ -30,7 +30,7 @@ module Eventure
       property :building
       property :detail, getter: lambda { |args|
         lang = args[:user_options]&.dig(:language) || 'zh-TW'
-        if lang == 'en' && respond_to?(:detail_en) && detail_en &&  !detail_en.empty?
+        if lang == 'en' && respond_to?(:detail_en) && detail_en && !detail_en.empty?
           detail_en
         else
           detail
@@ -38,7 +38,7 @@ module Eventure
       }
       property :organizer, getter: lambda { |args|
         lang = args[:user_options]&.dig(:language) || 'zh-TW'
-        if lang == 'en' && respond_to?(:organizer_en) && organizer_en &&  !organizer_en.empty?
+        if lang == 'en' && respond_to?(:organizer_en) && organizer_en && !organizer_en.empty?
           organizer_en
         else
           organizer

@@ -125,13 +125,14 @@ module Eventure
         end
 
         private
+
         def load_tags_from_db(activity_id)
           db = Eventure::App.db
           tag_rows = db[:activities_tags]
-                    .join(:tags, id: :tag_id)
-                    .where(activity_id: activity_id)
-                    .select(:tag)
-                    .all
+                     .join(:tags, id: :tag_id)
+                     .where(activity_id: activity_id)
+                     .select(:tag)
+                     .all
           tag_rows.map do |tag_row|
             Eventure::Entity::Tag.new(tag: tag_row[:tag])
           end

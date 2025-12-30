@@ -202,9 +202,7 @@ describe 'Activity entity domain logic tests' do
         _(urls).must_be_kind_of Array
         _(urls.length).must_equal activity.relate_data.length
 
-        if activity.relate_data.any?
-          _(urls.all? { |url| url.is_a?(String) }).must_equal true
-        end
+        _(urls.all? { |url| url.is_a?(String) }).must_equal true if activity.relate_data.any?
       end
     end
 
@@ -214,9 +212,7 @@ describe 'Activity entity domain logic tests' do
         _(titles).must_be_kind_of Array
         _(titles.length).must_equal activity.relate_data.length
 
-        if activity.relate_data.any?
-          _(titles.all? { |title| title.is_a?(String) }).must_equal true
-        end
+        _(titles.all? { |title| title.is_a?(String) }).must_equal true if activity.relate_data.any?
       end
     end
 

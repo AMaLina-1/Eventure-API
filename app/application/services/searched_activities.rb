@@ -37,7 +37,7 @@ module Eventure
         return Success(input) if kw.nil? || kw.to_s.strip.empty?
 
         pattern = kw.to_s.downcase
-        lang = input[:language]
+        # lang = input[:language]
 
         input[:filtered_activities] = input[:filtered_activities].select do |activity|
           name_match = activity.name.to_s.downcase.include?(pattern)
@@ -57,7 +57,7 @@ module Eventure
           end
           tags_match = tags.any? { |t| t.include?(pattern) }
 
-          name_match || detail_match || city_match || 
+          name_match || detail_match || city_match ||
             name_en_match || detail_en_match || location_en_match || tags_match
         end
 

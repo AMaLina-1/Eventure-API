@@ -62,13 +62,11 @@ module Eventure
             end
           end
         rescue Sequel::DatabaseError => e
-          if e.message.include?('database is locked') && retry_count < max_retries
-            retry_count += 1
-            sleep(0.5 * retry_count) # Exponential backoff
-            retry
-          else
-            raise
-          end
+          raise unless e.message.include?('database is locked') && retry_count < max_retries
+
+          retry_count += 1
+          sleep(0.5 * retry_count) # Exponential backoff
+          retry
         end
       end
 

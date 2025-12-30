@@ -75,11 +75,11 @@ module Eventure
       end
 
       def add_likes
-        @likes_count = (@likes_count || 0 ) + 1
+        @likes_count = (@likes_count || 0) + 1
       end
 
       def remove_likes
-        @likes_count = (@likes_count || 0 )
+        @likes_count = @likes_count || 0
         @likes_count -= 1 if @likes_count.positive?
       end
 

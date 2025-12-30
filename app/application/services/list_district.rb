@@ -21,7 +21,7 @@ module Eventure
         end
         list = Eventure::Response::DistrictsList.new(districts)
         Response::ApiResult.new(status: :ok, message: list)
-          .then { |result| Success(result) }
+                           .then { |result| Success(result) }
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: DB_ERR))
       end

@@ -10,7 +10,7 @@ Our application provides a **one-stop event discovery platform** that helps user
 
 1. Allowing users to apply filters such as **date**, **tag**, and **region** to quickly find relevant activities.
 
-2. Providing a **like** feature that allows users to express interest in activities. The system displays each activity's popularity based on the total number of likes. Users can also view their liked activities on the Like page.
+2. Providing a **like** feature that allows users to express interest in activities. The system displays each activity's popularity based on the total number of likes. Users can also view their liked activities on the Liked Activities page.
 
 3. Allowing users to switch the application language using a button.
 
@@ -45,7 +45,7 @@ We collect data from the open APIs of the following six cities and store them in
 | :--: | :-- |
 | `SearchedActivities` | Allows users to search for activities using keywords from the search bar. |
 | `FilteredActivities` | Filters activities based on criteria such as tag, city, start time, and end time, and returns the matched activities. |
-| `UpdateLikeCounts` | Updates user sessions for liked activities and updates like counts in the database. |
+| `UpdateLikeCounts` | Updates the like counts for each activity in the database. |
 | `ListActivity` | Retrieves all activities. |
 | `ListCity` | Retrieves the list of cities for filtering. |
 | `ListTag` | Retrieves the list of tags for filtering. |
@@ -129,3 +129,4 @@ Since the application is divided into API and App components, please complete al
 5. Start the background worker by running `rake worker:run:dev`.
 
 6. Start the API server by running `rake run`.
+
